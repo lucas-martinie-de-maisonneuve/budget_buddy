@@ -7,86 +7,32 @@ class Element():
         self.black = (0, 0, 0)
         self.white = (255, 255, 255)
 
-        self.darkgrey = (100,100,100)
-        self.grey = (250, 250, 250) # Backgroud Home
-        self.grey1 = (240, 242, 245)   
-        self.grey2 = (53, 53, 53) # Info profile rectangle 
-        self.grey3 = (25, 25, 25)
-        self.grey4 = (146, 151, 153)
-        self.grey5 = (34, 31, 37)
-        self.grey6 = (176, 186, 181)
-        self.grey7 = (30, 33, 35) # First section principal page
-        self.grey8 = (51, 55, 62) # Banner principal page
-        self.grey9 = (17, 18, 20) # Second section principal page
-        self.grey10 = (29,30,33) # Rect principal page
-        self.grey11 = (155,155,155)
-        self.dark_grey = (34, 31, 37)
+        self.green = (119, 186, 0)
+        self.green1 = (0, 106, 77)
+        self.green2 = (2, 71, 49)
+        self.green3 = (0, 106, 77)   
 
-        self.dark_green = (43, 147, 72)
-
-        self.blue = (0, 151, 254) # Login
-        self.blue1 = (0, 140, 234) # Login  
-        self.blue2 = (33, 6, 84) # Theme color pink
-        self.blue3 = (27, 38, 59) # Theme color orange
-        self.blue4 = (20, 236, 232) # Flashy blue #14ece8
-        self.darkblue = (65, 90, 119) 
-        self.lightblue = (189, 224, 254)
-
-        self.alpha_white =(150,150,150, 200) # Alpha profil picture on profil page
-        self.alpha_grey =(50,50,50,100) # Alpha profil picture on profil page
-        self.alpha_grey2 =(50,50,50,200) # Alpha background register
-        self.alpha_none =(0,0,0,0)
-
-        self.pink = (222, 50, 79)
-        self.pink1 = (254, 0, 135) # Notif number
-      
-        self.yellow = (233, 164, 41)   
-
-        self.green = (66, 183, 42) # Connected bubble
-        self.green2 = (39, 78, 19)
-        self.darkgreen = (97, 155, 138)
-
-        self.purple1 = (202, 8, 255) # Linehome
-        self.purple2 = (125, 85, 196)
-        self.purple3 = (60, 9, 108)  # Theme color blue
-        self.purple4 = (67, 47, 104) # Theme color green
-        self.dark_purple = (67, 47, 104)
-
-        self.darkgreenblue = (37, 50, 55)
-     
-        self.greyblue = (92, 103, 125)
-        self.darkbluesea = (0, 40, 85)
-        self.lightbluesea = (39, 76, 119)
-
-        self.yellow = (233, 164, 41)   
-        self.lightyellow = (244, 226, 133)
-        self.orange = (251, 133, 0)
-        self.orange2 = (255, 103, 2) 
-
-        self.red = (242, 106, 141)
-        self.darkred = (221, 45, 74)
-        self.brown = (75, 67, 67)
+        self.grey1 = (25, 25, 25)   
+        self.grey2 = (53, 53, 53)  
    
-        self.font1 = "assets/font/Uni Sans Heavy.otf"
-        self.font2 = "assets/font/gg sans Regular.ttf"
-        self.font3 = "assets/font/Uni Sans Thin.otf"
-        self.font4 = "assets/font/gg sans Semibold.ttf"
-        self.font5 = "assets/font/gg sans Bold.ttf"
-
+        self.font1 = "assets/font/RubikMonoOne-Regular.tff"
+        self.font2 = "assets/font/RobotoMono-Italic-VariableFont_wght.tff"
+        self.font3 = "assets/font/RobotoMono-VariableFont_wght.tff"
+      
 # Def text          
 
-    def text_center(self, font, text_size, text_content, color, x, y):
+    def txt_center(self, font, text_size, text_content, color, x, y):
         pygame.font.init()
         text = pygame.font.Font(f"{font}", text_size).render(text_content, True,color)
         text_rect = text.get_rect(center=(x, y))
         self.Window.blit(text, text_rect)
     
-    def text_not_align(self, font, text_size, text_content, color, x, y):
+    def txt_not_align(self, font, text_size, text_content, color, x, y):
         text = pygame.font.Font(f"{font}", text_size).render(text_content, True, color)
         text_rect = text.get_rect(topleft=(x, y))
         self.Window.blit(text, text_rect)
 
-    def text_center_italic(self, font, text_size, text_content, color, x, y):
+    def txt_center_italic(self, font, text_size, text_content, color, x, y):
         pygame.font.init()
         font_obj = pygame.font.Font(f"{font}", text_size)
         text = font_obj.render(text_content, True, color)
@@ -101,7 +47,7 @@ class Element():
         self.Window.blit(name, (x - name.get_width()//2, y - name.get_height()//2))
         return name
 
-    def image_not_center(self, name, x, y, width, height, image_name):
+    def img_not_center(self, name, x, y, width, height, image_name):
         name = pygame.image.load(f'assets/image/{image_name}.png').convert_alpha()
         name = pygame.transform.scale(name,(width,height))
         self.Window.blit(name, (x,y))
@@ -175,7 +121,7 @@ class Element():
         else:
             self.rect_full(color_full, x, y, width, height, radius)
             self.rect_border(color_border, x, y, width, height, thickness, radius)
-        self.text_center(font, text_size, text, text_color,  x, y)
+        self.txt_center(font, text_size, text, text_color,  x, y)
 
         return name    
 # Def Cursor 

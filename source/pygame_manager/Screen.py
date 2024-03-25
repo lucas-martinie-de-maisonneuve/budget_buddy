@@ -3,7 +3,7 @@ import pygame
 class Screen:
     def __init__(self):
         pygame.init()
-        self.W = 1200
+        self.W = 1000
         self.H = 700
         self.Window = pygame.display.set_mode((self.W, self.H))
         pygame.display.set_caption("Budget Buddy")

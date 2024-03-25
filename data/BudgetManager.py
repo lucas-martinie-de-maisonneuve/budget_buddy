@@ -1,7 +1,7 @@
 from datetime import datetime
 from data.Database import Database
 
-class DiscordManager(Database):
+class BudgetManager(Database):
     def __init__(self):
         Database.__init__(self, 'localhost', 'root', '$~Bc4gB9', 'discord')
         # Database.__init__(self, 'localhost', 'root', 'VannyLamorte25!', 'discord')
@@ -256,5 +256,5 @@ class DiscordManager(Database):
             f.write(save)
 
 
-manager = DiscordManager()
+manager = BudgetManager()
 manager.close_connection()
