@@ -8,6 +8,7 @@ CREATE TABLE user (
     name VARCHAR(255),
     email VARCHAR(255),
     password VARCHAR(255),
+    iban INT,
     last_transaction DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 

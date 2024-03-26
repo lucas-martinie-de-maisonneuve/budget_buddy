@@ -20,9 +20,9 @@ class BudgetManager(Database):
         user = self.fetch_one(sql, values)
         return user
     
-    def add_user(self, surname, name, pseudo, email, password, photo, id_role):
-        sql = "INSERT INTO user (surname, name, pseudo, email, password, photo, id_role) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-        values = (surname, name, pseudo, email, password, photo, id_role)
+    def add_user(self, surname, name, email, password, iban, last_transaction):
+        sql = "INSERT INTO user (surname, name, email, password, iban, last_transaction ) VALUES (%s, %s, %s, %s, %s, %s)"
+        values = (surname, name, email, password, iban, last_transaction )
         self.execute_query(sql, values)
 
     def surname_user(self):
@@ -31,14 +31,6 @@ class BudgetManager(Database):
 
     def display_user(self):
         sql = "SELECT * FROM user"
-        return self.fetch(sql)
-    
-    def display_admin_request(self):
-        sql = "SELECT * FROM user WHERE change_role=1"
-        return self.fetch(sql)
-    
-    def display_role_name(self):
-        sql = "SELECT role.name FROM role LEFT JOIN user ON user.id_role = role.id"
         return self.fetch(sql)
 
     def add_category(self, name, intro):
@@ -52,8 +44,8 @@ class BudgetManager(Database):
         sql = "SELECT * FROM category"
         return self.fetch(sql)
 
-    def display_channel(self):
-        sql = "SELECT * FROM channel"
+    def display_type(self):
+        sql = "SELECT * FROM type"
         return self.fetch(sql)
 
     def display_message(self):
@@ -75,7 +67,7 @@ class BudgetManager(Database):
         return self.fetch(sql)
 
     # Ajout Channel
-    def add_channel(self,name,status,communication,id_category):
+    def add_type(self,name,status,communication,id_category):
         sql = "INSERT INTO channel (name,status,communication,id_category) VALUES (%s, %s,%s, %s)"
         values = (name,status,communication,id_category)
         self.cursor.execute(sql, values)
@@ -108,51 +100,6 @@ class BudgetManager(Database):
         params = (pseudo, email, password, photo, id)
         self.execute_query(sql, params)     
 
-    def update_message_author(self, name, user):
-        sql = 'UPDATE message SET name=%s WHERE name=%s'
-        params = (name, user)
-        self.execute_query(sql, params)
-    
-    def update_abc_password(self, password, id_user): 
-        sql = 'UPDATE password SET password=%s WHERE id_user=%s'
-        params = (password, id_user)
-        self.execute_query(sql, params)
-    
-    def update_role_request(self, email):
-        sql = 'UPDATE user SET change_role=1 WHERE email=%s'
-        params = (email,)
-        self.execute_query(sql, params)
-
-    def upgrade_role(self, id_user):
-        sql = 'UPDATE user SET change_role=0, id_role=1 WHERE id =%s'
-        values = (id_user,)
-        self.execute_query(sql, values)
-
-    def deny_upgrade_role(self, id_user):
-        sql = 'UPDATE user SET change_role=0 WHERE id =%s'
-        values = (id_user,)
-        self.execute_query(sql, values)
-
-    # Delete User
-    def delete_user(self, id):
-        sql = "DELETE FROM user WHERE id = %s"
-        values = (id,)
-        self.execute_query(sql, values)
-
-    def delete_category(self, id):
-        sql = "DELETE FROM category WHERE id = %s"
-        values = (id,)
-        self.execute_query(sql, values)
-
-    def delete_channel(self, id):
-        sql = "DELETE FROM channel WHERE id = %s"
-        values = (id,)
-        self.execute_query(sql, values)
-
-    def delete_channel_message(self, id):
-        sql = "DELETE FROM message WHERE id_channel = %s"
-        values = (id,)
-        self.execute_query(sql, values)
 
     def save_message(self, name, message, id_channel):
         actual_time = datetime.now()
@@ -202,16 +149,7 @@ class BudgetManager(Database):
     def close_connection(self):
         self.disconnect()
     
-    def add_emoji(self, id_mes,nb_react):
-        sql = 'UPDATE message SET react=%s WHERE id=%s'
-        values = (nb_react, id_mes)
-        self.execute_query(sql, values)
-
-    def add_abc_password (self, password, id_user):
-        sql = "INSERT INTO password (password, id_user) VALUES (%s, %s)"
-        values = (password, id_user)
-        self.execute_query(sql, values)
-
+  
     # Notification   
     def save_last_message (self, user_id): 
         current_time = datetime.now()
