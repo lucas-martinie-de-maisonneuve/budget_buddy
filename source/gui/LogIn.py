@@ -11,51 +11,63 @@ class LogIn(Element, Screen, Controller):
 
         self.entry = False
 
-        self.img_twitter = pygame.image.load("assets/image/LogIn/login_twitter.png")
-        self.img_instagram = pygame.image.load("assets/image/LogIn/login_instagram.png")
-        self.img_facebook = pygame.image.load("assets/image/LogIn/login_facebook.png")
-        self.img_logo = pygame.image.load("assets/image/LogIn/login_logo.png")
-      
-    def hover_sign(self):
-        self.sign = (pygame.Rect(self.W//2+192, 590, 55, 20)) 
-        if self.is_mouse_over_button(self.sign):
-            self.text_center(self.font4, 13, "Sign-in options", self.white, self.W//2+220, 480)          
-        else:
-            self.text_center(self.font4, 12, "Sign-in options", self.white, self.W//2+220, 500)
+        self.image_paths = {
+            "twitter": "assets/image/LogIn/login_twitter.png",
+            "instagram": "assets/image/LogIn/login_instagram.png",
+            "facebook": "assets/image/LogIn/login_facebook.png",
+            "logo": "assets/image/LogIn/login_logo.png"
+            # "background": "assets/image/LogIn/login_background.png"
+        }
 
+        self.images = {}
+        for name, path in self.image_paths.items():
+            self.images[name] = pygame.image.load(path)    
+         
     def gui_home(self): 
         self.screen_color(self.white)
 
-        # self.img_background("background", 500, 350, 1200, 700, "LogIn/login3")
-
         # Rect principal
-        self.rect_full(self.green3, self.W//2+220, 355, 400, 580, 10)
-        self.rect_border(self.green3, self.W//2+220, 355, 400, 580, 2, 10)
-        
-        self.input_email_rect = self.button_hover("Email", self.W//2+220, 250, 350, 50, self.green2, self.green, self.green2, self.green, self.input_email, self.font1, self.white,18, 1, 5)
+        self.rect_full(self.green3, self.W//2+220, self.H//2, 400, 580, 10)
+        self.rect_border(self.white, self.W//2+220, self.H//2, 400, 580, 1, 10)
 
-        self.input_password_rect = self.button_hover("Password", self.W//2+220, 320, 350, 50, self.green2, self.green, self.green2, self.green, self.input_password, self.font1, self.white, 18, 1, 5)
+        # Logo
+        self.text_center(self.font1, 35, "Wildcat Wealth Bank", self.white, self.W//2+220, 140)
+        self.text_center(self.font4, 16, "Where Panthers Guard Your Fortune!", self.white, self.W//2+220, 180)
 
+        # Email        
+        self.input_email_rect = self.button_hover("Email", self.W//2+220, 250, 350, 50, self.green2, self.green, self.green2, self.green, self.input_email, self.font4, self.white,18, 1, 5)
+
+        # Password
+        self.input_password_rect = self.button_hover("Password", self.W//2+220, 320, 350, 50, self.green2, self.green, self.green2, self.green, self.input_password, self.font4, self.white, 18, 1, 5)
+
+        # Login
         self.login_rect = self.button_hover("Login", self.W//2+220, 390, 350, 50, self.green, self.green, self.green, self.green,"Log In", self.font1, self.white, 18, 1, 5) 
         
+        # No Account
         self.text_center(self.font1, 13, "No account ?", self.white, self.W//2+190, 450)
         self.text_center(self.font4, 13, "Create one!", self.white, self.W//2+265, 450)
+        
         # Lines
         pygame.draw.line(self.Window, self.green, (550, 450), (640, 450), 1) 
         pygame.draw.line(self.Window, self.green, (805, 450), (895, 450), 1)
         pygame.draw.line(self.Window, self.green, (520, 575), (919, 575), 1)
 
         # Social Media
-        self.img_hover("Twitter", "Twitter", self.W//2+160, 610, 35, 35, self.img_twitter, self.img_twitter)
-        self.img_hover("Instagram", "Instagram", self.W//2+220, 610, 35, 35, self.img_instagram, self.img_instagram)
-        self.img_hover("Facebook", "Facebook", self.W//2+280, 610, 35, 35, self.img_facebook, self.img_facebook)
-        
-        self.img_center("logo", self.W//2+220, 140, 200, 110, self.img_logo)
+        self.img_hover("Twitter", "Twitter", self.W//2+160, 610, 35, 35,self.images["twitter"],self.images["twitter"])
+        self.img_hover("Instagram", "Instagram", self.W//2+220, 610, 35, 35,self.images["instagram"],self.images["instagram"])
+        self.img_hover("Facebook", "Facebook", self.W//2+280, 610, 35, 35, self.images["facebook"], self.images["facebook"])        
+       
+        # Sign In
 
 
-
-        self.hover_sign()
+        # pygame.draw.rect(self.Window, self.black, [675, 490, 90, 20])
+        self.sign = (pygame.Rect(675, 490, 90, 20)) 
+        if self.is_mouse_over_button(self.sign):
+            self.text_center(self.font4, 15, "Sign-in options", self.white, self.W//2+220, 500)          
+        else:
+            self.text_center(self.font4, 13, "Sign-in options", self.white, self.W//2+220, 500)
       
+
     def login_run(self):
         login_running = True
         while login_running:
