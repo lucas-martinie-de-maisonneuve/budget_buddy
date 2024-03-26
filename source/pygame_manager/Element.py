@@ -45,7 +45,7 @@ class Element():
         text_rect = text.get_rect(center=(x, y))
         self.Window.blit(text, text_rect)
     
-    def text_not_align(self, font, text_size, text_content, color, x, y):
+    def text_not_center(self, font, text_size, text_content, color, x, y):
         text = pygame.font.Font(f"{font}", text_size).render(text_content, True, color)
         text_rect = text.get_rect(topleft=(x, y))
         self.Window.blit(text, text_rect)
@@ -59,31 +59,33 @@ class Element():
 
 # Def image
 
-    def img_center(self, name, x, y, width, height, image_name):
-        name = pygame.image.load(f'assets/image/{image_name}.png')
-        name = pygame.transform.scale(name, (width, height))
-        self.Window.blit(name, (x - name.get_width()//2, y - name.get_height()//2))
-        return name
 
-    def img_not_center(self, name, x, y, width, height, image_name):
-        name = pygame.image.load(f'assets/image/{image_name}.png').convert_alpha()
-        name = pygame.transform.scale(name,(width,height))
+    def img_center(self, name, x, y, width, height, image):
+        name = pygame.transform.smoothscale(image, (width, height))
+        self.Window.blit(name, (x - name.get_width()//2, y - name.get_height()//2))
+        button = pygame.Rect((x - width//2), (y - height//2), width, height)
+        return button
+
+    # Mines weeper - Tom and Jerry Logo
+    def img_not_center(self, name, x, y, width, height, image):
+        name = pygame.transform.smoothscale(image,(width,height))
         self.Window.blit(name, (x,y))
-        return name
+        button = pygame.Rect(x, y, width, height)
+        return button
         
-    def img_background(self, name, x, y, width, height, image_name):
-        name = pygame.image.load(f'assets/image/{image_name}.png').convert_alpha()
-        name = pygame.transform.scale(name, (width, height))
-        self.Window.blit(name, (x - name.get_width()//2, y - name.get_height()//2))
+    def img_background(self, x, y, width, height, image):
+        image = pygame.transform.smoothscale(image, (width, height))
+        self.Window.blit(image, (x - image.get_width()//2, y - image.get_height()//2))
 
-    def hover_image(self, name_rect, name, x, y, width, height, image_name, image_name_hover): 
+    def img_hover(self, name_rect, name, x, y, width, height, image_name, image_name_hover): 
         name_rect = pygame.Rect( x - width//2, y - height//2, width, height)        
         if self.is_mouse_over_button(name_rect):
             self.img_center(name, x, y, width+5, height+5, image_name_hover)     
         else:
             self.img_center(name, x, y, width, height, image_name)
         return name_rect
- 
+    
+
 # Def rectangle  
     def rect_full(self, color, x, y, width, height, radius):
         button = pygame.draw.rect(self.Window, color, pygame.Rect(x - width//2, y - height//2, width, height),0, radius)
