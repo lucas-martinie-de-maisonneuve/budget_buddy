@@ -92,10 +92,10 @@ class Element():
 # Def rectangle  
     def rect_full(self, color, x, y, width, height, radius):
         button = pygame.draw.rect(self.Window, color, pygame.Rect(x - width//2, y - height//2, width, height),0, radius)
-        return button
-    
+        return button    
+      
     def rect_full_not_centered(self, color, x, y, width, height, radius):
-        button = pygame.draw.rect(self.Window, color, pygame.Rect(x, y, width, height),0, radius)
+        button = pygame.draw.rect(self.Window, color, pygame.Rect(x - width, y - height, width, height),0, radius)
         return button
 
     def rect_border(self, color, x, y, width, height, thickness, radius):

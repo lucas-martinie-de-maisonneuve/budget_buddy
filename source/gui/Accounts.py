@@ -12,7 +12,8 @@ class Accounts(Element, Screen, Controller):
         self.image_paths = {
             "logout": "assets/image/Accounts/accounts_off1.png",
             "bell":"assets/image/Accounts/accounts_bell.png",
-            "logo":"assets/image/Accounts/accounts_logo.png"
+            "logo":"assets/image/Accounts/accounts_logo.png",
+            "background":"assets/image/Accounts/accounts_background.jpg"
         }
 
         self.images = {}
@@ -22,6 +23,10 @@ class Accounts(Element, Screen, Controller):
     def gui_accounts(self): 
         self.screen_color(self.white)
 
+        # Background
+        self.img_background(self.W//2, self.H//2, self.W, self.H,["background"])
+
+
         # Top bar
         self.rect_full(self.green3, 500, 25, 1000, 40, 0) 
         self.rect_full(self.green1, 500, 75, 1000, 70, 0)
@@ -29,9 +34,11 @@ class Accounts(Element, Screen, Controller):
 
         # Side bar
         self.rect_full(self.grey, 140, 425, 250, 520, 5) 
+        self.rect_border(self.green1, 140, 425, 250, 520, 2, 5)
 
         # Main bar
         self.rect_full(self.grey, 630, 425, 700, 520, 5)
+        self.rect_border(self.green2, 630, 425, 700, 520, 2, 5)
 
         # Lines v
         pygame.draw.line(self.Window, self.green4, (850, 53), (850, 100), 1)
