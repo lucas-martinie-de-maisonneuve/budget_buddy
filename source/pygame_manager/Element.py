@@ -10,10 +10,17 @@ class Element():
         self.green = (119, 186, 0)
         self.green1 = (0, 106, 77)
         self.green2 = (2, 71, 49)
-        self.green3 = (1, 43, 29)   
+        self.green3 = (1, 43, 29)  
+        self.green4 = (51, 136, 113) 
 
+        self.grey = (241, 241, 241)
         self.grey1 = (25, 25, 25)   
-        self.grey2 = (53, 53, 53)  
+        self.grey2 = (53, 53, 53) 
+        self.grey3 = (166, 166, 166) 
+
+        
+
+        self.yellow = (242,202,0) 
    
         self.font1 = "assets/font/Roboto-Black.ttf"
         self.font2 = "assets/font/RobotoMono-Italic-VariableFont_wght.ttf"
@@ -59,7 +66,6 @@ class Element():
 
 # Def image
 
-
     def img_center(self, name, x, y, width, height, image):
         name = pygame.transform.smoothscale(image, (width, height))
         self.Window.blit(name, (x - name.get_width()//2, y - name.get_height()//2))
@@ -77,6 +83,7 @@ class Element():
         image = pygame.transform.smoothscale(image, (width, height))
         self.Window.blit(image, (x - image.get_width()//2, y - image.get_height()//2))
 
+
     def img_hover(self, name_rect, name, x, y, width, height, image_name, image_name_hover): 
         name_rect = pygame.Rect( x - width//2, y - height//2, width, height)        
         if self.is_mouse_over_button(name_rect):
@@ -89,10 +96,10 @@ class Element():
 # Def rectangle  
     def rect_full(self, color, x, y, width, height, radius):
         button = pygame.draw.rect(self.Window, color, pygame.Rect(x - width//2, y - height//2, width, height),0, radius)
-        return button
-    
+        return button    
+      
     def rect_full_not_centered(self, color, x, y, width, height, radius):
-        button = pygame.draw.rect(self.Window, color, pygame.Rect(x, y, width, height),0, radius)
+        button = pygame.draw.rect(self.Window, color, pygame.Rect(x - width, y - height, width, height),0, radius)
         return button
 
     def rect_border(self, color, x, y, width, height, thickness, radius):
@@ -143,7 +150,22 @@ class Element():
             self.rect_border(color_border, x, y, width, height, thickness, radius)
         self.text_center(font, text_size, text, text_color,  x, y)
 
-        return name    
+        return name   
+
+    def button_hover_small(self, name, x, y, width, height, color_full, color_border, color_hover, color_border_hover, text, font, text_color,text_size, thickness, radius): 
+
+        name = pygame.Rect((x - width//2), (y - height//2), width, height)
+
+        if self.is_mouse_over_button(name):
+            self.rect_full(color_hover, x, y, width + 3, height + 3, radius)
+            self.rect_border(color_border_hover, x, y, width + 3, height + 3, thickness, radius)
+        else:
+            self.rect_full(color_full, x, y, width, height, radius)
+            self.rect_border(color_border, x, y, width, height, thickness, radius)
+        self.text_center(font, text_size, text, text_color,  x, y)
+
+        return name     
+        
 # Def Cursor 
     def normal_cursor(self):
         pygame.mouse.set_cursor(pygame.cursors.arrow)
