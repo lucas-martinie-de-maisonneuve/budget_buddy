@@ -16,6 +16,9 @@ class Element():
         self.grey = (241, 241, 241)
         self.grey1 = (25, 25, 25)   
         self.grey2 = (53, 53, 53) 
+        self.grey3 = (166, 166, 166) 
+
+        
 
         self.yellow = (242,202,0) 
    
@@ -147,7 +150,22 @@ class Element():
             self.rect_border(color_border, x, y, width, height, thickness, radius)
         self.text_center(font, text_size, text, text_color,  x, y)
 
-        return name    
+        return name   
+
+    def button_hover_small(self, name, x, y, width, height, color_full, color_border, color_hover, color_border_hover, text, font, text_color,text_size, thickness, radius): 
+
+        name = pygame.Rect((x - width//2), (y - height//2), width, height)
+
+        if self.is_mouse_over_button(name):
+            self.rect_full(color_hover, x, y, width + 3, height + 3, radius)
+            self.rect_border(color_border_hover, x, y, width + 3, height + 3, thickness, radius)
+        else:
+            self.rect_full(color_full, x, y, width, height, radius)
+            self.rect_border(color_border, x, y, width, height, thickness, radius)
+        self.text_center(font, text_size, text, text_color,  x, y)
+
+        return name     
+        
 # Def Cursor 
     def normal_cursor(self):
         pygame.mouse.set_cursor(pygame.cursors.arrow)
