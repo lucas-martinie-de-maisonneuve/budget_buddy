@@ -10,10 +10,14 @@ class Element():
         self.green = (119, 186, 0)
         self.green1 = (0, 106, 77)
         self.green2 = (2, 71, 49)
-        self.green3 = (1, 43, 29)   
+        self.green3 = (1, 43, 29)  
+        self.green4 = (51, 136, 113) 
 
+        self.grey = (241, 241, 241)
         self.grey1 = (25, 25, 25)   
-        self.grey2 = (53, 53, 53)  
+        self.grey2 = (53, 53, 53) 
+
+        self.yellow = (242,202,0) 
    
         self.font1 = "assets/font/Roboto-Black.ttf"
         self.font2 = "assets/font/RobotoMono-Italic-VariableFont_wght.ttf"
@@ -58,7 +62,6 @@ class Element():
         self.Window.blit(text, text_rect)
 
 # Def image
-
 
     def img_center(self, name, x, y, width, height, image):
         name = pygame.transform.smoothscale(image, (width, height))
