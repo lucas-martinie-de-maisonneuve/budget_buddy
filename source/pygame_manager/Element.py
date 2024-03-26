@@ -18,6 +18,7 @@ class Element():
         self.font1 = "assets/font/Roboto-Black.ttf"
         self.font2 = "assets/font/RobotoMono-Italic-VariableFont_wght.ttf"
         self.font3 = "assets/font/RobotoMono-VariableFont_wght.ttf"
+        self.font4 = "assets/font/Helvetica.ttf"
 
 
         self.W = 1000

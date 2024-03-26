@@ -3,8 +3,8 @@ from data.Database import Database
 
 class BudgetManager(Database):
     def __init__(self):
-        Database.__init__(self, 'localhost', 'root', '$~Bc4gB9', 'discord')
-        # Database.__init__(self, 'localhost', 'root', 'VannyLamorte25!', 'discord')
+        # Database.__init__(self, 'localhost', 'root', '$~Bc4gB9', 'discord')
+        Database.__init__(self, 'localhost', 'root', 'VannyLamorte25!', 'discord')
         # Database.__init__(self, 'localhost', 'root', 'azerty', 'discord') <-- Hamza
         self.connect()
 
@@ -98,8 +98,7 @@ class BudgetManager(Database):
     def update_user(self, pseudo, email, password, photo, id):
         sql = 'UPDATE user SET pseudo=%s, email=%s, password=%s, photo=%s WHERE id=%s'
         params = (pseudo, email, password, photo, id)
-        self.execute_query(sql, params)     
-
+        self.execute_query(sql, params)    
 
     def save_message(self, name, message, id_channel):
         actual_time = datetime.now()
@@ -176,23 +175,6 @@ class BudgetManager(Database):
         values = (channel_id,)
         return self.fetch(sql,values)
         
-    # Audio 
-    def save_to_database (self, name, id_channel):
-        with open("source/pyaudio/audio_liv.wav", 'rb') as f:
-            audio_blob = f.read()
-
-        time = datetime.now()
-        sql = "INSERT INTO audio(name, time, audio_blob, id_channel) VALUES (%s, %s, %s, %s)"
-        params = (name, time, audio_blob, id_channel)
-        self.execute_query(sql, params)
-
-    def retrieve_audio_database(self, id_channel): 
-        query = "SELECT audio_blob FROM audio WHERE id = %s"
-        values = (3,)
-        save = self.fetch(query, values)[0][0]
-        with open(f"source/pyaudio/output3.wav", 'wb') as f:
-            f.write(save)
-
 
 manager = BudgetManager()
 manager.close_connection()

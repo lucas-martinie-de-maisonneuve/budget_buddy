@@ -13,12 +13,12 @@ CREATE TABLE user (
 );
 
 INSERT INTO user(surname, name, email, password, last_transaction) VALUES
-('HLV','HLV', 'a', 'a')
+('HLV','HLV', 'a', '$2y$10$zqX/q.gy8UKpBlILqp1v0uI9R1qCp.SWyQ0YrWu1T55pi7TSJFRQC')
 ('Lucas','Martinie','lucas.m@laplateforme.io', '$2y$10$qIBQqkFGuABUzh8HIv2m2ujXi/oebdIBtChVGz1P0ixyWudg01sDG')
 ('Hamza','Naya','hamza.n@laplateforme.io', '$2y$10$AXJlbvg/.t9vYiSGPfuGHOYXmAKQT0zIVrcF5iPYIe0YbgdMwVDyi')
 ('Vanny','Lamorte','vanny.l@laplateforme.io', '$2y$10$cGxUJ9.IKTUilIBT3TJbkOLHMURdMq9KdYodZYzZ5MWAonsk2wA/O
 ');
-
+-- Super User a
 -- LucasMartinie1!
 -- HamzaNaya1!
 -- VannyLamorte1!
