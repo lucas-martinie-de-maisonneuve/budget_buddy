@@ -80,6 +80,7 @@ class Element():
         image = pygame.transform.smoothscale(image, (width, height))
         self.Window.blit(image, (x - image.get_width()//2, y - image.get_height()//2))
 
+
     def img_hover(self, name_rect, name, x, y, width, height, image_name, image_name_hover): 
         name_rect = pygame.Rect( x - width//2, y - height//2, width, height)        
         if self.is_mouse_over_button(name_rect):

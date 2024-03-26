@@ -13,7 +13,7 @@ class Accounts(Element, Screen, Controller):
             "logout": "assets/image/Accounts/accounts_off1.png",
             "bell":"assets/image/Accounts/accounts_bell.png",
             "logo":"assets/image/Accounts/accounts_logo.png",
-            "background":"assets/image/Accounts/accounts_background.jpg"
+            "background":"assets/image/Accounts/accounts_background1.jpg"
         }
 
         self.images = {}
@@ -24,13 +24,18 @@ class Accounts(Element, Screen, Controller):
         self.screen_color(self.white)
 
         # Background
-        self.img_background(self.W//2, self.H//2, self.W, self.H,["background"])
+        self.img_background(400, 300, 1244, 830, self.images["background"])
 
-
+     
         # Top bar
         self.rect_full(self.green3, 500, 25, 1000, 40, 0) 
         self.rect_full(self.green1, 500, 75, 1000, 70, 0)
         self.rect_full(self.green3, 500, 130, 1000, 40, 0)
+        
+        # User info
+        self.text_not_center(self.font1, 15, "Hamza Lucas Vanny", self.white, 595, 55)
+        self.text_not_center(self.font3, 13, " Account ID number | ", self.white, 585, 75)
+        self.text_not_center(self.font2, 13, "24121993", self.white, 755, 75)
 
         # Side bar
         self.rect_full(self.grey, 140, 425, 250, 520, 5) 
