@@ -15,6 +15,7 @@ class LogIn(Element, Screen, Controller):
         self.img_instagram = pygame.image.load("assets/image/LogIn/login_instagram.png")
         self.img_facebook = pygame.image.load("assets/image/LogIn/login_facebook.png")
         self.img_logo = pygame.image.load("assets/image/LogIn/login_logo.png")
+        self.img_back = pygame.image.load("assets/image/LogIn/login_background.png")
       
     def hover_sign(self):
         self.sign = (pygame.Rect(self.W//2+192, 590, 55, 20)) 
@@ -26,7 +27,7 @@ class LogIn(Element, Screen, Controller):
     def gui_home(self): 
         self.screen_color(self.white)
 
-        # self.img_background("background", 500, 350, 1200, 700, "LogIn/login3")
+        self.img_background(400, 300, 1244, 830, self.img_back)
 
         # Rect principal
         self.rect_full(self.green3, self.W//2+220, 355, 400, 580, 10)
