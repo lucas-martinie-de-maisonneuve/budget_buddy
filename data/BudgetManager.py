@@ -3,9 +3,9 @@ from data.Database import Database
 
 class BudgetManager(Database):
     def __init__(self):
-        # Database.__init__(self, 'localhost', 'root', '$~Bc4gB9', 'discord')
-        Database.__init__(self, 'localhost', 'root', 'VannyLamorte25!', 'discord')
-        # Database.__init__(self, 'localhost', 'root', 'Oleg4342758@!', 'discord')
+        # Database.__init__(self, 'localhost', 'root', '$~Bc4gB9', 'bank')
+        Database.__init__(self, 'localhost', 'root', 'VannyLamorte25!', 'bank')
+        # Database.__init__(self, 'localhost', 'root', 'Oleg4342758@!', 'bank')
         self.connect()
            
     def check_credentials(self, email, password):
@@ -22,9 +22,9 @@ class BudgetManager(Database):
     
     # TABLE USER
     
-    def add_user(self, first_name, last_name, email, password, iban, account_number, date_last_transaction):
-        sql = "INSERT INTO consumer (first_name, last_name, email, password, iban, account_number, date_last_transaction) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-        values = ( first_name, last_name, email, password, iban, account_number, date_last_transaction)
+    def add_user(self, first_name, last_name, email, password, iban, account_number):
+        sql = "INSERT INTO user (first_name, last_name, email, password, iban, account_number) VALUES (%s, %s, %s, %s, %s, %s)"
+        values = ( first_name, last_name, email, password, iban, account_number)
         self.execute_query(sql, values)
 
     def user_info(self):
@@ -84,9 +84,7 @@ class BudgetManager(Database):
         current_time = datetime.now()
         sql = "INSERT INTO notificaton = %s WHERE id = %s"
         values = (current_time, id_user,)
-        self.execute_query(sql, values)
-
-        
+        self.execute_query(sql, values)        
 
     def save_last_transaction (self, id_user): 
         current_time = datetime.now()
@@ -120,7 +118,3 @@ class BudgetManager(Database):
     def first_name_user(self):
         sql = "SELECT first_name FROM user"
         return self.fetch(sql)
-
-manager = BudgetManager()
-
-manager.close_connection()

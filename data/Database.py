@@ -39,3 +39,5 @@ class Database:
         self.disconnect()
         return result
     
+    # def close_connection(self):
+    

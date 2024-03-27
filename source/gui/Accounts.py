@@ -7,7 +7,8 @@ class Accounts(Element, Screen, Controller):
     def __init__(self): 
         Element.__init__(self)
         Screen.__init__(self)
-        Controller.__init__(self)     
+        Controller.__init__(self)   
+
 
         self.image_paths = {
             "logout": "assets/image/Accounts/accounts_off1.png",
@@ -24,6 +25,7 @@ class Accounts(Element, Screen, Controller):
         
     def background(self): 
         self.img_background(400, 300, 1244, 830, self.images["background"])
+        print(self.input_email)
      
     def top_bar(self):
 
@@ -96,6 +98,8 @@ class Accounts(Element, Screen, Controller):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     accounts_running = False
+
+        
   
             self.background()
             self.top_bar()
