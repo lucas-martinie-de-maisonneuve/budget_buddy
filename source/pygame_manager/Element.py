@@ -19,17 +19,14 @@ class Element(Screen):
         self.grey2 = (53, 53, 53) 
         self.grey3 = (166, 166, 166) 
 
-        
-
         self.yellow = (242,202,0) 
-   
+
         self.font1 = "assets/font/Roboto-Black.ttf"
         self.font2 = "assets/font/RobotoMono-Italic-VariableFont_wght.ttf"
         self.font3 = "assets/font/RobotoMono-VariableFont_wght.ttf"
         self.font4 = "assets/font/Helvetica.ttf"
-      
-# Def text          
 
+# Def text
     def text_center(self, font, text_size, text_content, color, x, y):
         pygame.font.init()
         text = pygame.font.Font(f"{font}", text_size).render(text_content, True,color)
