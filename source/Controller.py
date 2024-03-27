@@ -23,8 +23,3 @@ def login_user(self):
         self.user_info = self.get_user(self.input_email, hashed_password)
         self.connected = True
         return self.user_info
-    
-def test(self): 
-
-    last_co = 
-    self.add_user("Lucy", "Madec", "lucy.madec@laplateforme.io", "Lucy.Madec1!", "LM123456", "LM789", last_co)

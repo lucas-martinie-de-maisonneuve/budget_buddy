@@ -105,7 +105,7 @@ INSERT INTO transaction (transaction_re, transaction_name, description, amount, 
 CREATE TABLE notification (
     id INT PRIMARY KEY AUTO_INCREMENT,
     notif_message TEXT,
-    id_user
+    id_user INT
 );
 
 

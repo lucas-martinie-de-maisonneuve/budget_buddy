@@ -80,7 +80,7 @@ class BudgetManager(Database):
 
     # Notification    
         
-    def last_notif (self,): 
+    def last_notif (self, id_user): 
         current_time = datetime.now()
         sql = "INSERT INTO notificaton = %s WHERE id = %s"
         values = (current_time, id_user,)
@@ -112,7 +112,7 @@ class BudgetManager(Database):
         values = (value,)
         self.execute_query(sql, values)
 
-    def display_notification(self):
+    def display_notification(self, id_user):
         sql = "SELECT notif_message FROM notification WHERE id = %s"
         values = (id_user)
         self.execute_query(sql, values)
