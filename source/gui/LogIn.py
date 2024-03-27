@@ -1,12 +1,12 @@
 import pygame
-from source.pygame_manager.Screen import Screen
 from source.pygame_manager.Element import Element
+from source.pygame_manager.Animation import Animation
 from source.Controller import Controller
 
-class LogIn(Element, Screen, Controller): 
+class LogIn(Element, Animation, Controller): 
     def __init__(self): 
         Element.__init__(self)
-        Screen.__init__(self)
+        Animation.__init__(self)
         Controller.__init__(self)
 
         self.entry = False
@@ -23,7 +23,6 @@ class LogIn(Element, Screen, Controller):
             self.images[name] = pygame.image.load(path)    
          
     def gui_home(self): 
-        self.screen_color(self.white)
 
         self.img_background(400, 300, 1244, 830, self.images["background"])
 
@@ -37,9 +36,11 @@ class LogIn(Element, Screen, Controller):
 
         # Email        
         self.input_email_rect = self.button_hover("Email", self.W//2+220, 250, 350, 50, self.green2, self.green, self.green2, self.green, self.input_email, self.font4, self.white,18, 1, 5)
-
+        self.text_input(self.input_email_rect, self.input_email, "Email address", 720, 250, 350, 50, id="email_login")
+    
         # Password
         self.input_password_rect = self.button_hover("Password", self.W//2+220, 320, 350, 50, self.green2, self.green, self.green2, self.green, self.input_password, self.font4, self.white, 18, 1, 5)
+        self.text_input(self.input_password_rect, self.input_password, "Password", 720, 320, 350, 50, id="email_login")
 
         # Login
         self.login_rect = self.button_hover("Login", self.W//2+220, 390, 350, 50, self.green, self.green, self.green, self.green,"Log In", self.font1, self.white, 18, 1, 5) 

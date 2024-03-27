@@ -7,8 +7,8 @@ class Controller(BudgetManager):
         super().__init__()
 
         # Home
-        self.input_email = "Email"
-        self.input_password = "Password" 
+        self.input_email = ""
+        self.input_password = "" 
 
 def login_user(self):
         

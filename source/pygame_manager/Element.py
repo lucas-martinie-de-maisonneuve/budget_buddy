@@ -1,7 +1,8 @@
 import pygame
-
-class Element():
+from source.pygame_manager.Screen import Screen
+class Element(Screen):
     def __init__(self):
+        Screen.__init__(self)
 
         # Color
         self.black = (0, 0, 0)
@@ -26,23 +27,6 @@ class Element():
         self.font2 = "assets/font/RobotoMono-Italic-VariableFont_wght.ttf"
         self.font3 = "assets/font/RobotoMono-VariableFont_wght.ttf"
         self.font4 = "assets/font/Helvetica.ttf"
-
-
-        self.W = 1000
-        self.H = 700
-        self.Window = pygame.display.set_mode((self.W, self.H))
-        pygame.display.set_caption("Budget Buddy")
-        pygame.display.set_icon(pygame.image.load("assets/image/icon.png"))
-        self.clock = pygame.time.Clock()
-
-    def update(self):
-        pygame.display.flip()
-        pygame.display.update()
-        self.clock.tick(155)
-        self.Window.fill((0, 0, 0))
-
-    def screen_color(self, color): 
-        self.Window.fill(color)
       
 # Def text          
 
