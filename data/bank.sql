@@ -46,4 +46,11 @@ CREATE TABLE category (
 ('Personal Expenses', 4),
 ('Financial Obligations', 5)
 
+CREATE TABLE transaction (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
+    intro TEXT,
+    photo BOOLEAN
+);
+
 

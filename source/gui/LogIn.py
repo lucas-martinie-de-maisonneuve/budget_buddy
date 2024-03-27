@@ -15,8 +15,7 @@ class LogIn(Element, Screen, Controller):
             "twitter": "assets/image/LogIn/login_twitter.png",
             "instagram": "assets/image/LogIn/login_instagram.png",
             "facebook": "assets/image/LogIn/login_facebook.png",
-            "logo": "assets/image/LogIn/login_logo.png"
-            # "background": "assets/image/LogIn/login_background.png"
+            "background": "assets/image/LogIn/login_background.png"
         }
 
         self.images = {}
@@ -26,7 +25,7 @@ class LogIn(Element, Screen, Controller):
     def gui_home(self): 
         self.screen_color(self.white)
 
-        self.img_background(400, 300, 1244, 830, self.img_back)
+        self.img_background(400, 300, 1244, 830, self.images["background"])
 
         # Rect principal
         self.rect_full(self.green3, self.W//2+220, self.H//2, 400, 580, 10)
