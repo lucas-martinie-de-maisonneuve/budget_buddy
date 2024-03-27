@@ -10,7 +10,8 @@ class Element():
         self.green = (119, 186, 0)
         self.green1 = (0, 106, 77)
         self.green2 = (2, 71, 49)
-        self.green3 = (1, 43, 29)   
+        self.green3 = (1, 43, 29)
+        self.green4 = (51, 136, 113)
 
         self.grey1 = (25, 25, 25)   
         self.grey2 = (53, 53, 53)  
