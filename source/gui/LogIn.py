@@ -24,20 +24,14 @@ class LogIn(Element, Animation, Controller):
          
     def gui_home(self): 
 
+        # Background
         self.img_background(400, 300, 1244, 830, self.images["background"])
-
-        self.input_email_rect = self.button_hover("Email", self.W//2+220, 250, 350, 50, self.green2, self.green, self.green2, self.green, self.input_email, self.font1, self.white,15, 1, 5)
-
-        self.input_password_rect = self.button_hover("Password", self.W//2+220, 320, 350, 50, self.green2, self.green, self.green2, self.green, self.input_password, self.font1, self.white, 15, 1, 5)
-
-        self.login_rect = self.button_hover("Login", self.W//2+220, 390, 350, 50, self.green, self.green, self.green, self.green,"Log In", self.font1, self.white, 19, 1, 5) 
-
 
         # Rect principal
         self.rect_full(self.green3, self.W//2+220, self.H//2, 400, 580, 10)
         self.rect_border(self.white, self.W//2+220, self.H//2, 400, 580, 1, 10)
-
-        # Logo
+ 
+        # Bank Name
         self.text_center(self.font1, 35, "Wildcat Wealth Bank", self.white, self.W//2+220, 140)
         self.text_center(self.font4, 16, "Where Panthers Guard Your Fortune!", self.white, self.W//2+220, 180)
 
@@ -66,9 +60,7 @@ class LogIn(Element, Animation, Controller):
         self.img_hover("Instagram", "Instagram", self.W//2+220, 610, 35, 35,self.images["instagram"],self.images["instagram"])
         self.img_hover("Facebook", "Facebook", self.W//2+280, 610, 35, 35, self.images["facebook"], self.images["facebook"])     
 
-         # Sign In
-
-
+        # Sign In
         # pygame.draw.rect(self.Window, self.black, [675, 490, 90, 20])
         self.sign = (pygame.Rect(675, 490, 90, 20)) 
         if self.is_mouse_over_button(self.sign):
@@ -160,5 +152,5 @@ class LogIn(Element, Animation, Controller):
                         elif self.entry == 2:
                             self.input_password = self.input_password + event.unicode
 
-            self.gui_register()
+            self.gui_home()
             self.update()
