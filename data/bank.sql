@@ -2,7 +2,7 @@
 CREATE DATABASE bank;
 USE bank;
 
-CREATE TABLE consumer (
+CREATE TABLE user (
     id INT PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(255),
     last_name VARCHAR(255),
@@ -13,7 +13,7 @@ CREATE TABLE consumer (
     date_last_transaction DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO consumer(first_name, last_name, email, password, iban, account_number) VALUES
+INSERT INTO user (first_name, last_name, email, password, iban, account_number) VALUES
 ('HLV','HLV', 'a', '$2y$10$zqX/q.gy8UKpBlILqp1v0uI9R1qCp.SWyQ0YrWu1T55pi7TSJFRQC', "GB13abcd10203012345678", 12345678),
 ('Lucas','Martinie','lucas.m@laplateforme.io', '$2y$10$qIBQqkFGuABUzh8HIv2m2ujXi/oebdIBtChVGz1P0ixyWudg01sDG', "GB10abcd10203012345678", 25121995),
 ('Hamza','Naya','hamza.n@laplateforme.io', '$2y$10$AXJlbvg/.t9vYiSGPfuGHOYXmAKQT0zIVrcF5iPYIe0YbgdMwVDyi', "GB11abcd11223387654321", 13052001),
@@ -102,4 +102,11 @@ INSERT INTO transaction (transaction_re, transaction_name, description, amount, 
 -- Financial Obligations = 5
 
 
-SELECT * FROM user;
+CREATE TABLE notification (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    notif_message TEXT,
+    id_user
+);
+
+
+
