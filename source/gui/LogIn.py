@@ -15,8 +15,8 @@ class LogIn(Element, Animation, Controller):
             "twitter": "assets/image/LogIn/login_twitter.png",
             "instagram": "assets/image/LogIn/login_instagram.png",
             "facebook": "assets/image/LogIn/login_facebook.png",
-            "logo": "assets/image/LogIn/login_logo.png"
-            # "background": "assets/image/LogIn/login_background.png"
+            # "logo": "assets/image/LogIn/login_logo.png"
+            "background": "assets/image/LogIn/login_background.png"
         }
 
         self.images = {}
