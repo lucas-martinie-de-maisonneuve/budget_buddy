@@ -1,13 +1,13 @@
 import pygame
-from source.pygame_manager.Screen import Screen
 from source.pygame_manager.Element import Element
 from source.Controller import Controller
 
-class HomePage(Element, Screen, Controller):
-    def __init__(self): 
+class HomePage(Element, Controller):
+    def __init__(self, user_info): 
         Element.__init__(self)
-        Screen.__init__(self)
-        Controller.__init__(self)  
+        Controller.__init__(self)
+        self.user = user_info
+
 
         self.image_paths = {
             "logout": "assets/image/Accounts/accounts_off1.png",
