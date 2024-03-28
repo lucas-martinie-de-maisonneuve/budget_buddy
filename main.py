@@ -6,12 +6,12 @@
 ##################################################
 
 from source.gui.LogIn import LogIn
-from source.gui.Accounts import Accounts
+from source.gui.HomePage import HomePage
 
 
 # h = LogIn()
 # h.login_run()
 
 
-a = Accounts()
-a.accounts_run()
+hp = HomePage()
+hp.homepage_run()

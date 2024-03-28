@@ -16,13 +16,6 @@ class Controller(BudgetManager):
         self.input_email_register = "Email"
         self.input_password_register = "Password"
 
-        self.first_name = "Lucy"
-        self.last_name = "Madec"
-        self.email = "lucy.madecm@laplateforme.io"
-        self.p = "$2y$10$qIBQqkFGuABUzh8HIv2m2ujXi/oebdIBtChVGz1P0ixyWudg01sDG"
-        self.iban = "GB10abcd10203012345678"
-        self.account_number = "523"
-
     def login_user(self):
         hashed_password = sha256(self.input_password.encode()).hexdigest()
 

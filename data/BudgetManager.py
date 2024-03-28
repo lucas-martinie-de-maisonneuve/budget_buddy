@@ -118,3 +118,4 @@ class BudgetManager(Database):
     def first_name_user(self):
         sql = "SELECT first_name FROM user"
         return self.fetch(sql)
+

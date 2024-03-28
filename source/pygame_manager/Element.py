@@ -73,6 +73,16 @@ class Element(Screen):
             self.img_center(name, x, y, width, height, image_name)
         return name_rect
     
+    def img_txt_hover(self, name_rect, txt, x, y, width, height, image_name, image_name_hover, font, txt_size, color, x_t, y_t): 
+        name_rect = pygame.Rect( x - width//2, y - height//2, width + len(txt)*txt_size, height)   
+        self.text_not_center(font, txt_size, txt, color, x_t, y_t)
+        if self.is_mouse_over_button(name_rect):
+            self.img_center(txt, x, y, width+5, height+5, image_name_hover)     
+        else:
+            self.img_center(txt, x, y, width, height, image_name)
+
+        return name_rect
+    
 
 # Def rectangle  
     def rect_full(self, color, x, y, width, height, radius):

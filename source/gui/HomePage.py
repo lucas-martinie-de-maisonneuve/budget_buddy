@@ -3,7 +3,7 @@ from source.pygame_manager.Screen import Screen
 from source.pygame_manager.Element import Element
 from source.Controller import Controller
 
-class Accounts(Element, Screen, Controller):
+class HomePage(Element, Screen, Controller):
     def __init__(self): 
         Element.__init__(self)
         Screen.__init__(self)
@@ -16,7 +16,14 @@ class Accounts(Element, Screen, Controller):
             "logo":"assets/image/Accounts/accounts_logo.png",
             "background":"assets/image/Accounts/accounts_background1.jpg",
             "help":"assets/image/Accounts/accounts_help.png",
-            "pic":"assets/image/Accounts/accounts_pic.png"
+            "pic":"assets/image/Accounts/accounts_pic.png", 
+            "date":"assets/image/Account/account_1.png",
+            "income":"assets/image/Account/account_2.png",
+            "expense":"assets/image/Account/account_3.png",
+            "descending":"assets/image/Account/account_5.png",
+            "ascending":"assets/image/Account/account_7.png",
+            "calendar":"assets/image/Account/account_6.png",
+            "type":"assets/image/Account/account_4.png",
         }
 
         self.images = {}
@@ -44,7 +51,6 @@ class Accounts(Element, Screen, Controller):
 
         # Brand
         self.text_not_center(self.font1, 18, "Wildcat Wealth Bank", self.white, 10, 85)
-        self.img_center("Logo", 90, 65, 70, 40, self.images["logo"])
         
         # Account ID Number
        
@@ -63,9 +69,11 @@ class Accounts(Element, Screen, Controller):
         # Rect
         self.rect_full(self.grey, 140, 420, 250, 530, 5) 
         self.rect_border(self.green1, 140, 420, 250, 530, 2, 5)
+        self.rect_radius_top(self.green3, 140, 175, 250, 45, 5)
+
 
         # User info
-        self.img_not_center("Profil pic", 90, 170, 100, 100, self.images["pic"])
+        self.img_not_center("Profil pic", 90, 160, 90, 90, self.images["pic"])
         self.text_not_center(self.font1, 15, "Hamza Lucas Vanny", self.grey3, 70, 260)
         self.button_hover_small("My Profil", 140, 320, 190, 40, self.green2, self.green2, self.green2, self.green2, "My Profil", self.font1, self.white,15, 0, 3
         )
@@ -88,11 +96,22 @@ class Accounts(Element, Screen, Controller):
         self.img_hover("help", "help", 60, 650, 30, 30,self.images["help"],self.images["help"])
         self.text_not_center(self.font4, 12, "Need Help ?", self.grey2, 80, 645)
 
-    def main_bar(self): 
         self.rect_full(self.grey, 630, 420, 700, 530, 5)
         self.rect_border(self.green2, 630, 420, 700, 530, 2, 5)  
 
-    def accounts_run(self):
+    def filter_options(self): 
+        self.rect_radius_top(self.green3, 630, 175, 700, 45, 5)
+
+        self.img_txt_hover("date", "Date", 320, 350, 35, 35, self.images["date"], self.images["date"], self.font3, 15, self.grey3,345, 340)
+        self.img_txt_hover("income", "Income", 320, 400, 35, 35, self.images["income"], self.images["income"], self.font3, 15, self.grey3,345, 390)
+        self.img_txt_hover("expense", "Expense", 320, 450, 35, 35, self.images["expense"], self.images["expense"], self.font3, 15, self.grey3,345, 440)
+        self.img_txt_hover("descending", "Descending", 320, 500, 35, 35, self.images["descending"], self.images["descending"], self.font3, 15, self.grey3,345, 490)
+        self.img_txt_hover("ascending", "Ascending", 320, 550, 35, 35, self.images["ascending"], self.images["ascending"], self.font3, 15, self.grey3,345, 540)
+        self.img_txt_hover("calendar", "Calendar", 320, 600, 35, 35, self.images["calendar"], self.images["calendar"], self.font3, 15, self.grey3,345, 590)
+        self.img_txt_hover("type", "Type", 320, 650, 35, 35, self.images["type"], self.images["type"], self.font3, 15, self.grey3,345, 640)
+        
+
+    def homepage_run(self):
         accounts_running = True
         while accounts_running:
             for event in pygame.event.get():
@@ -104,7 +123,20 @@ class Accounts(Element, Screen, Controller):
             self.background()
             self.top_bar()
             self.side_bar()
-            self.main_bar()
+            self.filter_options()
+
             self.update()
+
+    # def home_run(self):
+    #     accounts_running = True
+    #     while accounts_running:
+    #         for event in pygame.event.get():
+    #             if event.type == pygame.QUIT:
+    #                 accounts_running = False
+  
+    #         self.background()
+    #         self.top_bar()
+    #         self.side_bar()
+    #         self.update()
 
 
