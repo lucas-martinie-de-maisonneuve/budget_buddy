@@ -195,5 +195,5 @@ class HomePage(Element, Controller):
             self.main_page_design()
             # self.profile_design()
             # self.saving_checking_design()
-            self.transaction_design()
+            # self.transaction_design()
             self.update()
