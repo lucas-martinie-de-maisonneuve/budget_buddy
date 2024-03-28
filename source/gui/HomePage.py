@@ -20,7 +20,7 @@ class HomePage(Element, Screen, Controller):
             "income":"assets/image/Account/account_2.png",
             "expense":"assets/image/Account/account_3.png",
             "descending":"assets/image/Account/account_5.png",
-            "ascending":"assets/image/Account/account_5.png",
+            "ascending":"assets/image/Account/account_7.png",
             "calendar":"assets/image/Account/account_6.png",
             "type":"assets/image/Account/account_4.png",
         }
