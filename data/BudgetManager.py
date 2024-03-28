@@ -3,9 +3,12 @@ from data.Database import Database
 
 class BudgetManager(Database):
     def __init__(self):
-        # Database.__init__(self, 'localhost', 'root', '$~Bc4gB9', 'bank')
-        Database.__init__(self, 'localhost', 'root', 'VannyLamorte25!', 'bank')
-        # Database.__init__(self, 'localhost', 'root', 'Oleg4342758@!', 'bank')
+        passwords = ['VannyLamorte25!', 'Oleg4342758@!', '$~Bc4gB9']
+        for password in passwords:
+            try:
+                Database.__init__(self, 'localhost', 'root', password, 'bank')
+            except:
+                pass
         self.connect()
            
     def check_credentials(self, email, password):
