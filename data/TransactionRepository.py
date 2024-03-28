@@ -3,13 +3,14 @@ from data.Database import Database
 
 class UserRepository(Database):
     def __init__(self):
-        passwords = ['VannyLamorte25!', 'Oleg4342758@!', '$~Bc4gB9']
+        passwords = ['VannyLamorte25!', 'Oleg4342758@!','$~Bc4gB9']
         for password in passwords:
             try:
                 Database.__init__(self, 'localhost', 'root', password, 'bank')
+                self.connect()
+                break
             except:
                 pass
-        self.connect()
 
 
     def add_transaction(self, transaction_re, transaction_name, description, amount, date, id_category, id_user,  account_id ):

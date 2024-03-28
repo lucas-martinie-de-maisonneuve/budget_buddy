@@ -1,4 +1,4 @@
--- Active: 1706527539532@@127.0.0.1@3306@discord
+-- Active: 1711550360410@@127.0.0.1@3306@bank
 CREATE DATABASE bank;
 USE bank;
 
@@ -14,7 +14,7 @@ CREATE TABLE user (
 );
 
 INSERT INTO user (first_name, last_name, email, password, iban, account_number) VALUES
-('HLV','HLV', 'a', "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb", 12345678),
+('HLV','HLV', 'a', "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb", "GB10WWBP10203012345698", 12345678),
 ('Lucas','Martinie','lucas.m@laplateforme.io', '43e405862bdfbdef17f2f13bf6e8a3efe088de01ad8eb4a9f47ff3fa21f20aae', "GB10WWBP10203012345678", 25121995),
 ('Hamza','Naya','hamza.n@laplateforme.io', 'c9d0532835cc70cbc44011958faed891b3f254627dd0e7b8d3d99c995b2600e4', "GB11WWBP11223387654321", 13052001),
 ('Vanny','Lamorte','vanny.l@laplateforme.io', '4f15f99279d26f053ddbe27b8e5d9d3203926820c25ebeade0bd082653ab696b', "GB12WWBP30201054321678", 25121993 );

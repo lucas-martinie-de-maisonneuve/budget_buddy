@@ -3,13 +3,15 @@ from data.Database import Database
 
 class UserRepository(Database):
     def __init__(self):
-        passwords = ['VannyLamorte25!', 'Oleg4342758@!', '$~Bc4gB9']
+        passwords = ['VannyLamorte25!', 'Oleg4342758@!','$~Bc4gB9']
         for password in passwords:
             try:
                 Database.__init__(self, 'localhost', 'root', password, 'bank')
+                self.connect()
+                break
             except:
                 pass
-        self.connect()
+
            
     def check_credentials(self, email, password):
         sql = "SELECT * FROM user WHERE email = %s AND password = %s"
