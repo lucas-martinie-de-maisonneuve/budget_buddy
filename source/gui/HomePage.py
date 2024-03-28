@@ -127,15 +127,10 @@ class HomePage(Element, Screen, Controller):
         self.text_not_center(self.font3, 16, "Account ID Number", self.grey1, 330, 450)
         self.text_not_center(self.font2, 16, "HAHAHAHIHIHOHO", self.grey1,520, 450)
 
-        pygame.draw.line(self.Window, self.green4, (330, 480), (700, 480), 1)
-
         # IBAN
         self.text_not_center(self.font3, 16, "IBAN", self.grey1, 330, 500)
         self.text_not_center(self.font2, 16, "MOUHAHAHAHAHAHA!!!!", self.grey1, 390, 500)
         pygame.draw.line(self.Window, self.green4, (330, 530), (700, 530), 1)
-
-        # Logo
-        # self.img_not_center("modify", 720, 380, 40, 40, self.images["modify"])
 
     def saving_checking_design(self): 
 
@@ -173,7 +168,6 @@ class HomePage(Element, Screen, Controller):
             self.text_not_center(self.font4, 12, "4 = Personal Expenses", self.grey2, 520, 605)
             self.text_not_center(self.font4, 12, "5 = Financial Obligations", self.grey2, 520, 625)      
 
-    
         # Receiver
         self.text_not_center(self.font1, 18, "Receiver", self.grey2, 780, 225)
         self.button_hover("Name",720, 290, 150, 40, self.grey, self.green1, self.grey, self.green1, "Name", self.font3, self.grey2, 14, 2, 5)
@@ -194,7 +188,6 @@ class HomePage(Element, Screen, Controller):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     accounts_running = False   
-
   
             self.main_page_design()
             # self.profile_design()
