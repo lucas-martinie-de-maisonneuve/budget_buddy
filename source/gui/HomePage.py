@@ -194,3 +194,17 @@ class HomePage(Element, Controller):
             # self.saving_checking_design()
             self.transaction_design()
             self.update()
+
+    # def home_run(self):
+    #     accounts_running = True
+    #     while accounts_running:
+    #         for event in pygame.event.get():
+    #             if event.type == pygame.QUIT:
+    #                 accounts_running = False
+  
+    #         self.background()
+    #         self.top_bar()
+    #         self.side_bar()
+    #         self.update()
+
+
