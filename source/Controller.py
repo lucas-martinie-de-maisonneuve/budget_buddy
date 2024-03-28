@@ -6,18 +6,24 @@ from data.TransactionRepository import TransactionRepository
 # Controller
 class Controller(UserRepository,TransactionRepository):
 
-    def __init__(self):        
+    def __init__(self):
         UserRepository.__init__(self)
 
         # Home
         self.input_email = ""
         self.input_password = ""
 
-        self.input_first_name_register = "First Name"
-        self.input_last_name_register = "Last Name"
+        self.input_first_name_register = ""
+        self.input_last_name_register = ""
 
-        self.input_email_register = "Email"
-        self.input_password_register = "Password"
+        self.input_email_register = ""
+        self.input_password_register = ""
+
+        self.account_number = ""
+
+        self.sort_code_1 = ""
+        self.sort_code_2 = ""
+        self.sort_code_3 = ""
 
         self.connected = False
 
@@ -27,7 +33,7 @@ class Controller(UserRepository,TransactionRepository):
         if self.check_credentials(self.input_email, hashed_password):
             self.user = self.get_user(self.input_email, hashed_password)
             self.connected = True
-            return self.user 
+            return self.user
 
     def display_transaction(self, user_id):
         transactions = self.transaction_info(user_id)
