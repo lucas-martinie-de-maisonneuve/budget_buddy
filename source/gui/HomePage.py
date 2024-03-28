@@ -70,7 +70,6 @@ class HomePage(Element, Screen, Controller):
         self.rect_border(self.green1, 140, 420, 250, 530, 2, 5)
         self.rect_radius_top(self.green3, 140, 175, 250, 45, 5)
 
-
         # User info
         self.img_not_center("Profil pic", 90, 160, 90, 90, self.images["pic"])
         self.text_not_center(self.font1, 15, "Hamza Lucas Vanny", self.grey3, 70, 260)
@@ -95,11 +94,17 @@ class HomePage(Element, Screen, Controller):
         self.img_hover("help", "help", 60, 650, 30, 30,self.images["help"],self.images["help"])
         self.text_not_center(self.font4, 12, "Need Help ?", self.grey2, 80, 645)
 
+    def main_section (self):
         self.rect_full(self.grey, 630, 420, 700, 530, 5)
-        self.rect_border(self.green2, 630, 420, 700, 530, 2, 5)  
+        self.rect_border(self.green2, 630, 420, 700, 530, 2, 5) 
+        self.rect_radius_top(self.green3, 630, 175, 700, 45, 5)
+
 
     def filter_options(self): 
-        self.rect_radius_top(self.green3, 630, 175, 700, 45, 5)
+
+        # Filter for income and expense
+
+        self.text_not_center(self.font3, 18, "Sort by", self.grey2, 305, 290)
 
         self.img_txt_hover("date", "Date", 320, 350, 35, 35, self.images["date"], self.images["date"], self.font3, 15, self.grey3,345, 340)
         self.img_txt_hover("income", "Income", 320, 400, 35, 35, self.images["income"], self.images["income"], self.font3, 15, self.grey3,345, 390)
@@ -108,6 +113,10 @@ class HomePage(Element, Screen, Controller):
         self.img_txt_hover("ascending", "Ascending", 320, 550, 35, 35, self.images["ascending"], self.images["ascending"], self.font3, 15, self.grey3,345, 540)
         self.img_txt_hover("calendar", "Calendar", 320, 600, 35, 35, self.images["calendar"], self.images["calendar"], self.font3, 15, self.grey3,345, 590)
         self.img_txt_hover("type", "Type", 320, 650, 35, 35, self.images["type"], self.images["type"], self.font3, 15, self.grey3,345, 640)
+
+    def transaction (self): 
+
+        
         
 
     def homepage_run(self):
@@ -122,8 +131,8 @@ class HomePage(Element, Screen, Controller):
             self.background()
             self.top_bar()
             self.side_bar()
+            self.main_section ()
             self.filter_options()
-
             self.update()
 
     # def home_run(self):
