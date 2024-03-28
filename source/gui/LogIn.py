@@ -53,12 +53,12 @@ class LogIn(Element, Animation, Controller):
         self.text_center(self.font1, 35, "Wildcat Wealth Bank", self.white, self.W//2+220, 140)
         self.text_center(self.font4, 16, "Where Panthers Guard Your Fortune!", self.white, self.W//2+220, 180)
 
-        # Email
-        self.input_email_rect = self.button_hover("Email", self.W//2+220, 250, 350, 50, self.green2, self.green, self.green2, self.green, self.input_email, self.font4, self.white,18, 1, 5)
+        # Email        
+        self.input_email_rect = self.button_hover("Email", self.W//2+220, 250, 350, 50, self.green2, self.green2, self.green2, self.green2, self.input_email, self.font4, self.white,18, 1, 5)
         self.text_input(self.input_email_rect, self.input_email, "Email address", 720, 250, 350, 50, id="email_login")
 
         # Password
-        self.input_password_rect = self.button_hover("Password", self.W//2+220, 320, 350, 50, self.green2, self.green, self.green2, self.green, self.input_password, self.font4, self.white, 18, 1, 5)
+        self.input_password_rect = self.button_hover("Password", self.W//2+220, 320, 350, 50, self.green2, self.green2, self.green2, self.green2, self.input_password, self.font4, self.white, 18, 1, 5)
         self.text_input(self.input_password_rect, self.input_password, "Password", 720, 320, 350, 50, id="email_login")
 
         # Login
