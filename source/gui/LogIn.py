@@ -53,7 +53,7 @@ class LogIn(Element, Animation, Controller):
         self.text_center(self.font1, 35, "Wildcat Wealth Bank", self.white, self.W//2+220, 140)
         self.text_center(self.font4, 16, "Where Panthers Guard Your Fortune!", self.white, self.W//2+220, 180)
 
-        # Email        
+        # Email
         self.input_email_rect = self.button_hover("Email", self.W//2+220, 250, 350, 50, self.green2, self.green2, self.green2, self.green2, self.input_email, self.font4, self.white,18, 1, 5)
         self.text_input(self.input_email_rect, self.input_email, "Email address", 720, 250, 350, 50, id="email_login")
 
@@ -89,6 +89,9 @@ class LogIn(Element, Animation, Controller):
     def gui_register(self):
 
         self.screen_color(self.white)
+
+        # Background
+        self.img_background(400, 300, 1244, 830, self.images["background"])
 
         # Rect principal
         self.rect_full(self.green3, self.W//2, self.H//2, 950, 650, 5)
@@ -142,7 +145,7 @@ class LogIn(Element, Animation, Controller):
         # Register button
         self.register_rect = self.button_hover("Register", self.W//2, self.H//2+250, 350, 50, self.green, self.green, self.green, self.green,"Register", self.font1, self.white, 19, 1, 5)
 
-        # Lines v top bar
+        # Lines
         pygame.draw.line(self.Window, self.green, (self.W//2, self.H//2-250), (self.W//2, self.H//2+50), 2)
         pygame.draw.line(self.Window, self.green, (self.W//2-80, self.H//2+160), (self.W//2+80, self.H//2+160), 2)
         if self.checkbox:
