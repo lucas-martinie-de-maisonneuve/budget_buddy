@@ -47,17 +47,18 @@ CREATE TABLE transaction (
     date DATE,
     id_category INT,
     id_user INT,
-    account_id INT
+    account_id INT, 
+    user_id INT
 );
 
 -- transaction_revenu = 1
 -- transaction_expense = 2
 
-INSERT INTO transaction (transaction_re, transaction_name, description, amount, date, id_category, id_user,  account_id ) VALUES
+INSERT INTO transaction (transaction_re, transaction_name, description, amount, date, id_category, id_user,  account_id, user_id ) VALUES
 -- Hamza
 ('2', 'Cooper Green', 'water bill', 40,'2024-03-25', 1, 1, 1),
 ('2', 'Total', 'fuel car', 52,'2024-03-24', 2, 1, 1),
-('2', 'Mark Spencer', 'grocery shopping', 150,'2024-03-23', 3, 1, 1 ),
+('2', 'Mark Spencer', 'grocery shopping', 150,'2024-03-23', 3, 1, 1),
 ('2', 'Aqua Mass', 'massage', 220,'2024-02-15', 4, 1, 1),
 ('2', 'Child Support', "Kylie's aids", 323,'2024-02-09', 5, 1, 1),
 ('1', 'La Plateforme', 'salary', 3000,'2024-02-14', 0, 1, 2),
@@ -67,7 +68,7 @@ INSERT INTO transaction (transaction_re, transaction_name, description, amount, 
 ('2', 'Tesco', 'grocery shopping', 30,'2024-01-10', 3, 1, 1),
 ('2', 'Blacks', 'hoodie', 50,'2024-01-09', 4, 1, 1),
 ('2', 'Cooper Green', 'rent', 950,'2024-01-08', 1, 1, 1),
-('2', 'Cooper Green', 'water bill', 46,'2023-06-25', 1, 1, 2),
+('2', 'Cooper Green', 'water bill', 46,'2023-06-25', 1, 1, 2), 
 ('2', 'Total', 'fuel car', 60,'2023-06-24', 2, 1, 2),
 ('2', 'Mark Spencer', 'grocery shopping', 82,'2023-06-23', 3, 1, 2),
 ('2', 'Moustache & Hair Salon', 'hairdresser', 35,'2023-05-15', 4, 1, 1),

@@ -48,7 +48,7 @@ class BudgetManager(Database):
         return self.fetch(sql)
     
     def update_user(self,email):
-        sql = 'UPDATE user SET pseudo=%s'
+        sql = 'UPDATE user SET email=%s'
         params = (email,)        
         self.execute_query(sql, params) 
 
