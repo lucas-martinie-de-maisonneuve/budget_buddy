@@ -16,15 +16,12 @@ class Controller(BudgetManager):
         self.input_email_register = "Email"
         self.input_password_register = "Password"
 
-def login_user(self):
-    hashed_password = sha256(self.input_password.encode()).hexdigest()
+    def login_user(self):
+        hashed_password = sha256(self.input_password.encode()).hexdigest()
 
-    if self.check_credentials(self.input_email, hashed_password):
-        self.user_info = self.get_user(self.input_email, hashed_password)
-        self.connected = True
-        return self.user_info
+        if self.check_credentials(self.input_email, hashed_password):
+            self.user_info = self.get_user(self.input_email, hashed_password)
+            self.connected = True
+            return self.user_info
     
-def test(self): 
-
-    last_co = 
-    self.add_user("Lucy", "Madec", "lucy.madec@laplateforme.io", "Lucy.Madec1!", "LM123456", "LM789", last_co)
+    # def user_info(self):

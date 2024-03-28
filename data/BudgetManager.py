@@ -3,9 +3,9 @@ from data.Database import Database
 
 class BudgetManager(Database):
     def __init__(self):
-        # Database.__init__(self, 'localhost', 'root', '$~Bc4gB9', 'discord')
-        Database.__init__(self, 'localhost', 'root', 'VannyLamorte25!', 'discord')
-        # Database.__init__(self, 'localhost', 'root', 'Oleg4342758@!', 'discord')
+        # Database.__init__(self, 'localhost', 'root', '$~Bc4gB9', 'bank')
+        Database.__init__(self, 'localhost', 'root', 'VannyLamorte25!', 'bank')
+        # Database.__init__(self, 'localhost', 'root', 'Oleg4342758@!', 'bank')
         self.connect()
            
     def check_credentials(self, email, password):
@@ -23,7 +23,7 @@ class BudgetManager(Database):
     # TABLE USER
     
     def add_user(self, first_name, last_name, email, password, iban, account_number, date_last_transaction):
-        sql = "INSERT INTO consumer (first_name, last_name, email, password, iban, account_number, date_last_transaction) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        sql = "INSERT INTO user (first_name, last_name, email, password, iban, account_number, date_last_transaction) VALUES (%s, %s, %s, %s, %s, %s, %s)"
         values = ( first_name, last_name, email, password, iban, account_number, date_last_transaction)
         self.execute_query(sql, values)
 
@@ -121,6 +121,3 @@ class BudgetManager(Database):
         sql = "SELECT first_name FROM user"
         return self.fetch(sql)
 
-manager = BudgetManager()
-
-manager.close_connection()
