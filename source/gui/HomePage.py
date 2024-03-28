@@ -68,7 +68,7 @@ class HomePage(Element, Controller):
         self.text_not_center(self.font1, 15, "17", self.yellow, 900, 50)
 
         # Log Out
-        self.img_hover("Log Out", "Log Out", 970, 80, 40, 40,self.images["logout"],self.images["logout"])
+        self.log_out_rect = self.img_hover("Log Out", "Log Out", 970, 80, 40, 40,self.images["logout"],self.images["logout"])
 
     def side_bar(self):
 
@@ -228,7 +228,10 @@ class HomePage(Element, Controller):
                             self.profile_display, self.checking_saving_display, self.transfer_display = False, True, False
                         elif self.profile_rect.collidepoint(event.pos):
                             self.profile_display, self.checking_saving_display, self.transfer_display = True, False, False
-                  
+                        elif self.log_out_rect.collidepoint(event.pos):
+                            self.accounts_running = False
+                            print("False")
+
             self.background()
             self.side_bar()
 

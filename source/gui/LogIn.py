@@ -16,7 +16,6 @@ class LogIn(Element, Animation, Controller):
         self.current_account = False
         self.savings_account = False
 
-
         self.sort_code_un = self.random_sort_code()
         self.sort_code_deux = self.random_sort_code()
         self.sort_code_trois = self.random_sort_code()
@@ -156,44 +155,44 @@ class LogIn(Element, Animation, Controller):
                 if event.type == pygame.QUIT:
                     login_running = False
 
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if self.input_email_rect.collidepoint(event.pos):
-                        self.input_email = ""
-                        self.entry = 1
+                if not self.switch:
+                    self.gui_home()
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if self.input_email_rect.collidepoint(event.pos):
+                            self.input_email = ""
+                            self.entry = 1
 
-                    elif self.input_password_rect.collidepoint(event.pos):
-                        self.input_password = ""
-                        self.entry = 2
+                        elif self.input_password_rect.collidepoint(event.pos):
+                            self.input_password = ""
+                            self.entry = 2
 
-                    elif self.login_rect.collidepoint(event.pos):
-                        self.user = self.login_user()
-                        if self.connected:
-                            hp = HomePage(self.user)
-                            hp.homepage_run()
+                        elif self.login_rect.collidepoint(event.pos):
+                            self.user = self.login_user()
+                            if self.connected:
+                                hp = HomePage(self.user)
+                                hp.homepage_run()
+                                self.connected = False
 
-                    elif self.signup_rect.collidepoint(event.pos):
-                        self.switch = True
+                        elif self.signup_rect.collidepoint(event.pos):
+                            self.switch = True
 
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_BACKSPACE:
-                        if self.entry == 1:
-                            self.input_email = self.input_email[:-1]
-                        elif self.entry == 2:
-                            self.input_password = self.input_password[:-1]
-                    else:
-                        if self.entry == 1:
-                            if event.unicode.islower():
-                                self.input_email += event.unicode
-                        elif self.entry == 2:
-                            self.input_password += event.unicode
+                    elif event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_BACKSPACE:
+                            if self.entry == 1:
+                                self.input_email = self.input_email[:-1]
+                            elif self.entry == 2:
+                                self.input_password = self.input_password[:-1]
+                        else:
+                            if self.entry == 1:
+                                if event.unicode:
+                                    self.input_email += event.unicode
 
-            if not self.connected and self.switch:
-                self.gui_register()
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        login_running = False
+                            elif self.entry == 2:
+                                self.input_password += event.unicode
 
-                    elif event.type == pygame.MOUSEBUTTONDOWN:
+                if self.switch:
+                    self.gui_register()
+                    if event.type == pygame.MOUSEBUTTONDOWN:
                         if self.input_first_name_register_rect.collidepoint(event.pos):
                             self.input_first_name_register =""
                             self.entry = 3
@@ -252,6 +251,5 @@ class LogIn(Element, Animation, Controller):
                                     self.input_email_register +=  event.unicode
                             elif self.entry == 6:
                                 self.input_password_register += event.unicode
-            else:
-                self.gui_home()
-            self.update()
+                
+                self.update()
