@@ -180,7 +180,10 @@ class HomePage(Element, Controller):
         self.button_hover("Saving Account", 880, 500, 150, 40, self.grey, self.green1, self.grey, self.green1, "Saving Account", self.font3, self.grey2, 14, 2, 5)
 
         # Validation button
-        self.button_hover("validation", 855, 600, 200, 40, self.green2, self.green2, self.green1, self.green1, "CONFIRM BANK TRANSFER", self.font3, self.white, 14, 2, 5)       
+        self.button_hover("validation", 855, 600, 200, 40, self.green2, self.green2, self.green1, self.green1, "CONFIRM BANK TRANSFER", self.font3, self.white, 14, 2, 5)
+
+        # Error Message 
+        self.text_not_center(self.font1, 12, "Oops, something has gone wrong ", self.red, 770, 630) 
 
     def homepage_run(self):
         accounts_running = True
@@ -194,17 +197,3 @@ class HomePage(Element, Controller):
             # self.saving_checking_design()
             self.transaction_design()
             self.update()
-
-    # def home_run(self):
-    #     accounts_running = True
-    #     while accounts_running:
-    #         for event in pygame.event.get():
-    #             if event.type == pygame.QUIT:
-    #                 accounts_running = False
-  
-    #         self.background()
-    #         self.top_bar()
-    #         self.side_bar()
-    #         self.update()
-
-

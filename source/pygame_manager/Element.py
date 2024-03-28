@@ -21,6 +21,8 @@ class Element(Screen):
 
         self.yellow = (242,202,0) 
 
+        self.red = (124,34,34)
+
         self.font1 = "assets/font/Roboto-Black.ttf"
         self.font2 = "assets/font/RobotoMono-Italic-VariableFont_wght.ttf"
         self.font3 = "assets/font/RobotoMono-VariableFont_wght.ttf"
