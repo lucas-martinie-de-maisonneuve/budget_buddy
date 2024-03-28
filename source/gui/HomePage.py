@@ -7,8 +7,7 @@ class HomePage(Element, Screen, Controller):
     def __init__(self): 
         Element.__init__(self)
         Screen.__init__(self)
-        Controller.__init__(self)   
-
+        Controller.__init__(self)  
 
         self.image_paths = {
             "logout": "assets/image/Accounts/accounts_off1.png",
@@ -159,21 +158,27 @@ class HomePage(Element, Screen, Controller):
         self.button_hover("Checking Account", 380, 360, 150, 40, self.grey, self.green1, self.grey, self.green1, "Checking Account", self.font3, self.grey2, 14, 2, 5)
         self.button_hover("Saving Account", 540, 360, 150, 40, self.grey, self.green1, self.grey, self.green1, "Saving Account", self.font3, self.grey2, 14, 2, 5)
         self.button_hover("Description", 460, 430, 310, 40, self.grey, self.green1, self.grey, self.green1, "Description", self.font3, self.grey2, 14, 2, 5)
-      
-        self.button_hover("Category", 420, 500, 220, 40, self.grey, self.green1, self.grey, self.green1, "Category", self.font3, self.grey2, 14, 2, 5)
-        self.button_hover("number", 560, 500, 40, 40, self.grey, self.green1, self.grey, self.green1, "7", self.font3, self.grey2, 14, 2, 5)
-        self.img_not_center("question", 585, 490, 25, 25, self.images["question"])
-
-
         self.button_hover("+/-", 325, 570, 40, 40, self.grey, self.green1, self.grey, self.green1, "+/-", self.font3, self.grey2, 14, 2, 5)
         self.button_hover("Amont", 485, 570, 260, 40, self.grey, self.green1, self.grey, self.green1, "Amount", self.font3, self.grey2, 14, 2, 5)
 
+        # Category      
+        self.button_hover("Category", 420, 500, 220, 40, self.grey, self.green1, self.grey, self.green1, "Category", self.font3, self.grey2, 14, 2, 5)
+        self.button_hover("number", 560, 500, 40, 40, self.grey, self.green1, self.grey, self.green1, "7", self.font3, self.grey2, 14, 2, 5)
+        self.question_rect = self.img_not_center("question", 585, 490, 25, 25, self.images["question"])
+
+        if self.is_mouse_over_button(self.question_rect ):
+            self.text_not_center(self.font4, 12, "1 = Living Expenses", self.grey2, 320, 605)
+            self.text_not_center(self.font4, 12, "2 = Transportation Costs", self.grey2, 320, 625)
+            self.text_not_center(self.font4, 12, "3 = Food and Grocery Expense", self.grey2, 320, 645)
+            self.text_not_center(self.font4, 12, "4 = Personal Expenses", self.grey2, 520, 605)
+            self.text_not_center(self.font4, 12, "5 = Financial Obligations", self.grey2, 520, 625)      
+
+    
         # Receiver
         self.text_not_center(self.font1, 18, "Receiver", self.grey2, 780, 225)
         self.button_hover("Name",720, 290, 150, 40, self.grey, self.green1, self.grey, self.green1, "Name", self.font3, self.grey2, 14, 2, 5)
         self.button_hover("Surname", 880, 290, 150, 40, self.grey, self.green1, self.grey, self.green1, "Surname ", self.font3, self.grey2, 14, 2, 5) 
         self.button_hover("IBAN", 800, 360, 310, 40, self.grey, self.green1, self.grey, self.green1, "IBAN", self.font3, self.grey2, 14, 2, 5)
-      
 
         # Send money to yourself
         self.text_not_center(self.font1, 18, "Transfer to yourself", self.grey2, 700, 430)
@@ -188,7 +193,8 @@ class HomePage(Element, Screen, Controller):
         while accounts_running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    accounts_running = False        
+                    accounts_running = False   
+
   
             self.main_page_design()
             # self.profile_design()
