@@ -1,4 +1,4 @@
--- Active: 1711550360410@@127.0.0.1@3306@bank
+-- Active: 1707919785972@@localhost@3306@bank
 CREATE DATABASE bank;
 USE bank;
 
@@ -46,51 +46,53 @@ CREATE TABLE transaction (
     amount INT,
     date DATE,
     id_category INT,
-    id_user INT,
+    id_receiver INT,
+    id_sender INT,
     account_id INT
 );
 
 -- transaction_revenu = 1
 -- transaction_expense = 2
 
-INSERT INTO transaction (transaction_re, transaction_name, description, amount, date, id_category, id_user,  account_id ) VALUES
+INSERT INTO transaction (transaction_re, transaction_name, description, amount, date, id_category, id_receiver, id_sender,account_id) VALUES
 -- Hamza
-('2', 'Cooper Green', 'water bill', 40,'2024-03-25', 1, 1, 1),
-('2', 'Total', 'fuel car', 52,'2024-03-24', 2, 1, 1),
-('2', 'Mark Spencer', 'grocery shopping', 150,'2024-03-23', 3, 1, 1 ),
-('2', 'Aqua Mass', 'massage', 220,'2024-02-15', 4, 1, 1),
-('2', 'Child Support', "Kylie's aids", 323,'2024-02-09', 5, 1, 1),
-('1', 'La Plateforme', 'salary', 3000,'2024-02-14', 0, 1, 2),
-('1', 'Salah Naya', 'birthday gift', 1000,'2024-02-14', 0, 1, 1),
-('2', 'EDF', 'electricity bill', 45,'2024-01-12', 1, 1, 1 ),
-('2', 'London Underground', 'Oyster Card', 100,'2024-01-11', 2, 1, 1),
-('2', 'Tesco', 'grocery shopping', 30,'2024-01-10', 3, 1, 1),
-('2', 'Blacks', 'hoodie', 50,'2024-01-09', 4, 1, 1),
-('2', 'Cooper Green', 'rent', 950,'2024-01-08', 1, 1, 1),
-('2', 'Cooper Green', 'water bill', 46,'2023-06-25', 1, 1, 2),
-('2', 'Total', 'fuel car', 60,'2023-06-24', 2, 1, 2),
-('2', 'Mark Spencer', 'grocery shopping', 82,'2023-06-23', 3, 1, 2),
-('2', 'Moustache & Hair Salon', 'hairdresser', 35,'2023-05-15', 4, 1, 1),
-('2', 'LLoyds Bank', 'student loan repayments', 350,'2023-05-09', 5, 1, 2),
-('1', 'La Plateforme', 'salary', 2500,'2023-05-14', 0, 1, 2),
-('1', 'JC Martinie', 'birthday gift', 200,'2023-05-14', 0, 1, 2),
-('2', 'EDF', 'electricity bill', 1500,'2023-04-12', 1, 1, 1 ),
-('2', 'London Underground', 'Oyster Card', 60,'2023-04-11', 2, 1, 2),
-('2', 'Tesco', 'grocery shopping', 120,'2023-04-10', 3, 1, 2),
-('2', 'JDSport', 'trouser', 50,'2023-04-09', 4, 1, 2),
-('2', 'Cooper Green', 'rent', 800,'2023-04-08', 1, 1, 2),
-('2', 'Cooper Green', 'water bill', 55,'2022-03-25', 1, 1, 3),
-('2', 'Total', 'fuel car', 30,'2022-03-24', 2, 1, 2),
-('2', 'Mark Spencer', 'grocery shopping', 50,'2022-03-23', 3, 1, 3),
-('2', 'Nail Time', 'nail salon', 25,'2022-02-15', 4, 1, 1),
-('2', 'Natwest', 'Loan Repayments ', 120,'2022-02-09', 5, 1, 3),
-('1', 'La Plateforme', 'salary', 2000,'2022-02-14', 0, 1, 2),
-('1', 'Gerard Lamorte', 'birthday gift', 100,'2022-02-14', 0, 1, 3),
-('2', 'EDF', 'electricity bill', 50,'2022-01-12', 1, 1, 1 ),
-('2', 'London Underground', 'Oyster Card', 120,'2022-01-11', 2, 1, 3),
-('2', 'Tesco', 'grocery shopping', 28,'2022-01-10', 3, 1, 3),
-('2', 'H&M', 'skirt', 35,'2022-01-09', 4, 1, 3),
-('2', 'Cooper Green', 'rent', 650,'2022-01-08', 1, 1, 3);
+('2', 'Cooper Green', 'water bill', 40,'2024-03-25', 1, 1, 1, 1),
+('2', 'Total', 'fuel car', 52,'2024-03-24', 2, 3, 1, 1),
+('2', 'Mark Spencer', 'grocery shopping', 150,'2024-03-23', 3, 1, 3, 1),
+('2', 'Aqua Mass', 'massage', 220,'2024-02-15', 4, 3, 1, 1),
+('2', 'Child Support', "Kylie's aids", 323,'2024-02-09', 5, 1, 3, 1),
+('1', 'La Plateforme', 'salary', 3000,'2024-02-14', 0, 3, 2, 1),
+('1', 'Salah Naya', 'birthday gift', 1000,'2024-02-14', 0, 3, 1, 1),
+('2', 'EDF', 'electricity bill', 45,'2024-01-12', 1, 1, 3, 1),
+('2', 'London Underground', 'Oyster Card', 100,'2024-01-11', 2, 3, 1, 1),
+('2', 'Tesco', 'grocery shopping', 30,'2024-01-10', 3, 1, 3, 1),
+('2', 'Blacks', 'hoodie', 50,'2024-01-09', 4, 3, 1, 1),
+('2', 'Cooper Green', 'rent', 950,'2024-01-08', 1, 1, 3, 1),
+('2', 'Cooper Green', 'water bill', 46,'2023-06-25', 1, 1, 3, 1),
+('2', 'Total', 'fuel car', 60,'2023-06-24', 2, 3, 2, 1),
+('2', 'Mark Spencer', 'grocery shopping', 82,'2023-06-23', 3, 3, 2, 1),
+('2', 'Moustache & Hair Salon', 'hairdresser', 35,'2023-05-15', 4, 3, 1, 1),
+('2', 'LLoyds Bank', 'student loan repayments', 350,'2023-05-09', 5, 1, 2, 1),
+('1', 'La Plateforme', 'salary', 2500,'2023-05-14', 0, 3, 2, 1),
+('1', 'JC Martinie', 'birthday gift', 200,'2023-05-14', 0, 1, 2, 1),
+('2', 'EDF', 'electricity bill', 1500,'2023-04-12', 1, 3, 3, 1),
+('2', 'London Underground', 'Oyster Card', 60,'2023-04-11', 2, 1, 3, 1),
+('2', 'Tesco', 'grocery shopping', 120,'2023-04-10', 3, 3, 2, 1),
+('2', 'JDSport', 'trouser', 50,'2023-04-09', 4, 3, 2, 1),
+('2', 'Cooper Green', 'rent', 800,'2023-04-08', 1, 1, 2, 1),
+('2', 'Cooper Green', 'water bill', 55,'2022-03-25', 1, 3, 3, 1),
+('2', 'Total', 'fuel car', 30,'2022-03-24', 2, 1, 2, 1),
+('2', 'Mark Spencer', 'grocery shopping', 50,'2022-03-23', 3, 3, 3, 1),
+('2', 'Nail Time', 'nail salon', 25,'2022-02-15', 4, 3, 1, 1),
+('2', 'Natwest', 'Loan Repayments ', 120,'2022-02-09', 5, 1, 3, 1),
+('1', 'La Plateforme', 'salary', 2000,'2022-02-14', 0, 1, 2, 1),
+('1', 'Gerard Lamorte', 'birthday gift', 100,'2022-02-14', 0, 3, 3, 1),
+('2', 'EDF', 'electricity bill', 50,'2022-01-12', 1, 3, 1, 1),
+('2', 'London Underground', 'Oyster Card', 120,'2022-01-11', 2, 1, 2, 1),
+('2', 'Tesco', 'grocery shopping', 28,'2022-01-10', 3, 3, 1, 1),
+('2', 'H&M', 'skirt', 35,'2022-01-09', 4, 3, 3, 1),
+('2', 'Cooper Green', 'rent', 650,'2022-01-08', 1, 1, 2, 1),
+('1', 'La Plateforme', 'salary', 2000,'2022-01-07', 0, 3, 1, 1);
 
 
 -- income = 0

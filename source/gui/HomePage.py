@@ -7,13 +7,15 @@ class HomePage(Element, Controller):
         Element.__init__(self)
         Controller.__init__(self)
         self.user = user_info
-
-
+        self.user_id = self.user[0]
+        self.transactions = self.display_transaction(self.user_id)
+        self.scroll = 0
         self.image_paths = {
             "logout": "assets/image/Accounts/accounts_off1.png",
             "bell":"assets/image/Accounts/accounts_bell.png",
             "logo":"assets/image/Accounts/accounts_logo.png",
             "background":"assets/image/Accounts/accounts_background1.jpg",
+            "background_top":"assets/image/Accounts/accounts_background_top.jpg",
             "help":"assets/image/Accounts/accounts_help.png",
             "pic":"assets/image/Accounts/accounts_pic.png", 
             "date":"assets/image/Account/account_1.png",
@@ -33,11 +35,12 @@ class HomePage(Element, Controller):
         self.img_background(400, 300, 1244, 830, self.images["background"])
      
     def top_bar(self):
-
+        self.img_background(500, 76.5, 1000, 153, self.images["background_top"])
         # Rect
         self.rect_full(self.green3, 500, 25, 1000, 30, 0) 
         self.rect_full(self.green1, 500, 75, 1000, 70, 0)
         self.rect_full(self.green3, 500, 125, 1000, 30, 0)
+
 
         # Lines v top bar
         pygame.draw.line(self.Window, self.green4, (850, 53), (850, 100), 1)
@@ -94,11 +97,26 @@ class HomePage(Element, Controller):
         self.img_hover("help", "help", 60, 650, 30, 30,self.images["help"],self.images["help"])
         self.text_not_center(self.font4, 12, "Need Help ?", self.grey2, 80, 645)
 
+    def main_block(self):
         self.rect_full(self.grey, 630, 420, 700, 530, 5)
-        self.rect_border(self.green2, 630, 420, 700, 530, 2, 5)  
+        self.filter_options()
+        y = 0
+
+        for transaction in self.transactions:
+            self.pos_y = y + self.scroll
+
+            if self.pos_y < 425:
+                self.text_not_center(self.font3, 10,f"{str(transaction[5].day)}/{str(transaction[5].month)}/{str(transaction[5].year)}", self.black, 460, self.pos_y + 252.5)
+                self.text_not_center(self.font3, 15, str(transaction[2]), self.black, 530, self.pos_y + 250)
+                self.text_not_center(self.font3, 12, str(transaction[3]), self.black, 750, self.pos_y + 251.5)
+                self.text_not_center(self.font3, 12, str(transaction[4]), self.black, 938, self.pos_y + 250)
+                self.text_not_center(self.font3, 12, "£", self.black, 930, self.pos_y + 250)
+                y += 25
+        
+        self.rect_radius_top(self.green3, 630, 175, 700, 45, 5)
+        self.rect_border(self.green2, 630, 420, 700, 530, 2, 5) 
 
     def filter_options(self): 
-        self.rect_radius_top(self.green3, 630, 175, 700, 45, 5)
 
         self.img_txt_hover("date", "Date", 320, 350, 35, 35, self.images["date"], self.images["date"], self.font3, 15, self.grey3,345, 340)
         self.img_txt_hover("income", "Income", 320, 400, 35, 35, self.images["income"], self.images["income"], self.font3, 15, self.grey3,345, 390)
@@ -107,7 +125,6 @@ class HomePage(Element, Controller):
         self.img_txt_hover("ascending", "Ascending", 320, 550, 35, 35, self.images["ascending"], self.images["ascending"], self.font3, 15, self.grey3,345, 540)
         self.img_txt_hover("calendar", "Calendar", 320, 600, 35, 35, self.images["calendar"], self.images["calendar"], self.font3, 15, self.grey3,345, 590)
         self.img_txt_hover("type", "Type", 320, 650, 35, 35, self.images["type"], self.images["type"], self.font3, 15, self.grey3,345, 640)
-        
 
     def homepage_run(self):
         accounts_running = True
@@ -115,10 +132,17 @@ class HomePage(Element, Controller):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     accounts_running = False
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 4 and self.scroll < 0 :
+                        self.scroll += 15
+
+                    elif event.button == 5:
+                        self.scroll -= 15
+                   
                   
             self.background()
-            self.top_bar()
             self.side_bar()
-            self.filter_options()
+            self.main_block()
+            self.top_bar()
 
             self.update()

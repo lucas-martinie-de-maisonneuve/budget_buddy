@@ -1,7 +1,7 @@
 from datetime import datetime
 from data.Database import Database
 
-class UserRepository(Database):
+class TransactionRepository(Database):
     def __init__(self):
         passwords = ['VannyLamorte25!', 'Oleg4342758@!','$~Bc4gB9']
         for password in passwords:
@@ -19,9 +19,12 @@ class UserRepository(Database):
         self.cursor.execute(sql, values)
         self.connection.commit()
 
-    def transaction_info(self):
-        sql = "SELECT * FROM transaction"
-        return self.fetch(sql)
+    def transaction_info(self, user_id):
+        sql = "SELECT * FROM transaction WHERE id_receiver = %s OR id_sender = %s"
+        values = (user_id, user_id)
+        return self.fetch(sql, values)
+
+
 
     # ACCOUNTS
         

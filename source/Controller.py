@@ -1,7 +1,10 @@
 from hashlib import sha256
 
 from data.UserRepository import UserRepository
-class Controller(UserRepository):
+from data.TransactionRepository import TransactionRepository
+
+# Controller
+class Controller(UserRepository,TransactionRepository):
 
     def __init__(self):        
         UserRepository.__init__(self)
@@ -25,3 +28,7 @@ class Controller(UserRepository):
             self.user = self.get_user(self.input_email, hashed_password)
             self.connected = True
             return self.user 
+
+    def display_transaction(self, user_id):
+        transactions = self.transaction_info(user_id)
+        return transactions
