@@ -1,10 +1,10 @@
 from hashlib import sha256
 
-from data.BudgetManager import BudgetManager
-class Controller(BudgetManager):
+from data.UserRepository import UserRepository
+class Controller(UserRepository):
 
     def __init__(self):        
-        BudgetManager.__init__(self)
+        UserRepository.__init__(self)
 
         # Home
         self.input_email = ""
@@ -16,12 +16,12 @@ class Controller(BudgetManager):
         self.input_email_register = "Email"
         self.input_password_register = "Password"
 
+        self.connected = False
+
     def login_user(self):
         hashed_password = sha256(self.input_password.encode()).hexdigest()
 
         if self.check_credentials(self.input_email, hashed_password):
-            self.user_info = self.get_user(self.input_email, hashed_password)
+            self.user = self.get_user(self.input_email, hashed_password)
             self.connected = True
-            return self.user_info
-    
- 
+            return self.user 

@@ -1,13 +1,12 @@
 import pygame
-from source.pygame_manager.Screen import Screen
 from source.pygame_manager.Element import Element
 from source.Controller import Controller
 
-class HomePage(Element, Screen, Controller):
-    def __init__(self): 
+class HomePage(Element, Controller):
+    def __init__(self, user_info): 
         Element.__init__(self)
-        Screen.__init__(self)
-        Controller.__init__(self)   
+        Controller.__init__(self)
+        self.user = user_info
 
 
         self.image_paths = {
@@ -116,26 +115,10 @@ class HomePage(Element, Screen, Controller):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     accounts_running = False
-
-        
-  
+                  
             self.background()
             self.top_bar()
             self.side_bar()
             self.filter_options()
 
             self.update()
-
-    # def home_run(self):
-    #     accounts_running = True
-    #     while accounts_running:
-    #         for event in pygame.event.get():
-    #             if event.type == pygame.QUIT:
-    #                 accounts_running = False
-  
-    #         self.background()
-    #         self.top_bar()
-    #         self.side_bar()
-    #         self.update()
-
-

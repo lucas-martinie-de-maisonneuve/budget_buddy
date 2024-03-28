@@ -2,6 +2,7 @@ import pygame
 from source.pygame_manager.Element import Element
 from source.pygame_manager.Animation import Animation
 from source.Controller import Controller
+from source.gui.HomePage import HomePage
 
 class LogIn(Element, Animation, Controller): 
     def __init__(self): 
@@ -135,7 +136,10 @@ class LogIn(Element, Animation, Controller):
                         self.entry = 2
 
                     elif self.login_rect.collidepoint(event.pos):
-                        pass
+                        self.user = self.login_user()
+                        if self.connected:
+                            hp = HomePage(self.user)
+                            hp.homepage_run()
 
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_BACKSPACE:
@@ -151,6 +155,6 @@ class LogIn(Element, Animation, Controller):
 
                         elif self.entry == 2:
                             self.input_password = self.input_password + event.unicode
-
-            self.gui_home()
-            self.update()
+            if not self.connected:
+                self.gui_home()
+                self.update()
