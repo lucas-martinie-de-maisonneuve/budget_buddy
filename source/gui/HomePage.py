@@ -32,7 +32,6 @@ class HomePage(Element, Screen, Controller):
         
     def background(self): 
         self.img_background(400, 300, 1244, 830, self.images["background"])
-        print(self.input_email)
      
     def top_bar(self):
 
