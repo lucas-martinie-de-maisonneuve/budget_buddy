@@ -1,4 +1,3 @@
--- Active: 1707919785972@@localhost@3306@bank
 CREATE DATABASE bank;
 USE bank;
 
