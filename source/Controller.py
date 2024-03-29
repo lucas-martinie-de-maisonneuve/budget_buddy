@@ -13,6 +13,7 @@ class Controller(UserRepository,TransactionRepository):
         self.input_email = ""
         self.input_password = ""
 
+        # Signup
         self.input_first_name_register = ""
         self.input_last_name_register = ""
 
@@ -24,6 +25,16 @@ class Controller(UserRepository,TransactionRepository):
         self.sort_code_1 = ""
         self.sort_code_2 = ""
         self.sort_code_3 = ""
+
+        # Homepage Transfer Money
+        self.input_descrition = "Description"
+        self.input_number_category = "1-7"
+        self.input_amont = "Amount"
+
+        self.input_name_receiver = "Name"
+        self.input_surname_receiver = "Surname"
+        self.input_iban_receiver = "IBAN"
+
 
         self.connected = False
 
