@@ -8,8 +8,16 @@ class HomePage(Element, Controller):
         Controller.__init__(self)
         self.user = user_info
         self.user_id = self.user[0]
-        self.transactions = self.display_transaction(self.user_id)
+        self.user_fisrt_name, self.user_last_name, self.user_email, self.user_iban, self.user_account_number = self.user[1], self.user[2], self.user[3], self.user[5], self.user[6]
+
+        self.transactions = self.display_transaction(self.user_id, 1)
+
+        self.date_sort = False
+
+
         self.scroll = 0
+        self.accounts_running = True
+        self.disconnected = True
 
         self.image_paths = {
             "logout": "assets/image/Accounts/accounts_off1.png",
@@ -61,14 +69,14 @@ class HomePage(Element, Controller):
         # Account ID Number
        
         self.text_not_center(self.font3, 13, " Account ID number | ", self.white, 585, 75)
-        self.text_not_center(self.font2, 13, "24121993", self.white, 755, 75)
+        self.text_not_center(self.font2, 13, self.user[6], self.white, 755, 75)
         
         # Notification
         self.img_hover("bell", "bell", 890, 80, 40, 40,self.images["bell"],self.images["bell"])
         self.text_not_center(self.font1, 15, "17", self.yellow, 900, 50)
 
         # Log Out
-        self.img_hover("Log Out", "Log Out", 970, 80, 40, 40,self.images["logout"],self.images["logout"])
+        self.log_out_rect = self.img_hover("Log Out", "Log Out", 970, 80, 40, 40,self.images["logout"],self.images["logout"])
 
     def side_bar(self):
 
@@ -79,7 +87,7 @@ class HomePage(Element, Controller):
 
         # User info
         self.img_not_center("Profil pic", 90, 160, 90, 90, self.images["pic"])
-        self.text_not_center(self.font1, 15, "Hamza Lucas Vanny", self.grey3, 70, 260)
+        self.text_not_center(self.font1, 15, f"{self.user[1]} { self.user[2]}", self.grey3, 70, 270)
         self.profile_rect = self.button_hover_small("My Profil", 140, 320, 190, 40, self.green2, self.green2, self.green2, self.green2, "My Profil", self.font1, self.white,15, 0, 3
         )
 
@@ -121,11 +129,17 @@ class HomePage(Element, Controller):
             self.pos_y = y + self.scroll
 
             if self.pos_y < 425:
+                self.text_not_center(self.font3, 10,str(transaction[6]), self.black, 450, self.pos_y + 252.5)
                 self.text_not_center(self.font3, 10,f"{str(transaction[5].day)}/{str(transaction[5].month)}/{str(transaction[5].year)}", self.black, 460, self.pos_y + 252.5)
                 self.text_not_center(self.font3, 15, str(transaction[2]), self.black, 530, self.pos_y + 250)
                 self.text_not_center(self.font3, 12, str(transaction[3]), self.black, 750, self.pos_y + 251.5)
                 self.text_not_center(self.font3, 12, str(transaction[4]), self.black, 938, self.pos_y + 250)
                 self.text_not_center(self.font3, 12, "£", self.black, 930, self.pos_y + 250)
+                if transaction[8] == self.user_id:
+                    self.text_not_center(self.font1, 18, "-", self.red, 920, self.pos_y + 250)
+                elif transaction[9] == self.user_id:
+                    self.text_not_center(self.font1, 18, "+", self.green, 920, self.pos_y + 250)
+
                 y += 25
         
         self.rect_radius_top(self.green3, 630, 175, 700, 45, 5)
@@ -133,40 +147,47 @@ class HomePage(Element, Controller):
     def profile_design(self):
 
         # Name
-        self.text_not_center(self.font3, 16, "Name", self.grey1, 330, 300)
-        self.text_not_center(self.font2, 16, "Lucas", self.grey1, 390, 300)
-        pygame.draw.line(self.Window, self.green4, (330, 330), (700, 330), 1)
+        self.text_not_center(self.font1, 16, "Name", self.grey1, 330, 300)
+        self.text_not_center(self.font2, 16, self.user[1], self.grey1, 390, 300)
+        pygame.draw.line(self.Window, self.green4, (330, 330), (750, 330), 1)
 
         # Surname
-        self.text_not_center(self.font3, 16, "Surname", self.grey1, 330, 350)
-        self.text_not_center(self.font2, 16, "Martinie", self.grey1, 420, 350)
-        pygame.draw.line(self.Window, self.green4, (330, 380), (700, 380), 1)
+        self.text_not_center(self.font1, 16, "Surname", self.grey1, 330, 350)
+        self.text_not_center(self.font2, 16,self.user[2], self.grey1, 420, 350)
+        pygame.draw.line(self.Window, self.green4, (330, 380), (750, 380), 1)
 
         # Email
-        self.text_not_center(self.font3, 16, "Email", self.grey1, 330, 400)
-        self.text_not_center(self.font2, 16, "lucas.martinie@laplateforme.io", self.grey1, 400, 400)
-        pygame.draw.line(self.Window, self.green4, (330, 430), (700, 430), 1)
+        self.text_not_center(self.font1, 16, "Email", self.grey1, 330, 400)
+        self.text_not_center(self.font2, 16, self.user[3], self.grey1, 400, 400)
+        pygame.draw.line(self.Window, self.green4, (330, 430), (750, 430), 1)
         
         # Account ID
-        self.text_not_center(self.font3, 16, "Account ID Number", self.grey1, 330, 450)
-        self.text_not_center(self.font2, 16, "HAHAHAHIHIHOHO", self.grey1,520, 450)
+        self.text_not_center(self.font1, 16, "Account ID Number", self.grey1, 330, 450)
+        self.text_not_center(self.font2, 16, self.user[5], self.grey1,500, 450)
+        pygame.draw.line(self.Window, self.green4, (330, 480), (750, 480), 1)
 
         # IBAN
-        self.text_not_center(self.font3, 16, "IBAN", self.grey1, 330, 500)
-        self.text_not_center(self.font2, 16, "MOUHAHAHAHAHAHA!!!!", self.grey1, 390, 500)
-        pygame.draw.line(self.Window, self.green4, (330, 530), (700, 530), 1)
+        self.text_not_center(self.font1, 16, "IBAN", self.grey1, 330, 500)
+        self.text_not_center(self.font2, 16, self.user[6], self.grey1, 390, 500)
+        pygame.draw.line(self.Window, self.green4, (330, 530), (750, 530), 1)
 
     def filter_options(self): 
 
-        # Filter for income and expense
+        # Filter by date
         self.text_not_center(self.font3, 18, "Sort by", self.grey2, 305, 290)
-        self.img_txt_hover("date", "Date", 320, 350, 35, 35, self.images["date"], self.images["date"], self.font3, 15, self.grey3,345, 340)
-        self.img_txt_hover("income", "Income", 320, 400, 35, 35, self.images["income"], self.images["income"], self.font3, 15, self.grey3,345, 390)
-        self.img_txt_hover("expense", "Expense", 320, 450, 35, 35, self.images["expense"], self.images["expense"], self.font3, 15, self.grey3,345, 440)
-        self.img_txt_hover("descending", "Descending", 320, 500, 35, 35, self.images["descending"], self.images["descending"], self.font3, 15, self.grey3,345, 490)
-        self.img_txt_hover("ascending", "Ascending", 320, 550, 35, 35, self.images["ascending"], self.images["ascending"], self.font3, 15, self.grey3,345, 540)
-        self.img_txt_hover("calendar", "Calendar", 320, 600, 35, 35, self.images["calendar"], self.images["calendar"], self.font3, 15, self.grey3,345, 590)
-        self.img_txt_hover("type", "Type", 320, 650, 35, 35, self.images["type"], self.images["type"], self.font3, 15, self.grey3,345, 640)
+        self.date_rect = self.img_txt_hover("date", "Date", 320, 350, 35, 35, self.images["date"], self.images["date"], self.font3, 15, self.grey3,345, 340)
+        # Filter by income
+        self.income_rect = self.img_txt_hover("income", "Income", 320, 400, 35, 35, self.images["income"], self.images["income"], self.font3, 15, self.grey3,345, 390)
+        # Filter by expense
+        self.expense_rect = self.img_txt_hover("expense", "Expense", 320, 450, 35, 35, self.images["expense"], self.images["expense"], self.font3, 15, self.grey3,345, 440)
+        # Filter by amount descending
+        self.descending_rect = self.img_txt_hover("descending", "Descending", 320, 500, 35, 35, self.images["descending"], self.images["descending"], self.font3, 15, self.grey3,345, 490)
+        # Filter by amount ascending
+        self.ascending_rect = self.img_txt_hover("ascending", "Ascending", 320, 550, 35, 35, self.images["ascending"], self.images["ascending"], self.font3, 15, self.grey3,345, 540)
+        # Filter by period
+        self.calendar_rect = self.img_txt_hover("calendar", "Calendar", 320, 600, 35, 35, self.images["calendar"], self.images["calendar"], self.font3, 15, self.grey3,345, 590)
+        # Filter by type
+        self.type_rect = self.img_txt_hover("type", "Type", 320, 650, 35, 35, self.images["type"], self.images["type"], self.font3, 15, self.grey3,345, 640)
 
     def transaction_design(self): 
 
@@ -210,11 +231,10 @@ class HomePage(Element, Controller):
         self.text_not_center(self.font1, 12, "Oops, something has gone wrong ", self.red, 770, 630) 
 
     def homepage_run(self):
-        accounts_running = True
-        while accounts_running:
+        if self.accounts_running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    accounts_running = False
+                    self.accounts_running = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 4 and self.scroll < 0 :
                         self.scroll += 15
@@ -228,19 +248,42 @@ class HomePage(Element, Controller):
                             self.profile_display, self.checking_saving_display, self.transfer_display = False, True, False
                         elif self.profile_rect.collidepoint(event.pos):
                             self.profile_display, self.checking_saving_display, self.transfer_display = True, False, False
-                  
+                        elif self.log_out_rect.collidepoint(event.pos):
+                            self.disconnected = True
+                            self.accounts_running = False
+                            print("False")
+
+                        elif self.date_rect.collidepoint(event.pos): 
+                            if self.date_sort: 
+                                self.transactions = self.display_transaction(self.user_id,1)
+                                self.date_sort = False
+                            else : 
+                                self.transactions = self.display_transaction(self.user_id,2)
+                                self.date_sort = True
+                        elif self.income_rect.collidepoint(event.pos): 
+                            self.transactions = self.display_transaction(self.user_id,3)
+
+                        elif self.expense_rect.collidepoint(event.pos):
+                            self.transactions = self.display_transaction(self.user_id,4)
+
+                        elif self.ascending_rect.collidepoint(event.pos):
+                            self.transactions = self.display_transaction(self.user_id,5)
+
+                        elif self.descending_rect.collidepoint(event.pos): 
+                            self.transactions = self.display_transaction(self.user_id,6)
+
+                        # elif self.calendar_rect.collidepoint(event.pos): 
+                        #     self.transactions = self.display_transaction(self.user_id,7)
+                        
+                        elif self.calendar_rect.collidepoint(event.pos): 
+                            self.transactions = self.display_transaction(self.user_id,8)
+
+
+
+
+      
             self.background()
             self.side_bar()
-
-
             self.main_page_design()
 
-            if self.profile_display:
-                self.profile_design()
-            elif self.checking_saving_display:
-                self.saving_checking_design()
-            elif self.transfer_display:
-                self.transaction_design()
-
-            self.top_bar()
-            self.update()
+            # self.top_bar()

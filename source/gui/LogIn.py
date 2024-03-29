@@ -9,14 +9,14 @@ class LogIn(Element, Animation, Controller):
         Element.__init__(self)
         Animation.__init__(self)
         Controller.__init__(self)
+        self.login_running = True
+        self.register_running = False
+        self.quit = False
 
         self.entry = False
-        self.switch = False
         self.checkbox = False
         self.current_account = False
         self.savings_account = False
-
-
         self.sort_code_un = self.random_sort_code()
         self.sort_code_deux = self.random_sort_code()
         self.sort_code_trois = self.random_sort_code()
@@ -174,12 +174,11 @@ class LogIn(Element, Animation, Controller):
 
 
     def login_run(self):
-        login_running = True
-        while login_running:
+        if self.login_running:
+            self.gui_home()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    login_running = False
-
+                    self.quit = True
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if self.input_email_rect.collidepoint(event.pos):
                         self.input_email = ""
@@ -191,12 +190,11 @@ class LogIn(Element, Animation, Controller):
 
                     elif self.login_rect.collidepoint(event.pos):
                         self.user = self.login_user()
-                        if self.connected:
-                            hp = HomePage(self.user)
-                            hp.homepage_run()
+                        self.login_running = False
 
                     elif self.signup_rect.collidepoint(event.pos):
-                        self.switch = True
+                        self.register_running = True
+                        self.login_running = False
 
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_BACKSPACE:
@@ -206,76 +204,76 @@ class LogIn(Element, Animation, Controller):
                             self.input_password = self.input_password[:-1]
                     else:
                         if self.entry == 1:
-                            if event.unicode.islower():
+                            if event.unicode:
                                 self.input_email += event.unicode
+
                         elif self.entry == 2:
                             self.input_password += event.unicode
+    def register_run(self):
+        if self.register_running:
 
-            if not self.connected and self.switch:
-                self.gui_register()
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        login_running = False
+            self.gui_register()
 
-                    elif event.type == pygame.MOUSEBUTTONDOWN:
-                        if self.input_first_name_register_rect.collidepoint(event.pos):
-                            self.input_first_name_register =""
-                            self.entry = 3
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.quit = True
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.input_first_name_register_rect.collidepoint(event.pos):
+                        self.input_first_name_register =""
+                        self.entry = 3
 
-                        elif self.input_last_name_register_rect.collidepoint(event.pos):
-                            self.input_last_name_register = ""
-                            self.entry = 4
+                    elif self.input_last_name_register_rect.collidepoint(event.pos):
+                        self.input_last_name_register = ""
+                        self.entry = 4
 
-                        elif self.input_email_register_rect.collidepoint(event.pos):
-                            self.input_email_register = ""
-                            self.entry = 5
+                    elif self.input_email_register_rect.collidepoint(event.pos):
+                        self.input_email_register = ""
+                        self.entry = 5
 
-                        elif self.input_password_register_rect.collidepoint(event.pos):
-                            self.input_password_register = ""
-                            self.entry = 6
+                    elif self.input_password_register_rect.collidepoint(event.pos):
+                        self.input_password_register = ""
+                        self.entry = 6
 
-                        elif self.input_account_Current.collidepoint(event.pos):
-                            self.current_account = not self.current_account
+                    elif self.input_account_Current.collidepoint(event.pos):
+                        self.current_account = not self.current_account
 
-                        elif self.input_account_Savings.collidepoint(event.pos):
-                            self.savings_account = not self.savings_account
+                    elif self.input_account_Savings.collidepoint(event.pos):
+                        self.savings_account = not self.savings_account
 
-                        elif self.register_rect.collidepoint(event.pos):
-                            self.switch = False
+                    elif self.register_rect.collidepoint(event.pos):
+                        self.login_running = True
+                        self.register_running = False
 
-                        elif self.checkbox_rect.collidepoint(event.pos):
-                            self.checkbox = not self.checkbox
-                            if self.checkbox:
-                                self.sort_code_1 = self.sort_code_un
-                                self.sort_code_2 = self.sort_code_deux
-                                self.sort_code_3 = self.sort_code_trois
-                                self.account_number = self.fixed_account_number
-                            else:
-                                self.sort_code_1 = ""
-                                self.sort_code_2 = ""
-                                self.sort_code_3 = ""
-                                self.account_number = ""
-
-                    elif event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_BACKSPACE:
-                            if self.entry == 3:
-                                self.input_first_name_register = self.input_first_name_register[:-1]
-                            elif self.entry == 4:
-                                self.input_last_name_register = self.input_last_name_register[:-1]
-                            elif self.entry == 5:
-                                self.input_email_register = self.input_email_register[:-1]
-                            elif self.entry == 6:
-                                self.input_password_register = self.input_password_register[:-1]
+                    elif self.checkbox_rect.collidepoint(event.pos):
+                        self.checkbox = not self.checkbox
+                        if self.checkbox:
+                            self.sort_code_1 = self.sort_code_un
+                            self.sort_code_2 = self.sort_code_deux
+                            self.sort_code_3 = self.sort_code_trois
+                            self.account_number = self.fixed_account_number
                         else:
-                            if self.entry == 3:
-                                self.input_first_name_register += event.unicode
-                            elif self.entry == 4:
-                                self.input_last_name_register += event.unicode
-                            elif self.entry == 5:
-                                if event.unicode.islower():
-                                    self.input_email_register +=  event.unicode
-                            elif self.entry == 6:
-                                self.input_password_register += event.unicode
-            else:
-                self.gui_home()
-            self.update()
+                            self.sort_code_1 = ""
+                            self.sort_code_2 = ""
+                            self.sort_code_3 = ""
+                            self.account_number = ""
+
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_BACKSPACE:
+                        if self.entry == 3:
+                            self.input_first_name_register = self.input_first_name_register[:-1]
+                        elif self.entry == 4:
+                            self.input_last_name_register = self.input_last_name_register[:-1]
+                        elif self.entry == 5:
+                            self.input_email_register = self.input_email_register[:-1]
+                        elif self.entry == 6:
+                            self.input_password_register = self.input_password_register[:-1]
+                    else:
+                        if self.entry == 3:
+                            self.input_first_name_register += event.unicode
+                        elif self.entry == 4:
+                            self.input_last_name_register += event.unicode
+                        elif self.entry == 5:
+                            if event.unicode.islower():
+                                self.input_email_register +=  event.unicode
+                        elif self.entry == 6:
+                            self.input_password_register += event.unicode
