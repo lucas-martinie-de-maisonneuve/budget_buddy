@@ -95,7 +95,7 @@ class LogIn(Element, Animation, Controller):
 
         # Rect principal
         self.rect_full(self.green3, self.W//2, self.H//2, 950, 650, 5)
-        self.rect_border(self.green3, self.W//2, self.H//2, 950, 650, 15, 5)
+        self.rect_border(self.white, self.W//2, self.H//2, 950, 650, 1, 10)
 
         # About you
         self.text_center(self.font4, 25, "About you", self.white, self.W//2-400, self.H//2-280)
