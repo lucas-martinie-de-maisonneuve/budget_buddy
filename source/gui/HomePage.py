@@ -13,7 +13,6 @@ class HomePage(Element, Controller):
         self.transactions = self.display_transaction(self.user_id, 1)
         self.date_sort = False
 
-
         self.checking_saving_event = False
         self.scroll = 0
         self.accounts_running = True
@@ -114,7 +113,6 @@ class HomePage(Element, Controller):
         self.rect_border(self.green2, 630, 420, 700, 530, 2, 5) 
         self.rect_radius_top(self.green3, 630, 175, 700, 45, 5)
 
-
     def main_page_design(self):
         self.background()
         self.top_bar()
@@ -149,7 +147,9 @@ class HomePage(Element, Controller):
         self.text_not_center(self.font2, 17,"To / From", self.black, 535, 210)
         self.text_not_center(self.font2, 17, "Description", self.black, 740, 210)
         self.text_not_center(self.font2, 17, "Amount", self.black, 910, 210)
-        self.checking_saving_event = True
+        
+        if not self.checking_saving_event:
+            self.checking_saving_event = True
 
     def profile_design(self):
 
@@ -249,10 +249,13 @@ class HomePage(Element, Controller):
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.transfer_rect.collidepoint(event.pos):
                         self.profile_display, self.checking_saving_display, self.checking_saving_event, self.transfer_display = False, False, False, True
+
                     elif self.checking_rect.collidepoint(event.pos) or self.saving_rect.collidepoint(event.pos):
                         self.profile_display, self.checking_saving_display, self.transfer_display = False, True, False
+
                     elif self.profile_rect.collidepoint(event.pos):
                         self.profile_display, self.checking_saving_display, self.transfer_display, self.checking_saving_event = True, False, False, False
+                        
                     elif self.log_out_rect.collidepoint(event.pos):
                         self.disconnected = True
                         self.accounts_running = False
