@@ -182,7 +182,7 @@ class LogIn(Element, Animation, Controller):
                             self.input_password = self.input_password[:-1]
                     else:
                         if self.entry == 1:
-                            if event.unicode.islower():
+                            if event.unicode:
                                 self.input_email += event.unicode
                         elif self.entry == 2:
                             self.input_password += event.unicode

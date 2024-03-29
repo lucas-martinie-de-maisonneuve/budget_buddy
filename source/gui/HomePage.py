@@ -8,6 +8,8 @@ class HomePage(Element, Controller):
         Controller.__init__(self)
         self.user = user_info
         self.user_id = self.user[0]
+        self.user_fisrt_name, self.user_last_name, self.user_email, self.user_iban, self.user_account_numer = self.user[1], self.user[2], self.user[3], self.user[5], self.user[6]
+
         self.transactions = self.display_transaction(self.user_id, 1)
 
         self.date_sort = False
@@ -138,27 +140,27 @@ class HomePage(Element, Controller):
 
         # Name
         self.text_not_center(self.font3, 16, "Name", self.grey1, 330, 300)
-        self.text_not_center(self.font2, 16, "Lucas", self.grey1, 390, 300)
+        self.text_not_center(self.font2, 16, self.user[1], self.grey1, 390, 300)
         pygame.draw.line(self.Window, self.green4, (330, 330), (700, 330), 1)
 
         # Surname
         self.text_not_center(self.font3, 16, "Surname", self.grey1, 330, 350)
-        self.text_not_center(self.font2, 16, "Martinie", self.grey1, 420, 350)
+        self.text_not_center(self.font2, 16,self.user[2], self.grey1, 420, 350)
         pygame.draw.line(self.Window, self.green4, (330, 380), (700, 380), 1)
 
         # Email
         self.text_not_center(self.font3, 16, "Email", self.grey1, 330, 400)
-        self.text_not_center(self.font2, 16, "lucas.martinie@laplateforme.io", self.grey1, 400, 400)
+        self.text_not_center(self.font2, 16, self.user[3], self.grey1, 400, 400)
         pygame.draw.line(self.Window, self.green4, (330, 430), (700, 430), 1)
         
         # Account ID
         self.text_not_center(self.font3, 16, "Account ID Number", self.grey1, 330, 450)
-        self.text_not_center(self.font2, 16, "HAHAHAHIHIHOHO", self.grey1,520, 450)
+        self.text_not_center(self.font2, 16, self.user[5], self.grey1,520, 450)
         pygame.draw.line(self.Window, self.green4, (330, 480), (700, 480), 1)
 
         # IBAN
         self.text_not_center(self.font3, 16, "IBAN", self.grey1, 330, 500)
-        self.text_not_center(self.font2, 16, "MOUHAHAHAHAHAHA!!!!", self.grey1, 390, 500)
+        self.text_not_center(self.font2, 16, self.user[6], self.grey1, 390, 500)
         pygame.draw.line(self.Window, self.green4, (330, 530), (700, 530), 1)
 
     def filter_options(self): 

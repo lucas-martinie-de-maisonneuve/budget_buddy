@@ -35,6 +35,7 @@ class Controller(UserRepository,TransactionRepository):
             self.connected = True
             return self.user
         
+     
     
     def display_transaction(self, user_id, filter):
         if filter == 1: 
@@ -56,7 +57,7 @@ class Controller(UserRepository,TransactionRepository):
             transactions = self.amount_asc_filter(user_id)
 
         # elif filter == 7: 
-            # transactions = self.amount_desc_filter(user_id)
+        #     transactions = self.amount_desc_filter(user_id)
 
         elif filter == 8: 
             transactions = self.category_filter(user_id)
