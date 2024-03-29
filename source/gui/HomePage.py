@@ -16,6 +16,8 @@ class HomePage(Element, Controller):
 
 
         self.scroll = 0
+        self.accounts_running = True
+        self.disconnected = True
 
         self.image_paths = {
             "logout": "assets/image/Accounts/accounts_off1.png",
@@ -74,7 +76,7 @@ class HomePage(Element, Controller):
         self.text_not_center(self.font1, 15, "17", self.yellow, 900, 50)
 
         # Log Out
-        self.img_hover("Log Out", "Log Out", 970, 80, 40, 40,self.images["logout"],self.images["logout"])
+        self.log_out_rect = self.img_hover("Log Out", "Log Out", 970, 80, 40, 40,self.images["logout"],self.images["logout"])
 
     def side_bar(self):
 
@@ -132,6 +134,11 @@ class HomePage(Element, Controller):
                 self.text_not_center(self.font3, 12, str(transaction[3]), self.black, 750, self.pos_y + 251.5)
                 self.text_not_center(self.font3, 12, str(transaction[4]), self.black, 938, self.pos_y + 250)
                 self.text_not_center(self.font3, 12, "£", self.black, 930, self.pos_y + 250)
+                if transaction[8] == self.user_id:
+                    self.text_not_center(self.font1, 18, "-", self.red, 920, self.pos_y + 250)
+                elif transaction[9] == self.user_id:
+                    self.text_not_center(self.font1, 18, "+", self.green, 920, self.pos_y + 250)
+
                 y += 25
         
         self.rect_radius_top(self.green3, 630, 175, 700, 45, 5)
@@ -223,11 +230,10 @@ class HomePage(Element, Controller):
         self.text_not_center(self.font1, 12, "Oops, something has gone wrong ", self.red, 770, 630) 
 
     def homepage_run(self):
-        accounts_running = True
-        while accounts_running:
+        if self.accounts_running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    accounts_running = False
+                    self.accounts_running = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 4 and self.scroll < 0 :
                         self.scroll += 15
@@ -241,6 +247,10 @@ class HomePage(Element, Controller):
                             self.profile_display, self.checking_saving_display, self.transfer_display = False, True, False
                         elif self.profile_rect.collidepoint(event.pos):
                             self.profile_display, self.checking_saving_display, self.transfer_display = True, False, False
+                        elif self.log_out_rect.collidepoint(event.pos):
+                            self.disconnected = True
+                            self.accounts_running = False
+                            print("False")
 
                         elif self.date_rect.collidepoint(event.pos): 
                             if self.date_sort: 
@@ -270,19 +280,9 @@ class HomePage(Element, Controller):
 
 
 
-                        
+      
             self.background()
             self.side_bar()
-
-
             self.main_page_design()
 
-            if self.profile_display:
-                self.profile_design()
-            elif self.checking_saving_display:
-                self.saving_checking_design()
-            elif self.transfer_display:
-                self.transaction_design()
-
-            self.top_bar()
-            self.update()
+            # self.top_bar()
