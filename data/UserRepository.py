@@ -57,16 +57,4 @@ class UserRepository(Database):
         params = (email,)        
         self.execute_query(sql, params) 
 
-    # A revoir
-
-    def get_last_message_time(self, id_user):
-        sql = "SELECT date_last_message FROM user WHERE id = %s"
-        values = (id_user,)
-        result = self.fetch(sql, values)
-        if result: 
-                return result[0][0]
-        else: 
-            return None 
-    def first_name_user(self):
-        sql = "SELECT first_name FROM user"
-        return self.fetch(sql)
+ 

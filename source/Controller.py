@@ -35,6 +35,12 @@ class Controller(UserRepository,TransactionRepository):
             self.connected = True
             return self.user
         
+    def save_last_co(self,user_id):
+        self.save_last_transaction (user_id)
+
+    def load_info_last_co(self, user): 
+        self.last_login_date = self.get_last_co_time(user)
+        return self.last_login_date        
      
     
     def display_transaction(self, user_id, filter):

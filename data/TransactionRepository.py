@@ -81,17 +81,27 @@ class TransactionRepository(Database):
 
     # Notification    
         
-    def last_notif (self, id_user): 
-        current_time = datetime.now()
-        sql = "INSERT INTO notificaton = %s WHERE id = %s"
-        values = (current_time, id_user,)
-        self.execute_query(sql, values)        
+    # def last_co (self, id_user): 
+    #     current_time = datetime.now()
+    #     sql = "INSERT INTO user = %s WHERE id = %s"
+    #     values = (current_time, id_user,)
+    #     self.execute_query(sql, values)     
 
+  
     def save_last_transaction (self, id_user): 
         current_time = datetime.now()
-        sql = "UPDATE user SET date_last_transaction = %s WHERE id = %s"
+        sql = "UPDATE user SET date_last_co = %s WHERE id = %s"
         values = (current_time, id_user,)
         self.execute_query(sql, values)
+
+    def get_last_co_time(self, id_user):
+        sql = "SELECT date_last_co FROM user WHERE id = %s"
+        values = (id_user)
+        result = self.fetch(sql, values)
+        if result: 
+                return result[0][0]
+        else: 
+            return None       
 
     def add_notification(self):
         user = "fist_name_user"

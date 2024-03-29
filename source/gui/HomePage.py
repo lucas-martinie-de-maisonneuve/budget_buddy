@@ -7,19 +7,21 @@ class HomePage(Element, Controller):
         Element.__init__(self)
         Controller.__init__(self)
         self.user = user_info
-        self.user_id = self.user[0]
-        self.user_fisrt_name, self.user_last_name, self.user_email, self.user_iban, self.user_account_number = self.user[1], self.user[2], self.user[3], self.user[5], self.user[6]
+        self.user_id, self.user_fisrt_name, self.user_last_name, self.user_email, self.user_iban, self.user_account_number, self.last_login_date = self.user[0], self.user[1], self.user[2], self.user[3], self.user[5], self.user[6], self.user[7]
 
         self.transactions = self.display_transaction(self.user_id, 1)
 
         self.date_sort = False
 
-
         self.scroll = 0
         self.accounts_running = True
         self.disconnected = True
 
+        # Notification
+        self.display_notif = self.notification()
+
         self.image_paths = {
+            # Main page
             "logout": "assets/image/Accounts/accounts_off1.png",
             "bell":"assets/image/Accounts/accounts_bell.png",
             "logo":"assets/image/Accounts/accounts_logo.png",
@@ -54,7 +56,6 @@ class HomePage(Element, Controller):
         self.rect_full(self.green1, 500, 75, 1000, 70, 0)
         self.rect_full(self.green3, 500, 125, 1000, 30, 0)
 
-
         # Lines v top bar
         pygame.draw.line(self.Window, self.green4, (850, 53), (850, 100), 1)
         pygame.draw.line(self.Window, self.green4, (930, 53), (930, 100), 1)
@@ -67,13 +68,11 @@ class HomePage(Element, Controller):
         self.text_not_center(self.font1, 18, "Wildcat Wealth Bank", self.white, 10, 85)
         
         # Account ID Number
-       
-        self.text_not_center(self.font3, 13, " Account ID number | ", self.white, 585, 75)
         self.text_not_center(self.font2, 13, self.user[6], self.white, 755, 75)
         
-        # Notification
+        # # Notification
         self.img_hover("bell", "bell", 890, 80, 40, 40,self.images["bell"],self.images["bell"])
-        self.text_not_center(self.font1, 15, "17", self.yellow, 900, 50)
+        self.text_not_center(self.font1, 15, str(self.display_notif), self.yellow, 900, 50) 
 
         # Log Out
         self.log_out_rect = self.img_hover("Log Out", "Log Out", 970, 80, 40, 40,self.images["logout"],self.images["logout"])
@@ -113,7 +112,6 @@ class HomePage(Element, Controller):
         self.rect_full(self.grey, 630, 420, 700, 530, 5)
         self.rect_border(self.green2, 630, 420, 700, 530, 2, 5) 
         self.rect_radius_top(self.green3, 630, 175, 700, 45, 5)
-
 
     def main_page_design(self):
         self.background()
@@ -186,7 +184,7 @@ class HomePage(Element, Controller):
         # Filter by period
         self.calendar_rect = self.img_txt_hover("calendar", "Calendar", 320, 600, 35, 35, self.images["calendar"], self.images["calendar"], self.font3, 15, self.grey3,345, 590)
         # Filter by type
-        self.type_rect = self.img_txt_hover("type", "Type", 320, 650, 35, 35, self.images["type"], self.images["type"], self.font3, 15, self.grey3,345, 640)
+        self.category_rect = self.img_txt_hover("type", "Type", 320, 650, 35, 35, self.images["type"], self.images["type"], self.font3, 15, self.grey3,345, 640)
 
     def transaction_design(self): 
 
@@ -229,6 +227,14 @@ class HomePage(Element, Controller):
         # Error Message 
         self.text_not_center(self.font1, 12, "Oops, something has gone wrong ", self.red, 770, 630) 
 
+    def notification(self):
+        new_notif = 0
+        for transaction in self.transactions: 
+            if transaction[5] > self.last_login_date: 
+                new_notif = new_notif + 1
+        return new_notif
+    
+           
     def homepage_run(self):
         if self.accounts_running:
             for event in pygame.event.get():
@@ -250,39 +256,11 @@ class HomePage(Element, Controller):
                         elif self.log_out_rect.collidepoint(event.pos):
                             self.disconnected = True
                             self.accounts_running = False
-                            print("False")
+                            self.save_last_co (self.user_id)
 
-                        elif self.date_rect.collidepoint(event.pos): 
-                            if self.date_sort: 
-                                self.transactions = self.display_transaction(self.user_id,1)
-                                self.date_sort = False
-                            else : 
-                                self.transactions = self.display_transaction(self.user_id,2)
-                                self.date_sort = True
-                        elif self.income_rect.collidepoint(event.pos): 
-                            self.transactions = self.display_transaction(self.user_id,3)
+                        self.event_saving_checking()
 
-                        elif self.expense_rect.collidepoint(event.pos):
-                            self.transactions = self.display_transaction(self.user_id,4)
-
-                        elif self.ascending_rect.collidepoint(event.pos):
-                            self.transactions = self.display_transaction(self.user_id,5)
-
-                        elif self.descending_rect.collidepoint(event.pos): 
-                            self.transactions = self.display_transaction(self.user_id,6)
-
-                        # elif self.calendar_rect.collidepoint(event.pos): 
-                        #     self.transactions = self.display_transaction(self.user_id,7)
                         
-                        elif self.calendar_rect.collidepoint(event.pos): 
-                            self.transactions = self.display_transaction(self.user_id,8)
-
-
-
-
-      
             self.background()
             self.side_bar()
             self.main_page_design()
-
-            # self.top_bar()
