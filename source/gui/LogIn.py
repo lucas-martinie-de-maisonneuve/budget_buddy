@@ -147,30 +147,32 @@ class LogIn(Element, Animation, Controller):
         # Register button
         self.register_rect = self.button_hover("Register", self.W//2, self.H//2+250, 350, 50, self.green, self.green, self.green, self.green,"Register", self.font1, self.white, 19, 1, 5)
 
-        # Lines
+        # Checkbox Lines
         pygame.draw.line(self.Window, self.green, (self.W//2, self.H//2-220), (self.W//2, self.H//2+80), 2)
         pygame.draw.line(self.Window, self.green, (self.W//2-80, self.H//2+160), (self.W//2+80, self.H//2+160), 2)
 
+        # Draw Checkbox Lines if checkbox TRUE
         if self.checkbox:
             pygame.draw.line(self.Window, self.green, (self.W//2 - 220 - 6, self.H//2 + 200 - 6), (self.W//2 - 220 + 2, self.H//2 + 200 + 7), 3)
             pygame.draw.line(self.Window, self.green, (self.W//2 - 220 + 1, self.H//2 + 200 + 7), (self.W//2 - 220 + 8, self.H//2 + 200 - 12), 3)
 
+        # Hover Text
         if self.is_mouse_over_button(self.info_current_rect):
             self.rect_full(self.green3, self.W//2+290, self.H//2-155, 310, 75, 5)
             self.rect_border(self.white, self.W//2+290, self.H//2-155, 310, 75, 1, 5)
 
-            self.text_not_center(self.font4, 15, "Checking account is a bank account that", self.white, self.W//2+150, self.H//2-180)
-            self.text_not_center(self.font4, 15, "allows frequent withdrawals and deposits,", self.white, self.W//2+150, self.H//2-165)
-            self.text_not_center(self.font4, 15, "often used for everyday transactions.", self.white, self.W//2+150, self.H//2-150)
+            self.text_not_center(self.font4, 14, "Checking account is a bank account that", self.white, self.W//2+150, self.H//2-180)
+            self.text_not_center(self.font4, 14, "allows frequent withdrawals and deposits,", self.white, self.W//2+150, self.H//2-165)
+            self.text_not_center(self.font4, 14, "often used for everyday transactions.", self.white, self.W//2+150, self.H//2-150)
 
         if self.is_mouse_over_button(self.info_savings_rect):
             self.rect_full(self.green3, self.W//2+290, self.H//2-105, 310, 90, 5)
             self.rect_border(self.white, self.W//2+290, self.H//2-105, 310, 90, 1, 5)
 
-            self.text_not_center(self.font4, 15, "Savings account is a bank account", self.white, self.W//2+150, self.H//2-135)
-            self.text_not_center(self.font4, 15, "designed for saving money over time,", self.white, self.W//2+150, self.H//2-120)
-            self.text_not_center(self.font4, 15, "typically offering interest on deposited funds", self.white, self.W//2+150, self.H//2-105)
-            self.text_not_center(self.font4, 15, "and restricting the number of withdrawals.", self.white, self.W//2+150, self.H//2-90)
+            self.text_not_center(self.font4, 14, "Savings account is a bank account", self.white, self.W//2+150, self.H//2-135)
+            self.text_not_center(self.font4, 14, "designed for saving money over time,", self.white, self.W//2+150, self.H//2-120)
+            self.text_not_center(self.font4, 14, "typically offering interest on deposited funds", self.white, self.W//2+150, self.H//2-105)
+            self.text_not_center(self.font4, 14, "and restricting the number of withdrawals.", self.white, self.W//2+150, self.H//2-90)
 
 
     def login_run(self):
@@ -268,12 +270,12 @@ class LogIn(Element, Animation, Controller):
                         elif self.entry == 6:
                             self.input_password_register = self.input_password_register[:-1]
                     else:
-                        if self.entry == 3:
+                        if self.entry == 3 and len(self.input_first_name_register) < 9:
                             self.input_first_name_register += event.unicode
-                        elif self.entry == 4:
+                        elif self.entry == 4 and len(self.input_last_name_register) < 9:
                             self.input_last_name_register += event.unicode
-                        elif self.entry == 5:
+                        elif self.entry == 5 and len(self.input_email_register) < 14:
                             if event.unicode.islower():
                                 self.input_email_register +=  event.unicode
-                        elif self.entry == 6:
+                        elif self.entry == 6 and len(self.input_password_register) < 14:
                             self.input_password_register += event.unicode
