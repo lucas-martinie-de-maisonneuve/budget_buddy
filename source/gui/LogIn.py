@@ -53,7 +53,7 @@ class LogIn(Element, Animation, Controller):
         self.text_center(self.font1, 35, "Wildcat Wealth Bank", self.white, self.W//2+220, 140)
         self.text_center(self.font4, 16, "Where Panthers Guard Your Fortune!", self.white, self.W//2+220, 180)
 
-        # Email        
+        # Email
         self.input_email_rect = self.button_hover("Email", self.W//2+220, 250, 350, 50, self.green2, self.green2, self.green2, self.green2, self.input_email, self.font4, self.white,18, 1, 5)
         self.text_input(self.input_email_rect, self.input_email, "Email address", 720, 250, 350, 50, id="email_login")
 
@@ -90,64 +90,90 @@ class LogIn(Element, Animation, Controller):
 
         self.screen_color(self.white)
 
+        # Background
+        self.img_background(400, 300, 1244, 830, self.images["background"])
+
         # Rect principal
         self.rect_full(self.green3, self.W//2, self.H//2, 950, 650, 5)
-        self.rect_border(self.green3, self.W//2, self.H//2, 950, 650, 15, 5)
+        self.rect_border(self.white, self.W//2, self.H//2, 950, 650, 1, 10)
 
         # About you
-        self.text_center(self.font1, 25, "About you", self.white, self.W//2-400, self.H//2-300)
+        self.text_center(self.font4, 25, "About you", self.white, self.W//2-400, self.H//2-280)
 
-        self.input_first_name_register_rect = self.button_hover("", self.W//2-245, self.H//2-225, 350, 50, self.green2, self.green3, self.green2, self.green3, self.input_first_name_register, self.font1, self.white,15, 1, 5)
-        self.text_center(self.font1, 15, "First Name", self.white, self.W//2-380, self.H//2-265)
+        self.input_first_name_register_rect = self.button_hover("", self.W//2-245, self.H//2-205, 350, 50, self.green2, self.green3, self.green2, self.green3, self.input_first_name_register, self.font1, self.white,15, 1, 5)
+        self.text_center(self.font4, 15, "First Name", self.white, self.W//2-380, self.H//2-245)
 
-        self.input_last_name_register_rect = self.button_hover("", self.W//2-245, self.H//2-140, 350, 50, self.green2, self.green3, self.green2, self.green3, self.input_last_name_register, self.font1, self.white,15, 1, 5)
-        self.text_center(self.font1, 15, "Last Name", self.white, self.W//2-380, self.H//2-180)
+        self.input_last_name_register_rect = self.button_hover("", self.W//2-245, self.H//2-120, 350, 50, self.green2, self.green3, self.green2, self.green3, self.input_last_name_register, self.font1, self.white,15, 1, 5)
+        self.text_center(self.font4, 15, "Last Name", self.white, self.W//2-380, self.H//2-160)
 
-        self.input_email_register_rect = self.button_hover("", self.W//2-245, self.H//2-55, 350, 50, self.green2, self.green3, self.green2, self.green3, self.input_email_register, self.font1, self.white,15, 1, 5)
-        self.text_center(self.font1, 15, "Email", self.white, self.W//2-400, self.H//2-95)
+        self.input_email_register_rect = self.button_hover("", self.W//2-245, self.H//2-35, 350, 50, self.green2, self.green3, self.green2, self.green3, self.input_email_register, self.font1, self.white,15, 1, 5)
+        self.text_center(self.font4, 15, "Email", self.white, self.W//2-400, self.H//2-75)
 
-        self.input_password_register_rect = self.button_hover("", self.W//2-245, self.H//2+30, 350, 50, self.green2, self.green3, self.green2, self.green3, self.input_password_register, self.font1, self.white, 15, 1, 5)
-        self.text_center(self.font1, 15, "Password", self.white, self.W//2-385, self.H//2-10)
+        self.input_password_register_rect = self.button_hover("", self.W//2-245, self.H//2+50, 350, 50, self.green2, self.green3, self.green2, self.green3, self.input_password_register, self.font1, self.white, 15, 1, 5)
+        self.text_center(self.font4, 15, "Password", self.white, self.W//2-385, self.H//2+10)
 
         # Your account
-        self.text_center(self.font1, 25, "Your account", self.white, self.W//2+100, self.H//2-300)
-        self.text_center(self.font1, 15, "Your account type", self.white, self.W//2+125, self.H//2-270)
+        self.text_center(self.font4, 25, "Your account", self.white, self.W//2+100, self.H//2-270)
+        self.text_center(self.font4, 15, "Your account type", self.white, self.W//2+125, self.H//2-240)
 
         if self.current_account:
-            self.input_account_Current = self.button_hover("Current Account", self.W//2+240, self.H//2-212, 350, 50, self.green, self.green3, self.green, self.green, "Current Account", self.font1, self.white, 15, 1, 5)
+            self.input_account_Current = self.button_hover("Current Account", self.W//2+240, self.H//2-192, 350, 50, self.green, self.green3, self.green, self.green, "Current Account", self.font1, self.white, 15, 1, 5)
         else:
-            self.input_account_Current = self.button_hover("Current Account", self.W//2+240, self.H//2-212, 350, 50, self.green2, self.green3, self.green2, self.green3, "Current Account", self.font1, self.white, 15, 1, 5)
+            self.input_account_Current = self.button_hover("Current Account", self.W//2+240, self.H//2-192, 350, 50, self.green2, self.green3, self.green2, self.green3, "Current Account", self.font1, self.white, 15, 1, 5)
 
         if self.savings_account:
-            self.input_account_Savings = self.button_hover("Savings Account", self.W//2+240, self.H//2-158, 350, 50, self.green, self.green3, self.green, self.green, "Savings Account", self.font1, self.white, 15, 1, 5)
+            self.input_account_Savings = self.button_hover("Savings Account", self.W//2+240, self.H//2-138, 350, 50, self.green, self.green3, self.green, self.green, "Savings Account", self.font1, self.white, 15, 1, 5)
         else:
-            self.input_account_Savings = self.button_hover("Savings Account", self.W//2+240, self.H//2-158, 350, 50, self.green2, self.green3, self.green2, self.green3, "Savings Account", self.font1, self.white, 15, 1, 5)
+            self.input_account_Savings = self.button_hover("Savings Account", self.W//2+240, self.H//2-138, 350, 50, self.green2, self.green3, self.green2, self.green3, "Savings Account", self.font1, self.white, 15, 1, 5)
 
+        self.info_current_rect = self.button_hover("?", self.W//2+442, self.H//2-192, 40, 40, self.green3, self.green3, self.green3, self.green3, "?", self.font1, self.white, 15, 1, 5)
+        self.info_savings_rect = self.button_hover("?", self.W//2+442, self.H//2-138, 40, 40, self.green3, self.green3, self.green3, self.green3, "?", self.font1, self.white, 15, 1, 5)
 
-        self.text_center(self.font1, 15, "Sort Code", self.white, self.W//2+100, self.H//2-95)
-        self.input_account_number_rect1 = self.button_hover("", self.W//2+122, self.H//2-55, 114, 50, self.green2, self.green3, self.green2, self.green3, str(self.sort_code_1), self.font1, self.white, 15, 1, 5)
-        self.input_account_number_rect2 = self.button_hover("", self.W//2+240, self.H//2-55, 114, 50, self.green2, self.green3, self.green2, self.green3, str(self.sort_code_2), self.font1, self.white, 15, 1, 5)
-        self.input_account_number_rect3 = self.button_hover("", self.W//2+358, self.H//2-55, 114, 50, self.green2, self.green3, self.green2, self.green3, str(self.sort_code_3), self.font1, self.white, 15, 1, 5)
+        self.text_center(self.font4, 15, "Sort Code", self.white, self.W//2+100, self.H//2-75)
+        self.input_account_number_rect1 = self.button_hover("", self.W//2+122, self.H//2-35, 114, 50, self.green2, self.green3, self.green2, self.green3, str(self.sort_code_1), self.font1, self.white, 15, 1, 5)
+        self.input_account_number_rect2 = self.button_hover("", self.W//2+240, self.H//2-35, 114, 50, self.green2, self.green3, self.green2, self.green3, str(self.sort_code_2), self.font1, self.white, 15, 1, 5)
+        self.input_account_number_rect3 = self.button_hover("", self.W//2+358, self.H//2-35, 114, 50, self.green2, self.green3, self.green2, self.green3, str(self.sort_code_3), self.font1, self.white, 15, 1, 5)
 
-        self.text_center(self.font1, 15, "Account Number", self.white, self.W//2+125, self.H//2-10)
-        self.input_account_number_rect = self.button_hover("", self.W//2+240, self.H//2+30, 350, 50, self.green2, self.green3, self.green2, self.green3, str(self.account_number), self.font1, self.white, 15, 1, 5)
+        self.text_center(self.font4, 15, "Account Number", self.white, self.W//2+125, self.H//2+10)
+        self.input_account_number_rect = self.button_hover("", self.W//2+240, self.H//2+50, 350, 50, self.green2, self.green3, self.green2, self.green3, str(self.account_number), self.font1, self.white, 15, 1, 5)
 
         # Terms & conditions
-        self.text_center(self.font1, 20, "Terms and Conditions", self.white, self.W//2, self.H//2+145)
-        self.text_center(self.font1, 15, "Please read the Internet Banking terms and conditions and our Data Privacy Notice.", self.white, self.W//2, self.H//2+175)
+        self.text_center(self.font4, 20, "Terms and Conditions", self.white, self.W//2, self.H//2+145)
+        self.text_center(self.font4, 17, "Please read the Internet Banking terms and conditions and our Data Privacy Notice.", self.white, self.W//2, self.H//2+175)
         self.checkbox_rect_rect = self.rect_full(self.green1, self.W//2, self.H//2+200, 500, 25, 2)
-        self.text_center(self.font1, 15, "I agree to the Internet Banking terms and conditions", self.white, self.W//2, self.H//2+200)
-        self.checkbox_rect = self.rect_full(self.green3, self.W//2-200, self.H//2+200, 15, 15, 2)
+        self.text_center(self.font4, 17, "I agree to the Internet Banking terms and conditions", self.white, self.W//2, self.H//2+200)
+        self.checkbox_rect = self.rect_full(self.green3, self.W//2-220, self.H//2+200, 15, 15, 2)
 
         # Register button
         self.register_rect = self.button_hover("Register", self.W//2, self.H//2+250, 350, 50, self.green, self.green, self.green, self.green,"Register", self.font1, self.white, 19, 1, 5)
 
-        # Lines v top bar
-        pygame.draw.line(self.Window, self.green, (self.W//2, self.H//2-250), (self.W//2, self.H//2+50), 2)
+        # Checkbox Lines
+        pygame.draw.line(self.Window, self.green, (self.W//2, self.H//2-220), (self.W//2, self.H//2+80), 2)
         pygame.draw.line(self.Window, self.green, (self.W//2-80, self.H//2+160), (self.W//2+80, self.H//2+160), 2)
+
+        # Draw Checkbox Lines if checkbox TRUE
         if self.checkbox:
-            pygame.draw.line(self.Window, self.green, (self.W//2 - 200 - 6, self.H//2 + 200 - 6), (self.W//2 - 200 + 2, self.H//2 + 200 + 7), 4)
-            pygame.draw.line(self.Window, self.green, (self.W//2 - 200 + 1, self.H//2 + 200 + 7), (self.W//2 - 200 + 8, self.H//2 + 200 - 12), 4)
+            pygame.draw.line(self.Window, self.green, (self.W//2 - 220 - 6, self.H//2 + 200 - 6), (self.W//2 - 220 + 2, self.H//2 + 200 + 7), 3)
+            pygame.draw.line(self.Window, self.green, (self.W//2 - 220 + 1, self.H//2 + 200 + 7), (self.W//2 - 220 + 8, self.H//2 + 200 - 12), 3)
+
+        # Hover Text
+        if self.is_mouse_over_button(self.info_current_rect):
+            self.rect_full(self.green3, self.W//2+290, self.H//2-155, 310, 75, 5)
+            self.rect_border(self.white, self.W//2+290, self.H//2-155, 310, 75, 1, 5)
+
+            self.text_not_center(self.font4, 14, "Checking account is a bank account that", self.white, self.W//2+150, self.H//2-180)
+            self.text_not_center(self.font4, 14, "allows frequent withdrawals and deposits,", self.white, self.W//2+150, self.H//2-165)
+            self.text_not_center(self.font4, 14, "often used for everyday transactions.", self.white, self.W//2+150, self.H//2-150)
+
+        if self.is_mouse_over_button(self.info_savings_rect):
+            self.rect_full(self.green3, self.W//2+290, self.H//2-105, 310, 90, 5)
+            self.rect_border(self.white, self.W//2+290, self.H//2-105, 310, 90, 1, 5)
+
+            self.text_not_center(self.font4, 14, "Savings account is a bank account", self.white, self.W//2+150, self.H//2-135)
+            self.text_not_center(self.font4, 14, "designed for saving money over time,", self.white, self.W//2+150, self.H//2-120)
+            self.text_not_center(self.font4, 14, "typically offering interest on deposited funds", self.white, self.W//2+150, self.H//2-105)
+            self.text_not_center(self.font4, 14, "and restricting the number of withdrawals.", self.white, self.W//2+150, self.H//2-90)
+
 
     def login_run(self):
         if self.login_running:
@@ -244,12 +270,12 @@ class LogIn(Element, Animation, Controller):
                         elif self.entry == 6:
                             self.input_password_register = self.input_password_register[:-1]
                     else:
-                        if self.entry == 3:
+                        if self.entry == 3 and len(self.input_first_name_register) < 9:
                             self.input_first_name_register += event.unicode
-                        elif self.entry == 4:
+                        elif self.entry == 4 and len(self.input_last_name_register) < 9:
                             self.input_last_name_register += event.unicode
-                        elif self.entry == 5:
+                        elif self.entry == 5 and len(self.input_email_register) < 14:
                             if event.unicode.islower():
                                 self.input_email_register +=  event.unicode
-                        elif self.entry == 6:
+                        elif self.entry == 6 and len(self.input_password_register) < 14:
                             self.input_password_register += event.unicode
