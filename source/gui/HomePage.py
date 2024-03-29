@@ -10,9 +10,8 @@ class HomePage(Element, Controller):
         self.user_id, self.user_fisrt_name, self.user_last_name, self.user_email, self.user_iban, self.user_account_number, self.last_login_date = self.user[0], self.user[1], self.user[2], self.user[3], self.user[5], self.user[6], self.user[7]
 
         self.transactions = self.display_transaction(self.user_id, 1)
-
         self.date_sort = False
-
+        self.checking_saving_event = False
         self.scroll = 0
         self.accounts_running = True
         self.disconnected = True
@@ -127,6 +126,7 @@ class HomePage(Element, Controller):
             self.pos_y = y + self.scroll
 
             if self.pos_y < 425:
+                self.text_not_center(self.font3, 10,str(transaction[6]), self.black, 450, self.pos_y + 252.5)
                 self.text_not_center(self.font3, 10,f"{str(transaction[5].day)}/{str(transaction[5].month)}/{str(transaction[5].year)}", self.black, 460, self.pos_y + 252.5)
                 self.text_not_center(self.font3, 15, str(transaction[2]), self.black, 530, self.pos_y + 250)
                 self.text_not_center(self.font3, 12, str(transaction[3]), self.black, 750, self.pos_y + 251.5)
@@ -140,6 +140,7 @@ class HomePage(Element, Controller):
                 y += 25
         
         self.rect_radius_top(self.green3, 630, 175, 700, 45, 5)
+        self.checking_saving_event = True
 
     def profile_design(self):
 
@@ -237,30 +238,51 @@ class HomePage(Element, Controller):
            
     def homepage_run(self):
         if self.accounts_running:
+            self.background()
+            self.side_bar()
+            self.main_page_design()
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.accounts_running = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if event.button == 4 and self.scroll < 0 :
-                        self.scroll += 15
-
-                    elif event.button == 5:
-                        self.scroll -= 15
-                    else:
-                        if self.transfer_rect.collidepoint(event.pos):
-                            self.profile_display, self.checking_saving_display, self.transfer_display = False, False, True
-                        elif self.checking_rect.collidepoint(event.pos) or self.saving_rect.collidepoint(event.pos):
-                            self.profile_display, self.checking_saving_display, self.transfer_display = False, True, False
-                        elif self.profile_rect.collidepoint(event.pos):
-                            self.profile_display, self.checking_saving_display, self.transfer_display = True, False, False
-                        elif self.log_out_rect.collidepoint(event.pos):
-                            self.disconnected = True
-                            self.accounts_running = False
-                            self.save_last_co (self.user_id)
-
-                        self.event_saving_checking()
-
+                    if self.transfer_rect.collidepoint(event.pos):
+                        self.profile_display, self.checking_saving_display, self.checking_saving_event, self.transfer_display = False, False, False, True
+                    elif self.checking_rect.collidepoint(event.pos) or self.saving_rect.collidepoint(event.pos):
+                        self.profile_display, self.checking_saving_display, self.transfer_display = False, True, False
+                    elif self.profile_rect.collidepoint(event.pos):
+                        self.profile_display, self.checking_saving_display, self.transfer_display, self.checking_saving_event = True, False, False, False
+                    elif self.log_out_rect.collidepoint(event.pos):
+                        self.disconnected = True
+                        self.accounts_running = False
                         
-            self.background()
-            self.side_bar()
-            self.main_page_design()
+                    if self.checking_saving_event:
+                        if event.button == 4 and self.scroll < 0 :
+                            self.scroll += 15
+                        elif event.button == 5:
+                            self.scroll -= 15
+                        else:
+                            if self.date_rect.collidepoint(event.pos): 
+                                if self.date_sort: 
+                                    self.transactions = self.display_transaction(self.user_id,1)
+                                    self.date_sort = False
+                                else : 
+                                    self.transactions = self.display_transaction(self.user_id,2)
+                                    self.date_sort = True
+                            elif self.income_rect.collidepoint(event.pos): 
+                                self.transactions = self.display_transaction(self.user_id,3)
+
+                            elif self.expense_rect.collidepoint(event.pos):
+                                self.transactions = self.display_transaction(self.user_id,4)
+
+                            elif self.ascending_rect.collidepoint(event.pos):
+                                self.transactions = self.display_transaction(self.user_id,5)
+
+                            elif self.descending_rect.collidepoint(event.pos): 
+                                self.transactions = self.display_transaction(self.user_id,6)
+
+                            # elif self.calendar_rect.collidepoint(event.pos): 
+                            #     self.transactions = self.display_transaction(self.user_id,7)
+                            
+                            elif self.calendar_rect.collidepoint(event.pos): 
+                                self.transactions = self.display_transaction(self.user_id,8)
