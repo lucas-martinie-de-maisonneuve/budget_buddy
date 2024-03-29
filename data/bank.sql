@@ -45,9 +45,9 @@ CREATE TABLE transaction (
     amount INT,
     date DATE,
     id_category INT,
-    id_receiver INT,
     account_id INT,
-    id_sender INT
+    id_sender INT,
+    id_receiver INT
 );
 
 -- transaction_revenu = 1
@@ -55,14 +55,14 @@ CREATE TABLE transaction (
 
 
 -- Hamza
-INSERT INTO transaction (transaction_re, transaction_name, description, amount, date, id_category, id_receiver,  account_id, id_sender) VALUES
+INSERT INTO transaction (transaction_re, transaction_name, description, amount, date, id_category, account_id, id_sender, id_receiver) VALUES
 ('2', 'Cooper Green', 'water bill', 40,'2024-03-25', 1, 1, 1, 3),
 ('2', 'Total', 'fuel car', 52,'2024-03-24', 2, 1, 1, 4),
 ('2', 'Mark Spencer', 'grocery shopping', 150,'2024-03-23', 3, 1, 1, 5),
 ('2', 'Aqua Mass', 'massage', 220,'2024-02-15', 4, 1, 1, 6),
 ('2', 'Child Support', "Kylie's aids", 323,'2024-02-09', 5, 1, 1, 2),
 ('1', 'La Plateforme', 'salary', 3000,'2024-02-14', 0, 1, 2, 4),
-('1', 'Salah Naya', 'birthday gift', 1000,'2024-02-14', 0, 1, 1, 3),
+('1', 'Salah Naya', 'birthday gift', 1000,'2024-02-14', 0, 1, 3, 1),
 ('2', 'EDF', 'electricity bill', 45,'2024-01-12', 1, 1, 1, 6),
 ('2', 'London Underground', 'Oyster Card', 100,'2024-01-11', 2, 1, 1, 2),
 ('2', 'Tesco', 'grocery shopping', 30,'2024-01-10', 3, 1, 1, 5),
