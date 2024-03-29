@@ -146,8 +146,14 @@ class HomePage(Element, Controller):
                     self.text_not_center(self.font1, 18, "+", self.green, 920, self.pos_y + 250)
 
                 y += 25
-        
+
+        self.rect_full(self.grey, 630, 220, 700, 50, 0)
+        self.rect_border(self.green2, 630, 420, 700, 530, 2, 5)
         self.rect_radius_top(self.green3, 630, 175, 700, 45, 5)
+        self.text_not_center(self.font2, 17,"Date", self.black, 464, 210)
+        self.text_not_center(self.font2, 17,"To / From", self.black, 535, 210)
+        self.text_not_center(self.font2, 17, "Description", self.black, 740, 210)
+        self.text_not_center(self.font2, 17, "Amount", self.black, 910, 210)
         self.checking_saving_event = True
 
     def profile_design(self):
