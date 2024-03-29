@@ -8,7 +8,11 @@ class HomePage(Element, Controller):
         Controller.__init__(self)
         self.user = user_info
         self.user_id = self.user[0]
-        self.transactions = self.display_transaction(self.user_id)
+        self.transactions = self.display_transaction(self.user_id, 1)
+
+        self.date_sort = False
+
+
         self.scroll = 0
 
         self.image_paths = {
@@ -150,6 +154,7 @@ class HomePage(Element, Controller):
         # Account ID
         self.text_not_center(self.font3, 16, "Account ID Number", self.grey1, 330, 450)
         self.text_not_center(self.font2, 16, "HAHAHAHIHIHOHO", self.grey1,520, 450)
+        pygame.draw.line(self.Window, self.green4, (330, 480), (700, 480), 1)
 
         # IBAN
         self.text_not_center(self.font3, 16, "IBAN", self.grey1, 330, 500)
@@ -158,15 +163,21 @@ class HomePage(Element, Controller):
 
     def filter_options(self): 
 
-        # Filter for income and expense
+        # Filter by date
         self.text_not_center(self.font3, 18, "Sort by", self.grey2, 305, 290)
-        self.img_txt_hover("date", "Date", 320, 350, 35, 35, self.images["date"], self.images["date"], self.font3, 15, self.grey3,345, 340)
-        self.img_txt_hover("income", "Income", 320, 400, 35, 35, self.images["income"], self.images["income"], self.font3, 15, self.grey3,345, 390)
-        self.img_txt_hover("expense", "Expense", 320, 450, 35, 35, self.images["expense"], self.images["expense"], self.font3, 15, self.grey3,345, 440)
-        self.img_txt_hover("descending", "Descending", 320, 500, 35, 35, self.images["descending"], self.images["descending"], self.font3, 15, self.grey3,345, 490)
-        self.img_txt_hover("ascending", "Ascending", 320, 550, 35, 35, self.images["ascending"], self.images["ascending"], self.font3, 15, self.grey3,345, 540)
-        self.img_txt_hover("calendar", "Calendar", 320, 600, 35, 35, self.images["calendar"], self.images["calendar"], self.font3, 15, self.grey3,345, 590)
-        self.img_txt_hover("type", "Type", 320, 650, 35, 35, self.images["type"], self.images["type"], self.font3, 15, self.grey3,345, 640)
+        self.date_rect = self.img_txt_hover("date", "Date", 320, 350, 35, 35, self.images["date"], self.images["date"], self.font3, 15, self.grey3,345, 340)
+        # Filter by income
+        self.income_rect = self.img_txt_hover("income", "Income", 320, 400, 35, 35, self.images["income"], self.images["income"], self.font3, 15, self.grey3,345, 390)
+        # Filter by expense
+        self.expense_rect = self.img_txt_hover("expense", "Expense", 320, 450, 35, 35, self.images["expense"], self.images["expense"], self.font3, 15, self.grey3,345, 440)
+        # Filter by amount descending
+        self.descending_rect = self.img_txt_hover("descending", "Descending", 320, 500, 35, 35, self.images["descending"], self.images["descending"], self.font3, 15, self.grey3,345, 490)
+        # Filter by amount ascending
+        self.ascending_rect = self.img_txt_hover("ascending", "Ascending", 320, 550, 35, 35, self.images["ascending"], self.images["ascending"], self.font3, 15, self.grey3,345, 540)
+        # Filter by period
+        self.calendar_rect = self.img_txt_hover("calendar", "Calendar", 320, 600, 35, 35, self.images["calendar"], self.images["calendar"], self.font3, 15, self.grey3,345, 590)
+        # Filter by type
+        self.type_rect = self.img_txt_hover("type", "Type", 320, 650, 35, 35, self.images["type"], self.images["type"], self.font3, 15, self.grey3,345, 640)
 
     def transaction_design(self): 
 
@@ -228,7 +239,36 @@ class HomePage(Element, Controller):
                             self.profile_display, self.checking_saving_display, self.transfer_display = False, True, False
                         elif self.profile_rect.collidepoint(event.pos):
                             self.profile_display, self.checking_saving_display, self.transfer_display = True, False, False
-                  
+
+                        elif self.date_rect.collidepoint(event.pos): 
+                            if self.date_sort: 
+                                self.transactions = self.display_transaction(self.user_id,1)
+                                self.date_sort = False
+                            else : 
+                                self.transactions = self.display_transaction(self.user_id,2)
+                                self.date_sort = True
+                        elif self.income_rect.collidepoint(event.pos): 
+                            self.transactions = self.display_transaction(self.user_id,3)
+
+                        elif self.expense_rect.collidepoint(event.pos):
+                            self.transactions = self.display_transaction(self.user_id,4)
+
+                        elif self.ascending_rect.collidepoint(event.pos):
+                            self.transactions = self.display_transaction(self.user_id,5)
+
+                        elif self.descending_rect.collidepoint(event.pos): 
+                            self.transactions = self.display_transaction(self.user_id,6)
+
+                        # elif self.calendar_rect.collidepoint(event.pos): 
+                        #     self.transactions = self.display_transaction(self.user_id,7)
+                        
+                        elif self.calendar_rect.collidepoint(event.pos): 
+                            self.transactions = self.display_transaction(self.user_id,8)
+
+
+
+
+                        
             self.background()
             self.side_bar()
 

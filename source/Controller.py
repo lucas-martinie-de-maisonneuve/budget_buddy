@@ -34,7 +34,35 @@ class Controller(UserRepository,TransactionRepository):
             self.user = self.get_user(self.input_email, hashed_password)
             self.connected = True
             return self.user
+        
+    
+    def display_transaction(self, user_id, filter):
+        if filter == 1: 
+            transactions = self.descending_date_filter(user_id)
+            
+        elif filter == 2: 
+            transactions = self.ascending_date_filter(user_id)
+        
+        elif filter == 3: 
+            transactions = self.income_filter(user_id)
 
-    def display_transaction(self, user_id):
-        transactions = self.transaction_info(user_id)
+        elif filter == 4: 
+            transactions = self.expense_filter(user_id)
+
+        elif filter == 5: 
+            transactions = self.amount_desc_filter(user_id)
+
+        elif filter == 6: 
+            transactions = self.amount_asc_filter(user_id)
+
+        # elif filter == 7: 
+            # transactions = self.amount_desc_filter(user_id)
+
+        elif filter == 8: 
+            transactions = self.category_filter(user_id)
+   
         return transactions
+
+
+    
+

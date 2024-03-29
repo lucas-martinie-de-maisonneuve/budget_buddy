@@ -26,16 +26,18 @@ INSERT INTO user (first_name, last_name, email, password, iban, account_number) 
 CREATE TABLE account (
     id INT PRIMARY KEY AUTO_INCREMENT,
     account_type INT,
-    ad_description TEXT,
     general_description TEXT
 );
 
 -- Checking Accounts = 1
 -- Savings Accounts = 2
 
-INSERT INTO account(account_type, ad_description, general_description) VALUES
-('1',"Unlock the perks of a checking account today! Enjoy easy access to your funds, seamless online transactions, and peace of mind with built-in security features.","Welcome to your checking account! Let's manage your finances together"),
-('2',"Unlock financial freedom with our Saving Account! Enjoy peace of mind knowing your money is safe and growing. With a minimum deposit of 100 pounds per month and a maximum daily withdrawal limit of 300 pounds, it's the perfect way to secure your future while maintaining access to your funds.", "Welcome back to your savings account! Let's continue growing your financial goals together");
+INSERT INTO account(account_type, description) VALUES
+('1',"Welcome to your checking account! Let's manage your finances together"),
+('2', "Welcome back to your savings account! Let's continue growing your financial goals together");
+
+-- "Unlock the perks of a checking account today! Enjoy easy access to your funds, seamless online transactions, and peace of mind with built-in security features."
+-- "Unlock financial freedom with our Saving Account! Enjoy peace of mind knowing your money is safe and growing. With a minimum deposit of 100 pounds per month and a maximum daily withdrawal limit of 300 pounds, it's the perfect way to secure your future while maintaining access to your funds."
 
 CREATE TABLE transaction (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -107,6 +109,3 @@ CREATE TABLE notification (
     notif_message TEXT,
     id_user INT
 );
-
-
-

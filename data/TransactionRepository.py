@@ -22,9 +22,7 @@ class TransactionRepository(Database):
         sql = "SELECT * FROM transaction WHERE id_receiver = %s OR id_sender = %s"
         values = (user_id, user_id)
         return self.fetch(sql, values)
-
-
-
+    
     # ACCOUNTS
         
     def account_type(self):
@@ -39,38 +37,46 @@ class TransactionRepository(Database):
         sql = "SELECT _description FROM account"
         return self.fetch(sql)
     
-    def date_filter (self):
-        sql = "SELECT * FROM transaction ORDER BY date"
-        return self.fetch(sql)
+    def income_filter(self, user_id):
+        sql = "SELECT * FROM transaction WHERE transaction_re = 1  AND (id_receiver = %s OR id_sender = %s)"
+        values = (user_id, user_id)
+        return self.fetch(sql, values)
     
-    def income_filter(self):
-        sql = "SELECT * FROM transaction WHERE transaction_re = 2"
-        return self.fetch(sql)
+    def expense_filter (self, user_id):
+        sql = "SELECT * FROM transaction WHERE transaction_re = 2 AND (id_receiver = %s OR id_sender = %s)"
+        values = (user_id, user_id)
+        return self.fetch(sql, values)
     
-    def expense_filter (self):
-        sql = "SELECT * FROM transaction WHERE transaction_re = 1"
-        return self.fetch(sql)
+    def ascending_date_filter(self, user_id):
+        sql = "SELECT * FROM transaction WHERE id_receiver = %s OR id_sender = %s ORDER BY date ASC"
+        values = (user_id, user_id)
+        return self.fetch(sql, values)
+        
+    def descending_date_filter (self, user_id): 
+        sql = "SELECT * FROM transaction WHERE id_receiver = %s OR id_sender = %s ORDER BY date DESC"
+        values = (user_id, user_id)
+        return self.fetch(sql, values)
     
-    def ascending__date_filter (self): 
-        sql = "SELECT * FROM transaction ORDER BY date ASC"
-        return self.fetch(sql)
-     
-    def descending_date_filter (self): 
-        sql = "SELECT * FROM transaction ORDER BY date DESC"
-        return self.fetch(sql)
-    
-    def calendar_filter(self, start_date, end_date):
-        sql = "SELECT * FROM transaction WHERE date BETWEEN %s AND %s ORDER BY date"
+    def calendar_filter(self, start_date, end_date, user_id):
+        sql = "SELECT * FROM transaction WHERE date BETWEEN %s AND %s ORDER BY date WHERE id_receiver = %s OR id_sender = %s"
         params = (start_date, end_date)
-        return self.fetch(sql, params)
+        values = (user_id, user_id)
+        return self.fetch(sql, params, values)
     
-    def amount_asc_filter (self): 
-        sql = "SELECT * FROM transaction ORDER BY amount ASC"
-        return self.fetch(sql)
+    def amount_asc_filter (self, user_id): 
+        sql = "SELECT * FROM transaction WHERE id_receiver = %s OR id_sender = %s ORDER BY amount ASC "
+        values = (user_id, user_id)
+        return self.fetch(sql, values)
     
-    def amount_desc_filter (self): 
-        sql = "SELECT * FROM transaction ORDER BY amount DESC"
-        return self.fetch(sql)
+    def amount_desc_filter (self, user_id): 
+        sql = "SELECT * FROM transaction WHERE id_receiver = %s OR id_sender = %s ORDER BY amount DESC"
+        values = (user_id, user_id)
+        return self.fetch(sql, values)
+    
+    def category_filter (self, user_id): 
+        sql = "SELECT * FROM transaction WHERE id_category = %s OR id_sender = %s ORDER BY amount DESC"
+        values = (user_id, user_id)
+        return self.fetch(sql, values)
 
 
     # Notification    
