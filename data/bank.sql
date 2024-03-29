@@ -9,14 +9,14 @@ CREATE TABLE user (
     password VARCHAR(255),
     iban VARCHAR(255),
     account_number VARCHAR(255),
-    date_last_transaction DATETIME DEFAULT CURRENT_TIMESTAMP
+    date_last_co DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 INSERT INTO user (first_name, last_name, email, password, iban, account_number) VALUES
-('Lucy','Madec', 'a', "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb", "GB10WWBP10203012345698", 28092002),
+('Hamza','Naya', 'a', "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb", "GB10WWBP10203012345698", 28092002),
 ('Lucas','Martinie','lucas.m@laplateforme.io', '43e405862bdfbdef17f2f13bf6e8a3efe088de01ad8eb4a9f47ff3fa21f20aae', "GB10WWBP10203012345678", 24121995),
-('Hamza','Naya','hamza.n@laplateforme.io', 'c9d0532835cc70cbc44011958faed891b3f254627dd0e7b8d3d99c995b2600e4', "GB11WWBP11223387654321", 13052001),
-('Vanny','Lamorte','vanny.l@laplateforme.io', '4f15f99279d26f053ddbe27b8e5d9d3203926820c25ebeade0bd082653ab696b', "GB12WWBP30201054321678", 25121993 );
+('Vanny','Lamorte','hamza.n@laplateforme.io', 'c9d0532835cc70cbc44011958faed891b3f254627dd0e7b8d3d99c995b2600e4', "GB11WWBP11223387654321", 13052001),
+('Lucy','Madec','vanny.l@laplateforme.io', '4f15f99279d26f053ddbe27b8e5d9d3203926820c25ebeade0bd082653ab696b', "GB12WWBP30201054321678", 25121993 );
 
 -- 0. Super User a
 -- 1. LucasMartinie1!
@@ -45,7 +45,7 @@ CREATE TABLE transaction (
     transaction_name VARCHAR(255),
     description TEXT,
     amount INT,
-    date DATE,
+    date DATETIME,
     id_category INT,
     account_id INT,
     id_sender INT,
