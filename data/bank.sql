@@ -13,28 +13,29 @@ CREATE TABLE user (
 );
 
 INSERT INTO user (first_name, last_name, email, password, iban, account_number) VALUES
-('Hamza','Naya', 'a', "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb", "GB10WWBP10203012345698", 28092002),
+('Hamza','Naya', 'a', "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb", "GB10WWBP10203012345698",13052001),
 ('Lucas','Martinie','lucas.m@laplateforme.io', '43e405862bdfbdef17f2f13bf6e8a3efe088de01ad8eb4a9f47ff3fa21f20aae', "GB10WWBP10203012345678", 24121995),
-('Vanny','Lamorte','hamza.n@laplateforme.io', 'c9d0532835cc70cbc44011958faed891b3f254627dd0e7b8d3d99c995b2600e4', "GB11WWBP11223387654321", 13052001),
-('Lucy','Madec','vanny.l@laplateforme.io', '4f15f99279d26f053ddbe27b8e5d9d3203926820c25ebeade0bd082653ab696b', "GB12WWBP30201054321678", 25121993 );
+('Vanny','Lamorte','vanny.l@laplateforme.io', 'c9d0532835cc70cbc44011958faed891b3f254627dd0e7b8d3d99c995b2600e4', "GB11WWBP11223387654321", 25121993),
+('Lucy','Madec','lucy.n@laplateforme.io', '0268ea55533d2d3f76ee356c0f4ad9d4cbbe437187696570c508d2c0c76bffa0', "GB12WWBP30201054321678", 228092002 );
 
--- 0. Super User a
--- 1. LucasMartinie1!
--- 2. HamzaNaya1!
--- 3. VannyLamorte1!
+-- 1. Super User a
+-- 2. LucasMartinie1!
+-- 3. HamzaNaya1!
+-- 4. LucyMadec1!
 
-CREATE TABLE account (
+CREATE TABLE decription (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    account_type INT,
-    general_description TEXT
+    tagline TEXT
 );
 
 -- Checking Accounts = 1
 -- Savings Accounts = 2
 
-INSERT INTO account(account_type, description) VALUES
-('1',"Welcome to your checking account! Let's manage your finances together"),
-('2', "Welcome back to your savings account! Let's continue growing your financial goals together");
+INSERT INTO description(tagline) VALUES
+("Welcome to your checking account! Let's manage your finances together"),
+("Welcome to your checking account! Let's manage your finances together"),
+("Welcome to your checking account! Let's manage your finances together"),
+("Welcome back to your savings account! Let's continue growing your financial goals together");
 
 -- "Unlock the perks of a checking account today! Enjoy easy access to your funds, seamless online transactions, and peace of mind with built-in security features."
 -- "Unlock financial freedom with our Saving Account! Enjoy peace of mind knowing your money is safe and growing. With a minimum deposit of 100 pounds per month and a maximum daily withdrawal limit of 300 pounds, it's the perfect way to secure your future while maintaining access to your funds."

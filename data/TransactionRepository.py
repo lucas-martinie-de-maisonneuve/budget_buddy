@@ -24,18 +24,11 @@ class TransactionRepository(Database):
         return self.fetch(sql, values)
     
     # ACCOUNTS
-        
-    def account_type(self):
-        sql = "SELECT ad_description FROM account"
-        return self.fetch(sql)
-        
-    def ad_description_account(self):
-        sql = "SELECT ad_description FROM account"
-        return self.fetch(sql)
     
-    def general_description_account(self):
-        sql = "SELECT _description FROM account"
-        return self.fetch(sql)
+    def description_account(self, account_nb):
+        sql = "SELECT description FROM account WHERE id = %s"
+        values = (account_nb)
+        return self.fetch(sql, values)    
     
     def income_filter(self, user_id):
         sql = "SELECT * FROM transaction WHERE transaction_re = 1  AND (id_receiver = %s OR id_sender = %s)"
@@ -80,13 +73,6 @@ class TransactionRepository(Database):
 
 
     # Notification    
-        
-    # def last_co (self, id_user): 
-    #     current_time = datetime.now()
-    #     sql = "INSERT INTO user = %s WHERE id = %s"
-    #     values = (current_time, id_user,)
-    #     self.execute_query(sql, values)     
-
   
     def save_last_transaction (self, id_user): 
         current_time = datetime.now()

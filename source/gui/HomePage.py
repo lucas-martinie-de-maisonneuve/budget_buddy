@@ -16,18 +16,22 @@ class HomePage(Element, Controller):
         self.accounts_running = True
         self.disconnected = True
 
+        # Main Page
+        self.welcome_message = ""
+
         # Notification
         self.display_notif = self.notification()
 
         self.image_paths = {
             # Main page
-            "logout": "assets/image/Accounts/accounts_off1.png",
-            "bell":"assets/image/Accounts/accounts_bell.png",
-            "logo":"assets/image/Accounts/accounts_logo.png",
-            "background":"assets/image/Accounts/accounts_background1.jpg",
-            "background_top":"assets/image/Accounts/accounts_background_top.jpg",
-            "help":"assets/image/Accounts/accounts_help.png",
-            "pic":"assets/image/Accounts/accounts_pic.png", 
+            "logout": "assets/image/MainPage/mainpage_off.png",
+            "bell":"assets/image/MainPage/mainpage_bell.png",
+            "background":"assets/image/MainPage/mainpage_background1.jpg",
+            "background_top":"assets/image/MainPage/mainpage_background_top.jpg",
+            "help":"assets/image/MainPage/mainpage_help.png",
+            "profile":"assets/image/MainPage/mainpage_profile.png",
+            "coin":"assets/image/MainPage/mainpage_coin.png",
+            # Checking & Saving
             "date":"assets/image/Account/account_1.png",
             "income":"assets/image/Account/account_2.png",
             "expense":"assets/image/Account/account_3.png",
@@ -35,8 +39,10 @@ class HomePage(Element, Controller):
             "ascending":"assets/image/Account/account_7.png",
             "calendar":"assets/image/Account/account_6.png",
             "type":"assets/image/Account/account_4.png",
-            "modify":"assets/image/Profile/profile1.png",
-            "question":"assets/image/Transaction/transaction1.png",
+            # Profile
+            "pen":"assets/image/Profile/profile_pen.png",
+            # Transaction
+            "question":"assets/image/Transaction/transaction_question.png",
         }
 
         self.images = {}
@@ -67,6 +73,7 @@ class HomePage(Element, Controller):
         self.text_not_center(self.font1, 18, "Wildcat Wealth Bank", self.white, 10, 85)
         
         # Account ID Number
+        self.text_not_center(self.font2, 13, "Account ID Number :", self.white, 600, 75)
         self.text_not_center(self.font2, 13, self.user[6], self.white, 755, 75)
         
         # # Notification
@@ -84,7 +91,7 @@ class HomePage(Element, Controller):
         self.rect_radius_top(self.green3, 140, 175, 250, 45, 5)
 
         # User info
-        self.img_not_center("Profil pic", 90, 160, 90, 90, self.images["pic"])
+        self.img_not_center("Profil pic", 90, 160, 90, 90, self.images["profile"])
         self.text_not_center(self.font1, 15, f"{self.user[1]} { self.user[2]}", self.grey3, 70, 270)
         self.profile_rect = self.button_hover_small("My Profil", 140, 320, 190, 40, self.green2, self.green2, self.green2, self.green2, "My Profil", self.font1, self.white,15, 0, 3
         )
@@ -112,7 +119,14 @@ class HomePage(Element, Controller):
         self.rect_border(self.green2, 630, 420, 700, 530, 2, 5) 
         self.rect_radius_top(self.green3, 630, 175, 700, 45, 5)
 
+    def all_accounts(self):
+        self.img_not_center("coins", 90, 160, 90, 90, self.images["coin"])
+ 
+
+
+
     def main_page_design(self):
+
         self.background()
         self.top_bar()
         self.side_bar()
@@ -141,6 +155,8 @@ class HomePage(Element, Controller):
         
         self.rect_radius_top(self.green3, 630, 175, 700, 45, 5)
         self.checking_saving_event = True
+
+        self.text_not_center(self.font1, 14, str(self.welcome_message[0][0]), self.white, 295, 170)
 
     def profile_design(self):
 
@@ -235,6 +251,8 @@ class HomePage(Element, Controller):
                 new_notif = new_notif + 1
         return new_notif
     
+    
+    
            
     def homepage_run(self):
         if self.accounts_running:
@@ -248,8 +266,15 @@ class HomePage(Element, Controller):
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.transfer_rect.collidepoint(event.pos):
                         self.profile_display, self.checking_saving_display, self.checking_saving_event, self.transfer_display = False, False, False, True
-                    elif self.checking_rect.collidepoint(event.pos) or self.saving_rect.collidepoint(event.pos):
+                    elif self.checking_rect.collidepoint(event.pos):
+                        self.welcome_message = self.catch_phrase(1)
                         self.profile_display, self.checking_saving_display, self.transfer_display = False, True, False
+
+                    elif self.saving_rect.collidepoint(event.pos):
+                        self.welcome_message = self.catch_phrase(2)
+                        self.profile_display, self.checking_saving_display, self.transfer_display = False, True, False
+
+                    
                     elif self.profile_rect.collidepoint(event.pos):
                         self.profile_display, self.checking_saving_display, self.transfer_display, self.checking_saving_event = True, False, False, False
                     elif self.log_out_rect.collidepoint(event.pos):

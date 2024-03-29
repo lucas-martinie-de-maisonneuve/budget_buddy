@@ -27,7 +27,8 @@ class LogIn(Element, Animation, Controller):
             "twitter": "assets/image/LogIn/login_twitter.png",
             "instagram": "assets/image/LogIn/login_instagram.png",
             "facebook": "assets/image/LogIn/login_facebook.png",
-            "background": "assets/image/LogIn/login_background.png"
+            "background": "assets/image/LogIn/login_background.png",
+            "eye":"assets/image/LogIn/login_eye.png"
         }
 
         self.images = {}
@@ -60,6 +61,9 @@ class LogIn(Element, Animation, Controller):
         # Password
         self.input_password_rect = self.button_hover("Password", self.W//2+220, 320, 350, 50, self.green2, self.green2, self.green2, self.green2, self.input_password, self.font4, self.white, 18, 1, 5)
         self.text_input(self.input_password_rect, self.input_password, "Password", 720, 320, 350, 50, id="email_login")
+
+        # Eye
+        self.img_background(870, 320, 25, 25, self.images["eye"])
 
         # Login
         self.login_rect = self.button_hover("Login", self.W//2+220, 390, 350, 50, self.green, self.green, self.green, self.green,"Log In", self.font1, self.white, 18, 1, 5) 
