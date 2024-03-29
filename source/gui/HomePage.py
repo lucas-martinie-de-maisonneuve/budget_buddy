@@ -129,6 +129,7 @@ class HomePage(Element, Controller):
             self.pos_y = y + self.scroll
 
             if self.pos_y < 425:
+                self.text_not_center(self.font3, 10,str(transaction[6]), self.black, 450, self.pos_y + 252.5)
                 self.text_not_center(self.font3, 10,f"{str(transaction[5].day)}/{str(transaction[5].month)}/{str(transaction[5].year)}", self.black, 460, self.pos_y + 252.5)
                 self.text_not_center(self.font3, 15, str(transaction[2]), self.black, 530, self.pos_y + 250)
                 self.text_not_center(self.font3, 12, str(transaction[3]), self.black, 750, self.pos_y + 251.5)

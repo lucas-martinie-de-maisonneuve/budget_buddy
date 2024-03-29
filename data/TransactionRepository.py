@@ -74,7 +74,7 @@ class TransactionRepository(Database):
         return self.fetch(sql, values)
     
     def category_filter (self, user_id): 
-        sql = "SELECT * FROM transaction WHERE id_category = %s OR id_sender = %s ORDER BY amount DESC"
+        sql = "SELECT * FROM transaction WHERE id_sender = %s OR id_receiver = %s ORDER BY id_category ASC"
         values = (user_id, user_id)
         return self.fetch(sql, values)
 
