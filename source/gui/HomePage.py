@@ -8,7 +8,7 @@ class HomePage(Element, Controller):
         Controller.__init__(self)
         self.user = user_info
         self.user_id = self.user[0]
-        self.user_fisrt_name, self.user_last_name, self.user_email, self.user_iban, self.user_account_numer = self.user[1], self.user[2], self.user[3], self.user[5], self.user[6]
+        self.user_fisrt_name, self.user_last_name, self.user_email, self.user_iban, self.user_account_number = self.user[1], self.user[2], self.user[3], self.user[5], self.user[6]
 
         self.transactions = self.display_transaction(self.user_id, 1)
 
@@ -67,7 +67,7 @@ class HomePage(Element, Controller):
         # Account ID Number
        
         self.text_not_center(self.font3, 13, " Account ID number | ", self.white, 585, 75)
-        self.text_not_center(self.font2, 13, "24121993", self.white, 755, 75)
+        self.text_not_center(self.font2, 13, self.user[6], self.white, 755, 75)
         
         # Notification
         self.img_hover("bell", "bell", 890, 80, 40, 40,self.images["bell"],self.images["bell"])
@@ -85,7 +85,7 @@ class HomePage(Element, Controller):
 
         # User info
         self.img_not_center("Profil pic", 90, 160, 90, 90, self.images["pic"])
-        self.text_not_center(self.font1, 15, "Hamza Lucas Vanny", self.grey3, 70, 260)
+        self.text_not_center(self.font1, 15, f"{self.user[1]} { self.user[2]}", self.grey3, 70, 270)
         self.profile_rect = self.button_hover_small("My Profil", 140, 320, 190, 40, self.green2, self.green2, self.green2, self.green2, "My Profil", self.font1, self.white,15, 0, 3
         )
 
@@ -139,29 +139,29 @@ class HomePage(Element, Controller):
     def profile_design(self):
 
         # Name
-        self.text_not_center(self.font3, 16, "Name", self.grey1, 330, 300)
+        self.text_not_center(self.font1, 16, "Name", self.grey1, 330, 300)
         self.text_not_center(self.font2, 16, self.user[1], self.grey1, 390, 300)
-        pygame.draw.line(self.Window, self.green4, (330, 330), (700, 330), 1)
+        pygame.draw.line(self.Window, self.green4, (330, 330), (750, 330), 1)
 
         # Surname
-        self.text_not_center(self.font3, 16, "Surname", self.grey1, 330, 350)
+        self.text_not_center(self.font1, 16, "Surname", self.grey1, 330, 350)
         self.text_not_center(self.font2, 16,self.user[2], self.grey1, 420, 350)
-        pygame.draw.line(self.Window, self.green4, (330, 380), (700, 380), 1)
+        pygame.draw.line(self.Window, self.green4, (330, 380), (750, 380), 1)
 
         # Email
-        self.text_not_center(self.font3, 16, "Email", self.grey1, 330, 400)
+        self.text_not_center(self.font1, 16, "Email", self.grey1, 330, 400)
         self.text_not_center(self.font2, 16, self.user[3], self.grey1, 400, 400)
-        pygame.draw.line(self.Window, self.green4, (330, 430), (700, 430), 1)
+        pygame.draw.line(self.Window, self.green4, (330, 430), (750, 430), 1)
         
         # Account ID
-        self.text_not_center(self.font3, 16, "Account ID Number", self.grey1, 330, 450)
-        self.text_not_center(self.font2, 16, self.user[5], self.grey1,520, 450)
-        pygame.draw.line(self.Window, self.green4, (330, 480), (700, 480), 1)
+        self.text_not_center(self.font1, 16, "Account ID Number", self.grey1, 330, 450)
+        self.text_not_center(self.font2, 16, self.user[5], self.grey1,500, 450)
+        pygame.draw.line(self.Window, self.green4, (330, 480), (750, 480), 1)
 
         # IBAN
-        self.text_not_center(self.font3, 16, "IBAN", self.grey1, 330, 500)
+        self.text_not_center(self.font1, 16, "IBAN", self.grey1, 330, 500)
         self.text_not_center(self.font2, 16, self.user[6], self.grey1, 390, 500)
-        pygame.draw.line(self.Window, self.green4, (330, 530), (700, 530), 1)
+        pygame.draw.line(self.Window, self.green4, (330, 530), (750, 530), 1)
 
     def filter_options(self): 
 
