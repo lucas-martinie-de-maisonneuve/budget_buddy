@@ -17,6 +17,7 @@ class HomePage(Element, Controller):
         self.checking_receiver = False
         self.saving_receiver = False
         self.not_conform = False
+        self.transaction_event = False
 
         self.checking_saving_event = False
         self.scroll = 0
@@ -243,89 +244,7 @@ class HomePage(Element, Controller):
         if self.not_conform:
             self.text_not_center(self.font1, 12, "Oops, something has gone wrong ", self.red, 770, 630)
 
-    def transaction_run(self):
-        if self.transaction_running:
-            self.transaction_design()
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.quit = True
-
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    if self.checking_sender_rect.collidepoint(event.pos):
-                        self.checking_sender = not self.checking_sender
-
-                    elif self.saving_sender_rect.collidepoint(event.pos):
-                        self.saving_sender = not self.checking_sender
-
-                    elif self.input_descrition_rect.collidepoint(event.pos):
-                        if self.input_descrition == "Description":
-                            self.input_descrition = ""
-                        self.entry = 3
-
-                    elif self.input_number_category_rect.collidepoint(event.pos):
-                        self.entry = 4
-
-                    elif self.transaction_type_rect.collidepoint(event.pos):
-                        pass
-
-                    elif self.input_amont_rect.collidepoint(event.pos):
-                        if self.input_amont == "Amount":
-                            self.input_amont = ""
-                        self.entry = 5
-
-                    elif self.input_name_receiver_rect.collidepoint(event.pos):
-                        if self.input_name_receiver == "Name":
-                            self.input_name_receiver = ""
-                        self.entry = 6
-
-                    elif self.input_surname_receiver_rect.collidepoint(event.pos):
-                        if self.input_surname_receiver == "Surname":
-                            self.input_surname_receiver = ""
-                        self.entry = 7
-
-                    elif self.input_iban_receiver_rect.collidepoint(event.pos):
-                        if self.input_iban == "IBAN":
-                            self.input_iban_receiver = ""
-                        self.entry = 8
-
-                    elif self.checking_receiver_rect.collidepoint(event.pos):
-                        self.checking_receiver = not self.checking_receiver
-
-                    elif self.saving_receiver_rect.collidepoint(event.pos):
-                        self.saving_receiver = not self.checking_receiver
-
-                    elif self.confirm_button_rect.collidepoint(event.pos):
-                        pass
-
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_BACKSPACE:
-                        if self.entry == 3:
-                            self.input_descrition = self.input_descrition[:-1]
-                        elif self.entry == 4:
-                            self.input_number_category = self.input_number_category[:-1]
-                        elif self.entry == 5:
-                            self.input_amont = self.input_amont[:-1]
-                        elif self.entry == 6:
-                            self.input_name_receiver = self.input_name_receiver[:-1]
-                        elif self.entry == 7:
-                            self.input_surname_receiver = self.input_surname_receiver[:-1]
-                        elif self.entry == 8:
-                            self.input_iban_receiver = self.input_iban_receiver[:-1]
-                    else:
-                        if self.entry == 3:
-                            self.input_descrition += event.unicode
-                        elif self.entry == 4:
-                            self.input_number_category += event.unicode
-                        elif self.entry == 5:
-                            self.input_amont += event.unicode
-                        elif self.entry == 6:
-                            self.input_name_receiver += event.unicode
-                        elif self.entry == 7:
-                            self.input_surname_receiver += event.unicode
-                        elif self.entry == 8:
-                            self.input_iban_receiver += event.unicode
-
+        self.transaction_event = True
 
     def homepage_run(self):
         if self.accounts_running:
@@ -335,14 +254,17 @@ class HomePage(Element, Controller):
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    self.accounts_running = False
+                    pass
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.transfer_rect.collidepoint(event.pos):
                         self.profile_display, self.checking_saving_display, self.checking_saving_event, self.transfer_display = False, False, False, True
+
                     elif self.checking_rect.collidepoint(event.pos) or self.saving_rect.collidepoint(event.pos):
-                        self.profile_display, self.checking_saving_display, self.transfer_display = False, True, False
+                        self.profile_display, self.checking_saving_display, self.transfer_display, self.transaction_event = False, True, False, False
+
                     elif self.profile_rect.collidepoint(event.pos):
-                        self.profile_display, self.checking_saving_display, self.transfer_display, self.checking_saving_event = True, False, False, False
+                        self.profile_display, self.checking_saving_display, self.transfer_display, self.checking_saving_event, self.transaction_event = True, False, False, False, False
+
                     elif self.log_out_rect.collidepoint(event.pos):
                         self.disconnected = True
                         self.accounts_running = False
@@ -377,3 +299,78 @@ class HomePage(Element, Controller):
 
                             elif self.calendar_rect.collidepoint(event.pos):
                                 self.transactions = self.display_transaction(self.user_id,8)
+
+                    if self.transaction_event:
+                        if self.checking_sender_rect.collidepoint(event.pos):
+                            self.checking_sender = not self.checking_sender
+
+                        elif self.saving_sender_rect.collidepoint(event.pos):
+                            self.saving_sender = not self.checking_sender
+
+                        elif self.input_descrition_rect.collidepoint(event.pos):
+                            if self.input_descrition == "Description":
+                                self.input_descrition = ""
+                            self.entry = 3
+
+                        elif self.input_number_category_rect.collidepoint(event.pos):
+                            self.entry = 4
+
+                        elif self.transaction_type_rect.collidepoint(event.pos):
+                            pass
+
+                        elif self.input_amont_rect.collidepoint(event.pos):
+                            if self.input_amont == "Amount":
+                                self.input_amont = ""
+                            self.entry = 5
+
+                        elif self.input_name_receiver_rect.collidepoint(event.pos):
+                            if self.input_name_receiver == "Name":
+                                self.input_name_receiver = ""
+                            self.entry = 6
+
+                        elif self.input_surname_receiver_rect.collidepoint(event.pos):
+                            if self.input_surname_receiver == "Surname":
+                                self.input_surname_receiver = ""
+                            self.entry = 7
+
+                        elif self.input_iban_receiver_rect.collidepoint(event.pos):
+                            if self.input_iban == "IBAN":
+                                self.input_iban_receiver = ""
+                            self.entry = 8
+
+                        elif self.checking_receiver_rect.collidepoint(event.pos):
+                            self.checking_receiver = not self.checking_receiver
+
+                        elif self.saving_receiver_rect.collidepoint(event.pos):
+                            self.saving_receiver = not self.checking_receiver
+
+                        elif self.confirm_button_rect.collidepoint(event.pos):
+                            pass
+                if self.transaction_event:
+                    if event.type == pygame.KEYDOWN:
+                            if event.key == pygame.K_BACKSPACE:
+                                if self.entry == 3:
+                                    self.input_descrition = self.input_descrition[:-1]
+                                elif self.entry == 4:
+                                    self.input_number_category = self.input_number_category[:-1]
+                                elif self.entry == 5:
+                                    self.input_amont = self.input_amont[:-1]
+                                elif self.entry == 6:
+                                    self.input_name_receiver = self.input_name_receiver[:-1]
+                                elif self.entry == 7:
+                                    self.input_surname_receiver = self.input_surname_receiver[:-1]
+                                elif self.entry == 8:
+                                    self.input_iban_receiver = self.input_iban_receiver[:-1]
+                            else:
+                                if self.entry == 3:
+                                    self.input_descrition += event.unicode
+                                elif self.entry == 4:
+                                    self.input_number_category += event.unicode
+                                elif self.entry == 5:
+                                    self.input_amont += event.unicode
+                                elif self.entry == 6:
+                                    self.input_name_receiver += event.unicode
+                                elif self.entry == 7:
+                                    self.input_surname_receiver += event.unicode
+                                elif self.entry == 8:
+                                    self.input_iban_receiver += event.unicode
