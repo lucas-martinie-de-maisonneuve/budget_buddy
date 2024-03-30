@@ -20,11 +20,14 @@ class Controller(UserRepository,TransactionRepository):
         self.input_email_register = ""
         self.input_password_register = ""
 
-        self.account_number = ""
-
         self.sort_code_1 = ""
         self.sort_code_2 = ""
         self.sort_code_3 = ""
+        self.country = "GB"
+        self.check_digits = ""
+        self.bank_code = "PANT"
+        self.account_number = ""
+        self.iban = ""
 
         # Homepage Transfer Money
         self.input_description = "Description"
