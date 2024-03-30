@@ -123,7 +123,6 @@ class HomePage(Element, Controller):
         self.rect_border(self.green2, 630, 420, 700, 530, 2, 5) 
         self.rect_radius_top(self.green3, 630, 175, 700, 45, 5)
 
-
     def main_page_design(self):
         self.background()
         self.top_bar()
@@ -158,7 +157,9 @@ class HomePage(Element, Controller):
         self.text_not_center(self.font2, 17,"To / From", self.black, 535, 210)
         self.text_not_center(self.font2, 17, "Description", self.black, 740, 210)
         self.text_not_center(self.font2, 17, "Amount", self.black, 910, 210)
-        self.checking_saving_event = True
+        
+        if not self.checking_saving_event:
+            self.checking_saving_event = True
 
     def profile_design(self):
 

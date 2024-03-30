@@ -27,5 +27,4 @@ def display():
         elif h.disconnected:
             l.login_running = True
 
-
         s.update()

@@ -12,6 +12,7 @@ class LogIn(Element, Animation, Controller):
         self.login_running = True
         self.register_running = False
         self.quit = False
+        self.error_login = False
 
         self.entry = False
         self.checkbox = False
@@ -63,6 +64,10 @@ class LogIn(Element, Animation, Controller):
 
         # Login
         self.login_rect = self.button_hover("Login", self.W//2+220, 390, 350, 50, self.green, self.green, self.green, self.green,"Log In", self.font1, self.white, 18, 1, 5) 
+
+        # Error message
+        if self.error_login:
+            self.text_center(self.font1, 16, "Wrong Email or Password", self.red2, 720, 430)
 
         # No Account
         self.text_center(self.font1, 13, "No account ?", self.white, self.W//2+190, 450)
@@ -183,16 +188,17 @@ class LogIn(Element, Animation, Controller):
                     self.quit = True
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if self.input_email_rect.collidepoint(event.pos):
-                        self.input_email = ""
                         self.entry = 1
 
                     elif self.input_password_rect.collidepoint(event.pos):
-                        self.input_password = ""
                         self.entry = 2
 
                     elif self.login_rect.collidepoint(event.pos):
                         self.user = self.login_user()
-                        self.login_running = False
+                        if self.user != None:
+                            self.login_running = False
+                        else:
+                            self.error_login = True
 
                     elif self.signup_rect.collidepoint(event.pos):
                         self.register_running = True
@@ -206,11 +212,13 @@ class LogIn(Element, Animation, Controller):
                             self.input_password = self.input_password[:-1]
                     else:
                         if self.entry == 1:
-                            if event.unicode:
-                                self.input_email += event.unicode
+                            self.input_email += event.unicode
+                            self.error_login = False
 
                         elif self.entry == 2:
                             self.input_password += event.unicode
+                            self.error_login = False
+
     def register_run(self):
         if self.register_running:
 
