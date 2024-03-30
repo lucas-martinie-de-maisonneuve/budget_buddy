@@ -29,7 +29,7 @@ class Controller(UserRepository,TransactionRepository):
         # Homepage Transfer Money
         self.input_descrition = "Description"
         self.input_number_category = "1-7"
-        self.input_amont = "Amount"
+        self.input_amount = "Amount"
 
         self.input_name_receiver = "Name"
         self.input_surname_receiver = "Surname"

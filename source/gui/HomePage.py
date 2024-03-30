@@ -12,12 +12,15 @@ class HomePage(Element, Controller):
 
         self.transactions = self.display_transaction(self.user_id, 1)
         self.date_sort = False
+
         self.checking_sender = False
         self.saving_sender = False
         self.checking_receiver = False
         self.saving_receiver = False
+
         self.not_conform = False
         self.transaction_event = False
+
 
         self.checking_saving_event = False
         self.scroll = 0
@@ -208,11 +211,19 @@ class HomePage(Element, Controller):
         self.text_not_center(self.font1, 18, "Sender", self.grey2, 450, 225)
         self.input_name_sender_rect = self.button_hover("Name", 380, 290, 150, 40, self.grey, self.green1, self.grey, self.green1, self.user_fisrt_name, self.font3, self.grey2, 14, 2, 5)
         self.input_surname_sender_rect = self.button_hover("Surname", 540, 290, 150, 40, self.grey, self.green1, self.grey, self.green1, self.user_last_name, self.font3, self.grey2, 14, 2, 5)
-        self.checking_sender_rect = self.button_hover("Checking Account", 380, 360, 150, 40, self.grey, self.green1, self.grey, self.green1, "Checking Account", self.font3, self.grey2, 14, 2, 5)
-        self.saving_sender_rect = self.button_hover("Saving Account", 540, 360, 150, 40, self.grey, self.green1, self.grey, self.green1, "Saving Account", self.font3, self.grey2, 14, 2, 5)
+
+        if self.checking_sender:
+            self.checking_sender_rect = self.button_hover("Checking Account", 380, 360, 150, 40, self.green1, self.green1, self.green1, self.green1, "Checking Account", self.font3, self.white, 14, 2, 5)
+        else:
+            self.checking_sender_rect = self.button_hover("Checking Account", 380, 360, 150, 40, self.grey, self.green1, self.grey, self.green1, "Checking Account", self.font3, self.grey2, 14, 2, 5)
+
+        if self.saving_sender:
+            self.saving_sender_rect = self.button_hover("Saving Account", 540, 360, 150, 40, self.green1, self.green1, self.green1, self.green1, "Saving Account", self.font3, self.white, 14, 2, 5)
+        else:
+            self.saving_sender_rect = self.button_hover("Saving Account", 540, 360, 150, 40, self.grey, self.green1, self.grey, self.green1, "Saving Account", self.font3, self.grey2, 14, 2, 5)
+
         self.input_descrition_rect = self.button_hover("Description", 460, 430, 310, 40, self.grey, self.green1, self.grey, self.green1, self.input_descrition, self.font3, self.grey2, 14, 2, 5)
-        self.transaction_type_rect = self.button_hover("+/-", 325, 570, 40, 40, self.grey, self.green1, self.grey, self.green1, "+/-", self.font3, self.grey2, 14, 2, 5)
-        self.input_amont_rect = self.button_hover("Amont", 485, 570, 260, 40, self.grey, self.green1, self.grey, self.green1, self.input_amont, self.font3, self.grey2, 14, 2, 5)
+        self.input_amont_rect = self.button_hover("Amount", 460, 570, 310, 40, self.grey, self.green1, self.grey, self.green1, self.input_amount, self.font3, self.grey2, 14, 2, 5)
 
         # Category
         self.button_hover("Category", 420, 500, 220, 40, self.grey, self.green1, self.grey, self.green1, "Category", self.font3, self.grey2, 14, 2, 5)
@@ -234,8 +245,16 @@ class HomePage(Element, Controller):
 
         # Send money to yourself
         self.text_not_center(self.font1, 18, "Transfer to yourself", self.grey2, 700, 430)
-        self.checking_receiver_rect = self.button_hover("Checking Account", 720, 500, 150, 40, self.grey, self.green1, self.grey, self.green1, "Checking Account", self.font3, self.grey2, 14, 2, 5)
-        self.saving_receiver_rect = self.button_hover("Saving Account", 880, 500, 150, 40, self.grey, self.green1, self.grey, self.green1, "Saving Account", self.font3, self.grey2, 14, 2, 5)
+
+        if self.checking_receiver:
+            self.checking_receiver_rect = self.button_hover("Checking Account", 720, 500, 150, 40, self.green1, self.green1, self.green1, self.green1, "Checking Account", self.font3, self.white, 14, 2, 5)
+        else:
+            self.checking_receiver_rect = self.button_hover("Checking Account", 720, 500, 150, 40, self.grey, self.green1, self.grey, self.green1, "Checking Account", self.font3, self.grey2, 14, 2, 5)
+
+        if self.saving_receiver:
+            self.saving_receiver_rect = self.button_hover("Saving Account", 880, 500, 150, 40, self.green1, self.green1, self.green1, self.green1, "Saving Account", self.font3, self.white, 14, 2, 5)
+        else:
+            self.saving_receiver_rect = self.button_hover("Saving Account", 880, 500, 150, 40, self.grey, self.green1, self.grey, self.green1, "Saving Account", self.font3, self.grey2, 14, 2, 5)
 
         # Validation button
         self.confirm_button_rect = self.button_hover("validation", 855, 600, 200, 40, self.green2, self.green2, self.green1, self.green1, "CONFIRM BANK TRANSFER", self.font3, self.white, 14, 2, 5)
@@ -257,7 +276,7 @@ class HomePage(Element, Controller):
                     pass
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.transfer_rect.collidepoint(event.pos):
-                        self.profile_display, self.checking_saving_display, self.checking_saving_event, self.transfer_display = False, False, False, True
+                        self.profile_display, self.checking_saving_display, self.checking_saving_event, self.transfer_display, self.transaction_event = False, False, False, True, False
 
                     elif self.checking_rect.collidepoint(event.pos) or self.saving_rect.collidepoint(event.pos):
                         self.profile_display, self.checking_saving_display, self.transfer_display, self.transaction_event = False, True, False, False
@@ -305,7 +324,7 @@ class HomePage(Element, Controller):
                             self.checking_sender = not self.checking_sender
 
                         elif self.saving_sender_rect.collidepoint(event.pos):
-                            self.saving_sender = not self.checking_sender
+                            self.saving_sender = not self.saving_sender
 
                         elif self.input_descrition_rect.collidepoint(event.pos):
                             if self.input_descrition == "Description":
@@ -313,14 +332,13 @@ class HomePage(Element, Controller):
                             self.entry = 3
 
                         elif self.input_number_category_rect.collidepoint(event.pos):
+                            if self.input_number_category == "1-7":
+                                self.input_number_category = ""
                             self.entry = 4
 
-                        elif self.transaction_type_rect.collidepoint(event.pos):
-                            pass
-
                         elif self.input_amont_rect.collidepoint(event.pos):
-                            if self.input_amont == "Amount":
-                                self.input_amont = ""
+                            if self.input_amount == "Amount":
+                                self.input_amount = ""
                             self.entry = 5
 
                         elif self.input_name_receiver_rect.collidepoint(event.pos):
@@ -334,7 +352,7 @@ class HomePage(Element, Controller):
                             self.entry = 7
 
                         elif self.input_iban_receiver_rect.collidepoint(event.pos):
-                            if self.input_iban == "IBAN":
+                            if self.input_iban_receiver  == "IBAN":
                                 self.input_iban_receiver = ""
                             self.entry = 8
 
@@ -342,7 +360,7 @@ class HomePage(Element, Controller):
                             self.checking_receiver = not self.checking_receiver
 
                         elif self.saving_receiver_rect.collidepoint(event.pos):
-                            self.saving_receiver = not self.checking_receiver
+                            self.saving_receiver = not self.saving_receiver
 
                         elif self.confirm_button_rect.collidepoint(event.pos):
                             pass
@@ -354,7 +372,7 @@ class HomePage(Element, Controller):
                                 elif self.entry == 4:
                                     self.input_number_category = self.input_number_category[:-1]
                                 elif self.entry == 5:
-                                    self.input_amont = self.input_amont[:-1]
+                                    self.input_amount = self.input_amount[:-1]
                                 elif self.entry == 6:
                                     self.input_name_receiver = self.input_name_receiver[:-1]
                                 elif self.entry == 7:
@@ -362,15 +380,23 @@ class HomePage(Element, Controller):
                                 elif self.entry == 8:
                                     self.input_iban_receiver = self.input_iban_receiver[:-1]
                             else:
-                                if self.entry == 3:
+                                if self.entry == 3 and len(self.input_descrition) < 32:
                                     self.input_descrition += event.unicode
-                                elif self.entry == 4:
-                                    self.input_number_category += event.unicode
-                                elif self.entry == 5:
-                                    self.input_amont += event.unicode
-                                elif self.entry == 6:
+
+                                elif self.entry == 4 and len(self.input_number_category) < 1:
+                                    if event.unicode.isdigit():
+                                        self.input_number_category += event.unicode
+
+                                elif self.entry == 5 and len(self.input_amount) < 6:
+                                    if event.unicode.isdigit():
+                                        self.input_amount += event.unicode
+
+                                elif self.entry == 6 and len(self.input_name_receiver) < 16:
                                     self.input_name_receiver += event.unicode
-                                elif self.entry == 7:
+
+                                elif self.entry == 7 and len(self.input_surname_receiver) < 16:
                                     self.input_surname_receiver += event.unicode
-                                elif self.entry == 8:
-                                    self.input_iban_receiver += event.unicode
+
+                                elif self.entry == 8 and len(self.input_iban_receiver) < 22:
+                                    if event.unicode.isupper():
+                                        self.input_iban_receiver += event.unicode
