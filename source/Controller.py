@@ -27,7 +27,7 @@ class Controller(UserRepository,TransactionRepository):
         self.sort_code_3 = ""
 
         # Homepage Transfer Money
-        self.input_descrition = "Description"
+        self.input_description = "Description"
         self.input_number_category = "1-7"
         self.input_amount = "Amount"
 

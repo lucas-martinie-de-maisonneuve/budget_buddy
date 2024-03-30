@@ -223,7 +223,7 @@ class HomePage(Element, Controller):
         else:
             self.saving_sender_rect = self.button_hover("Saving Account", 540, 360, 150, 40, self.grey, self.green1, self.grey, self.green1, "Saving Account", self.font3, self.grey2, 14, 2, 5)
 
-        self.input_descrition_rect = self.button_hover("Description", 460, 430, 310, 40, self.grey, self.green1, self.grey, self.green1, self.input_descrition, self.font3, self.grey2, 14, 2, 5)
+        self.input_description_rect = self.button_hover("Description", 460, 430, 310, 40, self.grey, self.green1, self.grey, self.green1, self.input_description, self.font3, self.grey2, 14, 2, 5)
         self.input_amont_rect = self.button_hover("Amount", 460, 570, 310, 40, self.grey, self.green1, self.grey, self.green1, self.input_amount, self.font3, self.grey2, 14, 2, 5)
 
         # Category
@@ -327,9 +327,9 @@ class HomePage(Element, Controller):
                         elif self.saving_sender_rect.collidepoint(event.pos):
                             self.saving_sender = not self.saving_sender
 
-                        elif self.input_descrition_rect.collidepoint(event.pos):
-                            if self.input_descrition == "Description":
-                                self.input_descrition = ""
+                        elif self.input_description_rect.collidepoint(event.pos):
+                            if self.input_description == "Description":
+                                self.input_description = ""
                             self.entry = 3
 
                         elif self.input_number_category_rect.collidepoint(event.pos):
@@ -369,7 +369,7 @@ class HomePage(Element, Controller):
                     if event.type == pygame.KEYDOWN:
                             if event.key == pygame.K_BACKSPACE:
                                 if self.entry == 3:
-                                    self.input_descrition = self.input_descrition[:-1]
+                                    self.input_description = self.input_description[:-1]
                                 elif self.entry == 4:
                                     self.input_number_category = self.input_number_category[:-1]
                                 elif self.entry == 5:
@@ -381,8 +381,8 @@ class HomePage(Element, Controller):
                                 elif self.entry == 8:
                                     self.input_iban_receiver = self.input_iban_receiver[:-1]
                             else:
-                                if self.entry == 3 and len(self.input_descrition) < 32:
-                                    self.input_descrition += event.unicode
+                                if self.entry == 3 and len(self.input_description) < 32:
+                                    self.input_description += event.unicode
 
                                 elif self.entry == 4 and len(self.input_number_category) < 1:
                                     if event.unicode.isdigit():
