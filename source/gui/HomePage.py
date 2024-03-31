@@ -19,10 +19,7 @@ class HomePage(Element, Controller):
         # Main Page
         self.welcome_message = ""
         self.coin_angle = 0
-        self.rotation_speed = 2
-
-
-        
+        self.rotation_speed = 2        
 
         # Notification
         self.display_notif = self.notification()
@@ -36,6 +33,7 @@ class HomePage(Element, Controller):
             "help":"assets/image/MainPage/mainpage_help.png",
             "profile":"assets/image/MainPage/mainpage_profile.png",
             "coin":"assets/image/MainPage/mainpage_coin.png",
+            "circle":"assets/image/MainPage/mainpage_circle.png",
             # Checking & Saving
             "date":"assets/image/Account/account_1.png",
             "income":"assets/image/Account/account_2.png",
@@ -127,11 +125,28 @@ class HomePage(Element, Controller):
     def all_accounts(self):
 
         pygame.draw.line(self.Window, self.grey3, (315, 280), (605, 280), 1)
-        self.text_not_center(self.font1, 18, "Total Balance", self.grey2, 405, 290)
+        self.text_not_center(self.font1, 35, "3200", self.green1, 405, 230)
         self.text_not_center(self.font1, 18, "Total Balance", self.grey2, 405, 290)
 
-        self.rect_full(self.grey1, 460, 410, 300, 150, 5)
-        self.rect_full(self.grey1, 460, 580, 300, 150, 5)
+        # Checking Account
+        self.rect_full(self.green1, 460, 410, 300, 150, 5)
+        self.img_hover("Circle", "Circle", 530, 410, 110, 110,self.images["circle"],self.images["circle"])
+        self.text_not_center(self.font4, 15, "+ 2400", self.white, 500, 405)
+        self.text_not_center(self.font1, 14, "CHECKING ACCOUNT", self.white, 330, 370)
+        self.text_not_center(self.font4, 12, "N° 1234566", self.white, 330, 400)
+        self.text_not_center(self.font4, 12, "Vanny Lamorte", self.white, 330, 430)
+
+
+
+        # Saving Account
+        self.rect_full(self.green1, 460, 580, 300, 150, 5)
+        self.img_hover("Circle", "Circle", 530, 580, 110, 110,self.images["circle"],self.images["circle"])
+        self.text_not_center(self.font4, 15, "+ 2400", self.white, 500, 575)
+        self.text_not_center(self.font1, 14, "SAVING ACCOUNT", self.white, 330, 540)
+        self.text_not_center(self.font4, 12, "N° 1234566", self.white, 330, 570)
+        self.text_not_center(self.font4, 12, "Vanny Lamorte", self.white, 330, 600)
+
+
 
        
         # Animation
