@@ -20,7 +20,7 @@ piece_x = (SCREEN_WIDTH - piece_rect.width) // 2
 piece_y = (SCREEN_HEIGHT - piece_rect.height) // 2
 
 # Vitesse de rotation de la pièce (en degrés par frame)
-rotation_speed = 2
+    rotation_speed = 2
 
 # Boucle principale
 clock = pygame.time.Clock()

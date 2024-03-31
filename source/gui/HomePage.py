@@ -18,6 +18,11 @@ class HomePage(Element, Controller):
 
         # Main Page
         self.welcome_message = ""
+        self.coin_angle = 0
+        self.rotation_speed = 2
+
+
+        
 
         # Notification
         self.display_notif = self.notification()
@@ -120,8 +125,31 @@ class HomePage(Element, Controller):
         self.rect_radius_top(self.green3, 630, 175, 700, 45, 5)
 
     def all_accounts(self):
-        self.img_not_center("coins", 90, 160, 90, 90, self.images["coin"])
- 
+
+        pygame.draw.line(self.Window, self.grey3, (315, 280), (605, 280), 1)
+        self.text_not_center(self.font1, 18, "Total Balance", self.grey2, 405, 290)
+        self.text_not_center(self.font1, 18, "Total Balance", self.grey2, 405, 290)
+
+        self.rect_full(self.grey1, 460, 410, 300, 150, 5)
+        self.rect_full(self.grey1, 460, 580, 300, 150, 5)
+
+       
+        # Animation
+
+        rotated_coin = pygame.transform.rotate(self.images["coin"], self.coin_angle)
+        resized_rotated_coin = pygame.transform.scale(rotated_coin, (90, 90))
+        resized_rotated_coin_rect = resized_rotated_coin.get_rect(center=(350, 240))
+
+        self.Window.blit(resized_rotated_coin, resized_rotated_coin_rect)
+     
+        self.coin_angle += self.rotation_speed
+        if self.coin_angle >= 360:
+            self.coin_angle -= 360
+        elif self.coin_angle < 0:
+            self.coin_angle += 360
+
+
+
 
 
 
@@ -131,6 +159,7 @@ class HomePage(Element, Controller):
         self.top_bar()
         self.side_bar()
         self.main_section()
+        self.all_accounts() # A MODIFIER
 
     def saving_checking_design(self):
         self.filter_options()
