@@ -38,7 +38,7 @@ class Controller(UserRepository,TransactionRepository):
         self.input_surname_receiver = "Surname"
         self.input_iban_receiver = "IBAN"
 
-
+        self.register = False
         self.connected = False
 
     def login_user(self):
@@ -48,16 +48,19 @@ class Controller(UserRepository,TransactionRepository):
             self.user = self.get_user(self.input_email, hashed_password)
             self.connected = True
             return self.user
-        
-     
-    
+
+    def register_user(self):
+        hashed_password_register = sha256(self.input_password_register.encode()).hexdigest()
+        self.new_user = self.add_user(self.input_first_name_register,self.input_last_name_register, self.input_email_register, hashed_password_register, self.iban, self.account_number )
+        return self.new_user
+
     def display_transaction(self, user_id, filter):
         if filter == 1: 
             transactions = self.descending_date_filter(user_id)
-            
-        elif filter == 2: 
+
+        elif filter == 2:
             transactions = self.ascending_date_filter(user_id)
-        
+
         elif filter == 3: 
             transactions = self.income_filter(user_id)
 

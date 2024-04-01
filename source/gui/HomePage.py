@@ -180,12 +180,12 @@ class HomePage(Element, Controller):
 
         # Account ID
         self.text_not_center(self.font1, 16, "Account ID Number", self.grey1, 330, 450)
-        self.text_not_center(self.font2, 16, self.user[5], self.grey1,500, 450)
+        self.text_not_center(self.font2, 16, self.user[6], self.grey1,500, 450)
         pygame.draw.line(self.Window, self.green4, (330, 480), (750, 480), 1)
 
         # IBAN
         self.text_not_center(self.font1, 16, "IBAN", self.grey1, 330, 500)
-        self.text_not_center(self.font2, 16, self.user[6], self.grey1, 390, 500)
+        self.text_not_center(self.font2, 16, self.user[5], self.grey1, 390, 500)
         pygame.draw.line(self.Window, self.green4, (330, 530), (750, 530), 1)
 
     def filter_options(self): 
