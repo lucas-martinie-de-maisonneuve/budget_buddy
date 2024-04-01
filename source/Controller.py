@@ -52,36 +52,32 @@ class Controller(UserRepository,TransactionRepository):
 
     def register_user(self):
         hashed_password_register = sha256(self.input_password_register.encode()).hexdigest()
-        self.new_user = self.add_user(self.input_first_name_register,self.input_last_name_register, self.input_email_register, hashed_password_register, self.iban, self.account_number )
+        self.new_user = self.add_user(self.input_first_name_register,self.input_last_name_register, self.input_email_register, hashed_password_register, self.iban, self.account_number, self.account_type_number)
         return self.new_user
 
     def display_transaction(self, user_id, filter):
-        if filter == 1: 
+        if filter == 1:
             transactions = self.descending_date_filter(user_id)
 
         elif filter == 2:
             transactions = self.ascending_date_filter(user_id)
 
-        elif filter == 3: 
+        elif filter == 3:
             transactions = self.income_filter(user_id)
 
-        elif filter == 4: 
+        elif filter == 4:
             transactions = self.expense_filter(user_id)
 
-        elif filter == 5: 
+        elif filter == 5:
             transactions = self.amount_desc_filter(user_id)
 
-        elif filter == 6: 
+        elif filter == 6:
             transactions = self.amount_asc_filter(user_id)
 
-        # elif filter == 7: 
+        # elif filter == 7:
         #     transactions = self.amount_desc_filter(user_id)
 
-        elif filter == 8: 
+        elif filter == 8:
             transactions = self.category_filter(user_id)
-   
+
         return transactions
-
-
-    
-

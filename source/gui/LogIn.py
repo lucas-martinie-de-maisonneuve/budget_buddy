@@ -20,6 +20,7 @@ class LogIn(Element, Animation, Controller):
         self.error_em = False
         self.error_pw = False
         self.error_op = False
+        self.error_ck = False
 
         self.entry = False
         self.running = True
@@ -72,7 +73,7 @@ class LogIn(Element, Animation, Controller):
         # Rect principal
         self.rect_full(self.green3, self.W//2+220, self.H//2, 400, 580, 10)
         self.rect_border(self.white, self.W//2+220, self.H//2, 400, 580, 1, 10)
- 
+
         # Bank Name
         self.text_center(self.font1, 35, "Wildcat Wealth Bank", self.white, self.W//2+220, 140)
         self.text_center(self.font4, 16, "Where Panthers Guard Your Fortune!", self.white, self.W//2+220, 180)
@@ -126,7 +127,7 @@ class LogIn(Element, Animation, Controller):
         self.rect_border(self.white, self.W//2, self.H//2, 950, 650, 1, 10)
 
         # About you
-        self.text_center(self.font4, 25, "About you", self.white, self.W//2-400, self.H//2-270)
+        self.text_center(self.font4, 25, "About you", self.white, self.W//2-380, self.H//2-270)
 
         if self.error_fn:
             self.text_center(self.font4, 15, "Invalid Input", self.red2, self.W//2-110, self.H//2-232)
@@ -141,20 +142,27 @@ class LogIn(Element, Animation, Controller):
         self.input_last_name_register_rect = self.button_hover("", self.W//2-245, self.H//2-107, 350, 50, self.green2, self.green3, self.green2, self.green3, self.input_last_name_register, self.font4, self.white,15, 1, 5)
         self.text_center(self.font4, 15, "Last Name", self.white, self.W//2-380, self.H//2-147)
 
-        if self.error_em:
-            self.text_center(self.font4, 15, "Invalid Input", self.red2, self.W//2-110, self.H//2-62)
-
         self.input_email_register_rect = self.button_hover("", self.W//2-245, self.H//2-22, 350, 50, self.green2, self.green3, self.green2, self.green3, self.input_email_register, self.font4, self.white,15, 1, 5)
         self.text_center(self.font4, 15, "Email", self.white, self.W//2-400, self.H//2-62)
 
+        if self.error_em:
+            self.text_center(self.font4, 15, "Invalid Input", self.red2, self.W//2-110, self.H//2-62)
+            self.text_center(self.font4, 15, "example@example.com", self.red2, self.W//2-250, self.H//2-22)
+
         if self.error_pw:
             self.text_center(self.font4, 15, "Invalid Input", self.red2, self.W//2-110, self.H//2+17)
+            self.text_center(self.font4, 15, "Password should have ", self.red2, self.W//2-340, self.H//2+95)
+            self.text_center(self.font4, 13, "- Minimum of 8 Characters", self.red2, self.W//2-165, self.H//2+95)
+            self.text_center(self.font4, 13, "- Lower cases letters", self.red2, self.W//2-182, self.H//2+108)
+            self.text_center(self.font4, 13, "- Upper cases letters", self.red2, self.W//2-182, self.H//2+122)
+            self.text_center(self.font4, 13, "- Numbers", self.red2, self.W//2-212, self.H//2+134)
+            self.text_center(self.font4, 13, "- Special Character", self.red2, self.W//2-186, self.H//2+147)
 
         self.input_password_register_rect = self.button_hover("", self.W//2-245, self.H//2+57, 350, 50, self.green2, self.green3, self.green2, self.green3, self.input_password_register, self.font4, self.white, 15, 1, 5)
         self.text_center(self.font4, 15, "Password", self.white, self.W//2-385, self.H//2+17)
 
         # Your account
-        self.text_center(self.font4, 25, "Your account", self.white, self.W//2+100, self.H//2-270)
+        self.text_center(self.font4, 25, "Your account", self.white, self.W//2+120, self.H//2-270)
         self.text_center(self.font4, 15, "Your account type", self.white, self.W//2+125, self.H//2-240)
 
         if self.error_op:
@@ -210,6 +218,8 @@ class LogIn(Element, Animation, Controller):
         pygame.draw.line(self.Window, self.green, (self.W//2, self.H//2-220), (self.W//2, self.H//2+80), 3)
         pygame.draw.line(self.Window, self.green, (self.W//2-80, self.H//2+180), (self.W//2+80, self.H//2+180), 3)
 
+        if self.error_ck:
+            self.text_center(self.font4, 15, "Checkbox Required", self.red2, self.W//2+360, self.H//2+220)
         # Draw Checkbox Lines if checkbox TRUE
         if self.checkbox:
             pygame.draw.line(self.Window, self.green, (self.W//2 - 220 - 6, self.H//2 + 220 - 6), (self.W//2 - 220 + 2, self.H//2 + 220 + 7), 3)
@@ -321,8 +331,9 @@ class LogIn(Element, Animation, Controller):
                             not self.input_last_name_register or
                             not self.input_email_register or
                             not self.input_password_register or
-                            not self.current_account or
-                            not self.savings_account):
+                            not self.current_account and
+                            not self.savings_account or 
+                            not self.checkbox):
                             if self.input_first_name_register == "":
                                 self.error_fn = True
                             if self.input_last_name_register == "":
@@ -333,7 +344,15 @@ class LogIn(Element, Animation, Controller):
                                 self.error_pw = True
                             if not self.current_account and not self.savings_account:
                                 self.error_op = True
+                            if not self.checkbox:
+                                self.error_ck = True
                         else:
+                            if self.current_account and not self.savings_account:
+                                self.account_type_number = 1
+                            if self.savings_account and not self.current_account:
+                                self.account_type_number = 2
+                            if self.current_account and self.savings_account:
+                                self.account_type_number = 3
                             self.register_user()
                             self.login_running = True
                             self.register_running = False
@@ -353,6 +372,7 @@ class LogIn(Element, Animation, Controller):
 
                     elif self.checkbox_rect.collidepoint(event.pos):
                         self.checkbox = not self.checkbox
+                        self.error_ck = False
                         self.account_details()
 
                 elif event.type == pygame.KEYDOWN:

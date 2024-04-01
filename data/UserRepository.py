@@ -12,24 +12,22 @@ class UserRepository(Database):
             except:
                 pass
 
-           
     def check_credentials(self, email, password):
         sql = "SELECT * FROM user WHERE email = %s AND password = %s"
         values = (email, password)
         user = self.fetch_one(sql, values)
         return user is not None
-    
+
     def get_user(self, email, password):
         sql = "SELECT * FROM user WHERE email = %s AND password = %s"
         values = (email, password)
         user = self.fetch_one(sql, values)
         return user
-    
+
     # TABLE USER
-    
-    def add_user(self, first_name, last_name, email, password, iban, account_number):
-        sql = "INSERT INTO user (first_name, last_name, email, password, iban, account_number) VALUES (%s, %s, %s, %s, %s, %s)"
-        values = ( first_name, last_name, email, password, iban, account_number)
+    def add_user(self, first_name, last_name, email, password, iban, account_number, account_type):
+        sql = "INSERT INTO user (first_name, last_name, email, password, iban, account_number, account_type) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        values = ( first_name, last_name, email, password, iban, account_number, account_type)
         self.execute_query(sql, values)
 
     def user_info(self):
@@ -39,23 +37,23 @@ class UserRepository(Database):
     def first_name_user(self):
         sql = "SELECT first_name FROM user"
         return self.fetch(sql)
-    
+
     def last_name_user(self):
         sql = "SELECT last_name FROM user"
         return self.fetch(sql)
-    
+
     def iban_user(self):
         sql = "SELECT iban FROM user"
         return self.fetch(sql)
-    
+
     def account_number_user(self):
         sql = "SELECT iban FROM user"
         return self.fetch(sql)
-    
+
     def update_user(self,email):
         sql = 'UPDATE user SET pseudo=%s'
-        params = (email,)        
-        self.execute_query(sql, params) 
+        params = (email,)
+        self.execute_query(sql, params)
 
     # A revoir
 
@@ -63,10 +61,11 @@ class UserRepository(Database):
         sql = "SELECT date_last_message FROM user WHERE id = %s"
         values = (id_user,)
         result = self.fetch(sql, values)
-        if result: 
+        if result:
                 return result[0][0]
-        else: 
-            return None 
+        else:
+            return None
+
     def first_name_user(self):
         sql = "SELECT first_name FROM user"
         return self.fetch(sql)
