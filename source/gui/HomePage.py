@@ -180,12 +180,12 @@ class HomePage(Element, Controller):
 
         # Account ID
         self.text_not_center(self.font1, 16, "Account ID Number", self.grey1, 330, 450)
-        self.text_not_center(self.font2, 16, self.user[6], self.grey1,500, 450)
+        self.text_not_center(self.font2, 16, self.user[5], self.grey1,500, 450)
         pygame.draw.line(self.Window, self.green4, (330, 480), (750, 480), 1)
 
         # IBAN
         self.text_not_center(self.font1, 16, "IBAN", self.grey1, 330, 500)
-        self.text_not_center(self.font2, 16, self.user[5], self.grey1, 390, 500)
+        self.text_not_center(self.font2, 16, self.user[6], self.grey1, 390, 500)
         pygame.draw.line(self.Window, self.green4, (330, 530), (750, 530), 1)
 
     def filter_options(self): 
@@ -227,7 +227,21 @@ class HomePage(Element, Controller):
         self.input_amont_rect = self.button_hover("Amount", 460, 570, 310, 40, self.grey, self.green1, self.grey, self.green1, self.input_amount, self.font3, self.grey2, 14, 2, 5)
 
         # Category
-        self.button_hover("Category", 420, 500, 220, 40, self.grey, self.green1, self.grey, self.green1, "Category", self.font3, self.grey2, 14, 2, 5)
+        if self.input_number_category == "1":
+            self.category = "Living Expenses"
+        elif self.input_number_category == "2":
+            self.category = "Transportation Costs"
+        elif self.input_number_category == "3":
+            self.category = "Food and Grocery Expense"
+        elif self.input_number_category == "4":
+            self.category = "Personal Expenses"
+        elif self.input_number_category == "5":
+            self.category = "Financial Obligations"
+        else:
+            self.category = "Category"
+
+
+        self.button_hover("Category", 420, 500, 220, 40, self.grey, self.green1, self.grey, self.green1, self.category, self.font3, self.grey2, 14, 2, 5)
         self.input_number_category_rect = self.button_hover("number", 560, 500, 40, 40, self.grey, self.green1, self.grey, self.green1, self.input_number_category, self.font3, self.grey2, 14, 2, 5)
         self.question_rect = self.img_not_center("question", 585, 490, 25, 25, self.images["question"])
 
