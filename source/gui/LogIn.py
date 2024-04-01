@@ -1,4 +1,4 @@
-import pygame, random
+import pygame, random, webbrowser
 from source.pygame_manager.Element import Element
 from source.pygame_manager.Animation import Animation
 from source.Controller import Controller
@@ -165,6 +165,8 @@ class LogIn(Element, Animation, Controller):
             self.input_iban_number_rect = self.button_hover("", self.W//2+240, self.H//2+110, 350, 50, self.green2, self.green3, self.green2, self.green3, "", self.font4, self.white, 15, 1, 5)
 
         # Terms & conditions
+        self.info_1_rect = self.button_hover("", self.W//2-50, self.H//2+195, 280, 15, self.green3, self.green3, self.green, self.green, "", self.font4, self.white, 15, 1, 5)
+        self.info_2_rect = self.button_hover("", self.W//2+235, self.H//2+195, 155, 15, self.green3, self.green3, self.green, self.green, "", self.font4, self.white, 15, 1, 5)
         self.text_center(self.font4, 20, "Terms and Conditions", self.white, self.W//2, self.H//2+165)
         self.text_center(self.font4, 17, "Please read the Internet Banking terms and conditions and our Data Privacy Notice.", self.white, self.W//2, self.H//2+195)
         self.checkbox_rect_rect = self.rect_full(self.green1, self.W//2, self.H//2+220, 500, 25, 2)
@@ -288,6 +290,12 @@ class LogIn(Element, Animation, Controller):
                         self.input_last_name_register = ""
                         self.input_email_register = ""
                         self.input_password_register = ""
+
+                    elif self.info_1_rect.collidepoint(event.pos):
+                        webbrowser.open("https://www.lloydsbank.com/legal/online-banking/internet-banking.html")
+
+                    elif self.info_2_rect.collidepoint(event.pos):
+                        webbrowser.open("https://www.lloydsbank.com/help-guidance/privacy/data-privacy-notice.html")
 
                     elif self.checkbox_rect.collidepoint(event.pos):
                         self.checkbox = not self.checkbox
