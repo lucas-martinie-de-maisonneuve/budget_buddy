@@ -69,8 +69,24 @@ class TransactionRepository(Database):
     def category_filter (self, user_id): 
         sql = "SELECT * FROM transaction WHERE id_sender = %s OR id_receiver = %s ORDER BY id_category ASC"
         values = (user_id, user_id)
+        return self.fetch(sql, values)    
+    
+    def sum_account_r(self, account_id, user_id  ):
+        sql = "SELECT SUM(amount) AS total_amount FROM transaction WHERE account_id = %s AND id_receiver = %s"
+        values = (account_id, user_id)
         return self.fetch(sql, values)
+    
+    def sum_account_s(self, account_id, user_id  ):
+        sql = "SELECT SUM(amount) AS total_amount FROM transaction WHERE account_id = %s AND id_sender = %s"
+        values = (account_id, user_id)
+        return self.fetch(sql, values)
+      
 
+
+    # def diagram_category (self, user_id, account_id): 
+    #     sql = "SELECT id_category FROM transaction WHERE id_sender = %s OR id_receiver = %s AND account_id = %s "
+    #     values = (user_id, user_id, account_id)
+    #     return self.fetch(sql, values)
 
     # Notification    
   

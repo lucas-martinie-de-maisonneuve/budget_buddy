@@ -75,6 +75,26 @@ class Controller(UserRepository,TransactionRepository):
             transactions = self.category_filter(user_id)
    
         return transactions
+    
+    # Main Page
+
+    def display_total_amount(self, account_id, user_id):
+        total_amount_r =  self.sum_account_r(account_id, user_id)[0][0]  
+        total_amount_s =  self.sum_account_s(account_id, user_id)[0][0]   
+        if total_amount_r == None:
+            total_amount_r = 0
+        if total_amount_s ==  None:
+            total_amount_s = 0
+
+        total = total_amount_r -  total_amount_s
+        return total
+    
+ 
+
+
+
+
+
 
 
     

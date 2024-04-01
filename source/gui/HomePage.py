@@ -19,7 +19,10 @@ class HomePage(Element, Controller):
         # Main Page
         self.welcome_message = ""
         self.coin_angle = 0
-        self.rotation_speed = 2        
+        self.rotation_speed = 2    
+        self.total_saving = str(self.display_total_amount(2, self.user_id))
+        self.total_checking = str(self.display_total_amount(1, self.user_id))  
+        self.total_account = str(int(self.total_saving) + int(self.total_checking))
 
         # Notification
         self.display_notif = self.notification()
@@ -125,32 +128,27 @@ class HomePage(Element, Controller):
     def all_accounts(self):
 
         pygame.draw.line(self.Window, self.grey3, (315, 280), (605, 280), 1)
-        self.text_not_center(self.font1, 35, "3200", self.green1, 405, 230)
+        self.text_not_center(self.font1, 35, self.total_account, self.green1, 405, 230)
         self.text_not_center(self.font1, 18, "Total Balance", self.grey2, 405, 290)
 
         # Checking Account
         self.rect_full(self.green1, 460, 410, 300, 150, 5)
         self.img_hover("Circle", "Circle", 530, 410, 110, 110,self.images["circle"],self.images["circle"])
-        self.text_not_center(self.font4, 15, "+ 2400", self.white, 500, 405)
+        self.text_not_center(self.font4, 15, self.total_checking, self.white, 500, 405)
         self.text_not_center(self.font1, 14, "CHECKING ACCOUNT", self.white, 330, 370)
         self.text_not_center(self.font4, 12, "N° 1234566", self.white, 330, 400)
         self.text_not_center(self.font4, 12, "Vanny Lamorte", self.white, 330, 430)
 
-
-
         # Saving Account
         self.rect_full(self.green1, 460, 580, 300, 150, 5)
         self.img_hover("Circle", "Circle", 530, 580, 110, 110,self.images["circle"],self.images["circle"])
-        self.text_not_center(self.font4, 15, "+ 2400", self.white, 500, 575)
+        self.text_not_center(self.font4, 15, self.total_saving, self.white, 500, 575)
         self.text_not_center(self.font1, 14, "SAVING ACCOUNT", self.white, 330, 540)
         self.text_not_center(self.font4, 12, "N° 1234566", self.white, 330, 570)
         self.text_not_center(self.font4, 12, "Vanny Lamorte", self.white, 330, 600)
 
 
-
-       
         # Animation
-
         rotated_coin = pygame.transform.rotate(self.images["coin"], self.coin_angle)
         resized_rotated_coin = pygame.transform.scale(rotated_coin, (90, 90))
         resized_rotated_coin_rect = resized_rotated_coin.get_rect(center=(350, 240))
@@ -163,11 +161,11 @@ class HomePage(Element, Controller):
         elif self.coin_angle < 0:
             self.coin_angle += 360
 
-
-
-
-
-
+    # Diagramme
+    def diagram(self):
+        pass     
+      
+    
     def main_page_design(self):
 
         self.background()
