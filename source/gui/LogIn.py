@@ -15,6 +15,11 @@ class LogIn(Element, Animation, Controller):
 
         self.quit = False
         self.error_login = False
+        self.error_fn = False
+        self.error_ln = False
+        self.error_em = False
+        self.error_pw = False
+        self.error_op = False
 
         self.entry = False
         self.running = True
@@ -49,6 +54,15 @@ class LogIn(Element, Animation, Controller):
 
         self.iban_number = self.country_iban + str(self.check_digits_iban) + self.bank_code_iban + self.sort_code_iban + str(self.account_number_iban)
         return self.iban_number
+
+    def validate_password(self, password):
+        has_special = any(char in '!@#$%^&*()-_+=~`[]{}|\\:;"<>,.?/' for char in password)
+        has_digit = any(char.isdigit() for char in password)
+        has_upper = any(char.isupper() for char in password)
+        return has_special and has_digit and has_upper and len(password) >= 8
+
+    def validate_email(self, email):
+        return '@' in email and '.' in email
 
     def gui_home(self):
 
@@ -90,7 +104,7 @@ class LogIn(Element, Animation, Controller):
         # Social Media
         self.img_hover("Twitter", "Twitter", self.W//2+160, 610, 35, 35,self.images["twitter"],self.images["twitter"])
         self.img_hover("Instagram", "Instagram", self.W//2+220, 610, 35, 35,self.images["instagram"],self.images["instagram"])
-        self.img_hover("Facebook", "Facebook", self.W//2+280, 610, 35, 35, self.images["facebook"], self.images["facebook"])     
+        self.img_hover("Facebook", "Facebook", self.W//2+280, 610, 35, 35, self.images["facebook"], self.images["facebook"])
 
         # Sign In
         self.signup_rect = pygame.draw.rect(self.Window, self.green3, [675, 490, 90, 20])
@@ -114,14 +128,27 @@ class LogIn(Element, Animation, Controller):
         # About you
         self.text_center(self.font4, 25, "About you", self.white, self.W//2-400, self.H//2-270)
 
+        if self.error_fn:
+            self.text_center(self.font4, 15, "Invalid Input", self.red2, self.W//2-110, self.H//2-232)
+
+
         self.input_first_name_register_rect = self.button_hover("", self.W//2-245, self.H//2-192, 350, 50, self.green2, self.green3, self.green2, self.green3, self.input_first_name_register, self.font4, self.white,15, 1, 5)
         self.text_center(self.font4, 15, "First Name", self.white, self.W//2-380, self.H//2-232)
+
+        if self.error_ln:
+            self.text_center(self.font4, 15, "Invalid Input", self.red2, self.W//2-110, self.H//2-147)
 
         self.input_last_name_register_rect = self.button_hover("", self.W//2-245, self.H//2-107, 350, 50, self.green2, self.green3, self.green2, self.green3, self.input_last_name_register, self.font4, self.white,15, 1, 5)
         self.text_center(self.font4, 15, "Last Name", self.white, self.W//2-380, self.H//2-147)
 
+        if self.error_em:
+            self.text_center(self.font4, 15, "Invalid Input", self.red2, self.W//2-110, self.H//2-62)
+
         self.input_email_register_rect = self.button_hover("", self.W//2-245, self.H//2-22, 350, 50, self.green2, self.green3, self.green2, self.green3, self.input_email_register, self.font4, self.white,15, 1, 5)
         self.text_center(self.font4, 15, "Email", self.white, self.W//2-400, self.H//2-62)
+
+        if self.error_pw:
+            self.text_center(self.font4, 15, "Invalid Input", self.red2, self.W//2-110, self.H//2+17)
 
         self.input_password_register_rect = self.button_hover("", self.W//2-245, self.H//2+57, 350, 50, self.green2, self.green3, self.green2, self.green3, self.input_password_register, self.font4, self.white, 15, 1, 5)
         self.text_center(self.font4, 15, "Password", self.white, self.W//2-385, self.H//2+17)
@@ -129,6 +156,9 @@ class LogIn(Element, Animation, Controller):
         # Your account
         self.text_center(self.font4, 25, "Your account", self.white, self.W//2+100, self.H//2-270)
         self.text_center(self.font4, 15, "Your account type", self.white, self.W//2+125, self.H//2-240)
+
+        if self.error_op:
+            self.text_center(self.font4, 15, "Choose an option or both", self.red2, self.W//2+300, self.H//2-240)
 
         if self.current_account:
             self.input_account_Current = self.button_hover("Current Account", self.W//2+240, self.H//2-192, 350, 50, self.green, self.green3, self.green, self.green, "Current Account", self.font4, self.white, 15, 1, 5)
@@ -203,6 +233,7 @@ class LogIn(Element, Animation, Controller):
             self.text_not_center(self.font4, 14, "typically offering interest on deposited funds", self.white, self.W//2+150, self.H//2-105)
             self.text_not_center(self.font4, 14, "and restricting the number of withdrawals.", self.white, self.W//2+150, self.H//2-90)
 
+
     def account_details(self):
         self.check_digits  = self.random_sort_code()
         self.sort_code_1 = self.random_sort_code()
@@ -262,34 +293,57 @@ class LogIn(Element, Animation, Controller):
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.input_first_name_register_rect.collidepoint(event.pos):
+                        self.error_fn = False
                         self.entry = 3
 
                     elif self.input_last_name_register_rect.collidepoint(event.pos):
+                        self.error_ln = False
                         self.entry = 4
 
                     elif self.input_email_register_rect.collidepoint(event.pos):
+                        self.error_em = False
                         self.entry = 5
 
                     elif self.input_password_register_rect.collidepoint(event.pos):
+                        self.error_pw = False
                         self.entry = 6
 
                     elif self.input_account_Current.collidepoint(event.pos):
                         self.current_account = not self.current_account
+                        self.error_op = False
 
                     elif self.input_account_Savings.collidepoint(event.pos):
                         self.savings_account = not self.savings_account
+                        self.error_op = False
 
                     elif self.register_rect.collidepoint(event.pos):
-                        self.register_user()
-                        self.login_running = True
-                        self.register_running = False
-                        self.checkbox = False
-                        self.current_account = False
-                        self.savings_account = False
-                        self.input_first_name_register = ""
-                        self.input_last_name_register = ""
-                        self.input_email_register = ""
-                        self.input_password_register = ""
+                        if (not self.input_first_name_register or
+                            not self.input_last_name_register or
+                            not self.input_email_register or
+                            not self.input_password_register or
+                            not self.current_account or
+                            not self.savings_account):
+                            if self.input_first_name_register == "":
+                                self.error_fn = True
+                            if self.input_last_name_register == "":
+                                self.error_ln = True
+                            if self.input_email_register == "" or not self.validate_email(self.input_email_register):
+                                self.error_em = True
+                            if self.input_password_register == ""  or not self.validate_password(self.input_password_register):
+                                self.error_pw = True
+                            if not self.current_account and not self.savings_account:
+                                self.error_op = True
+                        else:
+                            self.register_user()
+                            self.login_running = True
+                            self.register_running = False
+                            self.checkbox = False
+                            self.current_account = False
+                            self.savings_account = False
+                            self.input_first_name_register = ""
+                            self.input_last_name_register = ""
+                            self.input_email_register = ""
+                            self.input_password_register = ""
 
                     elif self.info_1_rect.collidepoint(event.pos):
                         webbrowser.open("https://www.lloydsbank.com/legal/online-banking/internet-banking.html")
