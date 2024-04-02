@@ -22,7 +22,7 @@ class TransactionRepository(Database):
         sql = "SELECT * FROM transaction WHERE id_receiver = %s OR id_sender = %s"
         values = (user_id, user_id)
         return self.fetch(sql, values)
-    
+
     # ACCOUNTS
     
     def description_account(self, account_nb):
@@ -34,39 +34,39 @@ class TransactionRepository(Database):
         sql = "SELECT * FROM transaction WHERE transaction_re = 1  AND (id_receiver = %s OR id_sender = %s)"
         values = (user_id, user_id)
         return self.fetch(sql, values)
-    
+
     def expense_filter (self, user_id):
         sql = "SELECT * FROM transaction WHERE transaction_re = 2 AND (id_receiver = %s OR id_sender = %s)"
         values = (user_id, user_id)
         return self.fetch(sql, values)
-    
+
     def ascending_date_filter(self, user_id):
         sql = "SELECT * FROM transaction WHERE id_receiver = %s OR id_sender = %s ORDER BY date ASC"
         values = (user_id, user_id)
         return self.fetch(sql, values)
-        
-    def descending_date_filter (self, user_id): 
+
+    def descending_date_filter (self, user_id):
         sql = "SELECT * FROM transaction WHERE id_receiver = %s OR id_sender = %s ORDER BY date DESC"
         values = (user_id, user_id)
         return self.fetch(sql, values)
-    
+
     def calendar_filter(self, start_date, end_date, user_id):
         sql = "SELECT * FROM transaction WHERE date BETWEEN %s AND %s ORDER BY date WHERE id_receiver = %s OR id_sender = %s"
         params = (start_date, end_date)
         values = (user_id, user_id)
         return self.fetch(sql, params, values)
-    
-    def amount_asc_filter (self, user_id): 
+
+    def amount_asc_filter (self, user_id):
         sql = "SELECT * FROM transaction WHERE id_receiver = %s OR id_sender = %s ORDER BY amount ASC "
         values = (user_id, user_id)
         return self.fetch(sql, values)
-    
-    def amount_desc_filter (self, user_id): 
+
+    def amount_desc_filter (self, user_id):
         sql = "SELECT * FROM transaction WHERE id_receiver = %s OR id_sender = %s ORDER BY amount DESC"
         values = (user_id, user_id)
         return self.fetch(sql, values)
-    
-    def category_filter (self, user_id): 
+
+    def category_filter (self, user_id):
         sql = "SELECT * FROM transaction WHERE id_sender = %s OR id_receiver = %s ORDER BY id_category ASC"
         values = (user_id, user_id)
         return self.fetch(sql, values)    
@@ -88,9 +88,14 @@ class TransactionRepository(Database):
     #     values = (user_id, user_id, account_id)
     #     return self.fetch(sql, values)
 
-    # Notification    
-  
-    def save_last_transaction (self, id_user): 
+    # Notification
+    def last_notif (self, id_user):
+        current_time = datetime.now()
+        sql = "INSERT INTO notificaton = %s WHERE id = %s"
+        values = (current_time, id_user,)
+        self.execute_query(sql, values)
+
+    def save_last_transaction (self, id_user):
         current_time = datetime.now()
         sql = "UPDATE user SET date_last_co = %s WHERE id = %s"
         values = (current_time, id_user,)
@@ -117,4 +122,3 @@ class TransactionRepository(Database):
         sql = "SELECT notif_message FROM notification WHERE id = %s"
         values = (id_user)
         self.execute_query(sql, values)
-    

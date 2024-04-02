@@ -13,18 +13,33 @@ class Controller(UserRepository,TransactionRepository):
         self.input_email = ""
         self.input_password = ""
 
+        # Signup
         self.input_first_name_register = ""
         self.input_last_name_register = ""
 
         self.input_email_register = ""
         self.input_password_register = ""
 
-        self.account_number = ""
-
         self.sort_code_1 = ""
         self.sort_code_2 = ""
         self.sort_code_3 = ""
+        self.country = "GB"
+        self.check_digits = ""
+        self.bank_code = "PANT"
+        self.account_number = ""
+        self.iban = ""
 
+        # Homepage Transfer Money
+        self.input_description = "Description"
+        self.category = "Category"
+        self.input_number_category = "1-7"
+        self.input_amount = "Amount"
+
+        self.input_name_receiver = "Name"
+        self.input_surname_receiver = "Surname"
+        self.input_iban_receiver = "IBAN"
+
+        self.register = False
         self.connected = False
 
     def login_user(self):
@@ -34,6 +49,11 @@ class Controller(UserRepository,TransactionRepository):
             self.user = self.get_user(self.input_email, hashed_password)
             self.connected = True
             return self.user
+        
+    def register_user(self):
+        hashed_password_register = sha256(self.input_password_register.encode()).hexdigest()
+        self.new_user = self.add_user(self.input_first_name_register,self.input_last_name_register, self.input_email_register, hashed_password_register, self.iban, self.account_number, self.account_type_number)
+        return self.new_user
         
     # Notification
         
@@ -50,30 +70,30 @@ class Controller(UserRepository,TransactionRepository):
         return self.description_account([account_nb])  
     
     def display_transaction(self, user_id, filter):
-        if filter == 1: 
+        if filter == 1:
             transactions = self.descending_date_filter(user_id)
-            
-        elif filter == 2: 
+
+        elif filter == 2:
             transactions = self.ascending_date_filter(user_id)
-        
-        elif filter == 3: 
+
+        elif filter == 3:
             transactions = self.income_filter(user_id)
 
-        elif filter == 4: 
+        elif filter == 4:
             transactions = self.expense_filter(user_id)
 
-        elif filter == 5: 
+        elif filter == 5:
             transactions = self.amount_desc_filter(user_id)
 
-        elif filter == 6: 
+        elif filter == 6:
             transactions = self.amount_asc_filter(user_id)
 
-        # elif filter == 7: 
+        # elif filter == 7:
         #     transactions = self.amount_desc_filter(user_id)
 
-        elif filter == 8: 
+        elif filter == 8:
             transactions = self.category_filter(user_id)
-   
+
         return transactions
     
     # Main Page
