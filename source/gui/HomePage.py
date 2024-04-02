@@ -7,9 +7,10 @@ class HomePage(Element, Controller):
         Element.__init__(self)
         Controller.__init__(self)
         self.user = user_info
-        self.user_id, self.user_fisrt_name, self.user_last_name, self.user_email, self.user_iban, self.user_account_number, self.last_login_date = self.user[0], self.user[1], self.user[2], self.user[3], self.user[5], self.user[6], self.user[9]
+        self.user_id, self.user_fisrt_name, self.user_last_name, self.user_email, self.sort_code, self.user_iban, self.user_account_number, self.last_login_date = self.user[0], self.user[1], self.user[2], self.user[3], self.user[5], self.user[6], self.user[7], self.user[9]
 
         self.transactions = self.display_transaction(self.user_id, 1, None, None, None)
+        self.account_type = None
         self.date_sort = False
 
         self.checking_sender = False
@@ -17,13 +18,18 @@ class HomePage(Element, Controller):
         self.checking_receiver = False
         self.saving_receiver = False
 
+        self.sort_code_1 = str(self.sort_code)[:2]
+        self.sort_code_2 = str(self.sort_code)[2:4]
+        self.sort_code_3 = str(self.sort_code)[4:]
+        self.sort_code_final = '-'.join([self.sort_code_1, self.sort_code_2, self.sort_code_3])
+
         self.not_conform = False
         self.transaction_event = False
-        
+
         self.sort_category = 0
         self.category_list = ["income", "Living Expenses", "Transportation Costs" ,"Food and Grocery Expenditures", "Personal Expenses", "Financial Obligations"]
         self.display_category_description = False
-        
+
         self.checking_saving_event = False
         self.scroll = 0
         self.accounts_running = True
@@ -33,11 +39,11 @@ class HomePage(Element, Controller):
         self.entry = False
 
         # Main Page
-        self.welcome_message = ""
+        self.welcome_message = ""                   
         self.coin_angle = 0
-        self.rotation_speed = 2    
+        self.rotation_speed = 2
         self.total_saving = str(self.display_total_amount(2, self.user_id))
-        self.total_checking = str(self.display_total_amount(1, self.user_id))  
+        self.total_checking = str(self.display_total_amount(1, self.user_id))
         self.total_account = str(int(self.total_saving) + int(self.total_checking))
 
         # Notification
@@ -79,6 +85,13 @@ class HomePage(Element, Controller):
 
         self.profile_display, self.checking_saving_display, self.transfer_display = False, False, False
 
+        self.welcome_message_list = ["Welcome to your profile! Here, you can view all the details and information pertinent to you",
+        "Welcome! You are currently on the homepage where you can view the total details of all accounts",
+        "Welcome to your checking account! Let's manage your finances together",
+        "Welcome back to your savings account! Let's continue growing your financial goals together",
+        "Transfer Money Now with Ease!"
+        ]
+
     def background(self):
         self.img_background(400, 300, 1244, 830, self.images["background"])
 
@@ -103,7 +116,7 @@ class HomePage(Element, Controller):
 
         # Account ID Number
         self.text_not_center(self.font3, 13, " Account ID number | ", self.white, 600, 75)
-        self.text_not_center(self.font2, 13, self.user[7], self.white, 765, 75)
+        self.text_not_center(self.font2, 13, self.user_account_number, self.white, 770, 76)
 
         # Notification
         self.img_hover("bell", "bell", 890, 80, 40, 40,self.images["bell"],self.images["bell"])
@@ -121,19 +134,23 @@ class HomePage(Element, Controller):
 
         # User info
         self.img_not_center("Profil pic", 90, 160, 90, 90, self.images["profile"])
-        self.text_not_center(self.font1, 15, f"{self.user[1]} { self.user[2]}", self.grey3, 70, 270)
-        self.profile_rect = self.button_hover_small("My Profil", 140, 320, 190, 40, self.green2, self.green2, self.green2, self.green2, "My Profil", self.font1, self.white,15, 0, 3
+        self.text_not_center(self.font1, 15, f"{self.user_fisrt_name} {self.user_last_name}", self.grey3, 70, 260)
+        self.profile_rect = self.button_hover_small("My Profil", 140, 310, 190, 40, self.green2, self.green2, self.green2, self.green2, "My Profil", self.font1, self.white,15, 0, 3
         )
+
+        # Home
+        self.home_rect = self.button_hover_small("Home", 140, 360, 190, 40, self.green2, self.green2, self.green2, self.green2, "Home", self.font1, self.white,15, 0, 3        )
+
 
         # Lines h top bar
-        pygame.draw.line(self.Window, self.grey3, (100, 375), (180, 375), 3)
-        pygame.draw.line(self.Window, self.grey3, (100, 535), (180, 535), 3)
+        pygame.draw.line(self.Window, self.grey3, (100, 405), (180, 405), 3)
+        pygame.draw.line(self.Window, self.grey3, (100, 545), (180, 545), 3)
 
         # Accounts
-        self.checking_rect = self.button_hover_small("Checking Accounts", 140, 430, 190, 40, self.green2, self.green2, self.green2, self.green2, "Checking Accounts", self.font1, self.white,15, 0, 3
+        self.checking_rect = self.button_hover_small("Checking Accounts", 140, 450, 190, 40, self.green2, self.green2, self.green2, self.green2, "Checking Accounts", self.font1, self.white,15, 0, 3
         )
         # Saving Account
-        self.saving_rect = self.saving_rect = self.button_hover_small("Saving Account", 140, 480, 190, 40, self.green2, self.green2, self.green2, self.green2, "Saving Account", self.font1, self.white,15, 0, 3
+        self.saving_rect = self.saving_rect = self.button_hover_small("Saving Account", 140, 500, 190, 40, self.green2, self.green2, self.green2, self.green2, "Saving Account", self.font1, self.white,15, 0, 3
         )
 
         self.transfer_rect = self.button_hover_small("Transfer money", 140, 590, 190, 40, self.green2, self.green2, self.green2, self.green2, "Transfer money", self.font1, self.white,15, 0, 3
@@ -148,6 +165,9 @@ class HomePage(Element, Controller):
         self.rect_border(self.green2, 630, 420, 700, 530, 2, 5)
         self.rect_radius_top(self.green3, 630, 175, 700, 45, 5)
 
+        # Welcome message
+        self.text_not_center(self.font1, 14, self.welcome_message, self.white, 295, 170) 
+
     def all_accounts(self):
 
         pygame.draw.line(self.Window, self.grey3, (315, 280), (605, 280), 1)
@@ -159,18 +179,18 @@ class HomePage(Element, Controller):
         self.img_hover("Circle", "Circle", 530, 410, 110, 110,self.images["circle"],self.images["circle"])
         self.text_not_center(self.font4, 15, self.total_checking, self.white, 500, 405)
         self.text_not_center(self.font1, 14, "CHECKING ACCOUNT", self.white, 330, 370)
-        self.text_not_center(self.font4, 12,f"Sort Code  — {self.user[5]}", self.white, 330, 400)
-        self.text_not_center(self.font4, 12, f"Account ID — { self.user[7]}", self.white, 330, 430)
-        self.text_not_center(self.font4, 12, f"{self.user[1]} { self.user[2]}", self.white, 330, 460)
+        self.text_not_center(self.font4, 12,f"Sort Code {self.sort_code_final}", self.white, 330, 400)
+        self.text_not_center(self.font4, 12, f"Account ID {self.user_account_number}", self.white, 330, 430)
+        self.text_not_center(self.font4, 12, f"{self.user_fisrt_name} {self.user_last_name}", self.white, 330, 460)
 
         # Saving Account
         self.rect_full(self.green1, 460, 580, 300, 150, 5)
         self.img_hover("Circle", "Circle", 530, 580, 110, 110,self.images["circle"],self.images["circle"])
         self.text_not_center(self.font4, 15, self.total_saving, self.white, 500, 575)
         self.text_not_center(self.font1, 14, "SAVING ACCOUNT", self.white, 330, 540)
-        self.text_not_center(self.font4, 12, f"Sort Code — {self.user[5]}", self.white, 330, 570)
-        self.text_not_center(self.font4, 12,f"Account ID  — { self.user[7]}", self.white, 330, 600)
-        self.text_not_center(self.font4, 12,f"{self.user[1]} { self.user[2]}", self.white, 330, 630)
+        self.text_not_center(self.font4, 12, f"Sort Code {self.sort_code_final}", self.white, 330, 570)
+        self.text_not_center(self.font4, 12,f"Account ID {self.user_account_number}", self.white, 330, 600)
+        self.text_not_center(self.font4, 12,f"{self.user_fisrt_name} {self.user_last_name}", self.white, 330, 630)
 
         # Animation
         rotated_coin = pygame.transform.rotate(self.images["coin"], self.coin_angle)
@@ -187,8 +207,7 @@ class HomePage(Element, Controller):
 
     # Diagramme
     def diagram(self):
-        pass     
-      
+        pass          
     
     def main_page_design(self):
 
@@ -203,20 +222,20 @@ class HomePage(Element, Controller):
 
         for transaction in self.transactions:
             self.pos_y = y + self.scroll
+            if transaction[7] == self.account_type:
+                if self.pos_y < 425:
+                    self.text_not_center(self.font3, 10,('['+ str(transaction[6])+']'), self.black, 440, self.pos_y + 252.5)
+                    self.text_not_center(self.font3, 10, f"{transaction[5].day:02d}/{transaction[5].month:02d}/{transaction[5].year}", self.black, 460, self.pos_y + 252.5)
+                    self.text_not_center(self.font3, 15, str(transaction[2]), self.black, 530, self.pos_y + 250)
+                    self.text_not_center(self.font3, 12, str(transaction[3]), self.black, 750, self.pos_y + 251.5)
+                    self.text_not_center(self.font3, 12, str(transaction[4]), self.black, 938, self.pos_y + 250)
+                    self.text_not_center(self.font3, 12, "£", self.black, 930, self.pos_y + 250)
+                    if transaction[8] == self.user_id:
+                        self.text_not_center(self.font1, 18, "-", self.red, 920, self.pos_y + 250)
+                    elif transaction[9] == self.user_id:
+                        self.text_not_center(self.font1, 18, "+", self.green, 920, self.pos_y + 250)
 
-            if self.pos_y < 425:
-                self.text_not_center(self.font3, 10,('['+ str(transaction[6])+']'), self.black, 440, self.pos_y + 252.5)
-                self.text_not_center(self.font3, 10, f"{transaction[5].day:02d}/{transaction[5].month:02d}/{transaction[5].year}", self.black, 460, self.pos_y + 252.5)
-                self.text_not_center(self.font3, 15, str(transaction[2]), self.black, 530, self.pos_y + 250)
-                self.text_not_center(self.font3, 12, str(transaction[3]), self.black, 750, self.pos_y + 251.5)
-                self.text_not_center(self.font3, 12, str(transaction[4]), self.black, 938, self.pos_y + 250)
-                self.text_not_center(self.font3, 12, "£", self.black, 930, self.pos_y + 250)
-                if transaction[8] == self.user_id:
-                    self.text_not_center(self.font1, 18, "-", self.red, 920, self.pos_y + 250)
-                elif transaction[9] == self.user_id:
-                    self.text_not_center(self.font1, 18, "+", self.green, 920, self.pos_y + 250)
-
-                y += 25
+                    y += 25
 
         self.rect_full(self.grey, 630, 220, 700, 50, 0)
         self.rect_border(self.green2, 630, 420, 700, 530, 2, 5)
@@ -230,7 +249,8 @@ class HomePage(Element, Controller):
         if not self.checking_saving_event:
             self.checking_saving_event = True
 
-        self.text_not_center(self.font1, 14, str(self.welcome_message[0][0]), self.white, 295, 170)
+        # Welcome message
+        self.text_not_center(self.font1, 14, self.welcome_message, self.white, 295, 170) 
 
         if self.calendar_error: 
             self.text_not_center(self.font4, 12, "Invalid", self.red, 345, 582)
@@ -249,17 +269,17 @@ class HomePage(Element, Controller):
 
         # Email
         self.text_not_center(self.font1, 16, "Email", self.grey1, 330, 400)
-        self.text_not_center(self.font2, 16, self.user[3], self.grey1, 400, 400)
+        self.text_not_center(self.font2, 16, self.user[3], self.grey1, 380, 400)
         pygame.draw.line(self.Window, self.green4, (330, 430), (750, 430), 1)
 
         # Account ID
         self.text_not_center(self.font1, 16, "Account ID Number", self.grey1, 330, 450)
-        self.text_not_center(self.font2, 16, self.user[7], self.grey1,500, 450)
+        self.text_not_center(self.font2, 16, self.user[7], self.grey1,480, 450)
         pygame.draw.line(self.Window, self.green4, (330, 480), (750, 480), 1)
 
         # Sort Code
         self.text_not_center(self.font1, 16, "Sort Code", self.grey1, 330, 500)
-        self.text_not_center(self.font2, 16, str(self.user[5]), self.grey1, 480, 500)
+        self.text_not_center(self.font2, 16, self.sort_code_final, self.grey1, 410, 490)
         pygame.draw.line(self.Window, self.green4, (330, 530), (750, 530), 1)
 
         # IBAN
@@ -388,17 +408,26 @@ class HomePage(Element, Controller):
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.transfer_rect.collidepoint(event.pos):
                         self.profile_display, self.checking_saving_display, self.checking_saving_event, self.transfer_display, self.transaction_event = False, False, False, True, False
+                        self.welcome_message = self.welcome_message_list[4] 
+
+                    elif self.home_rect.collidepoint(event.pos):
+                        self.profile_display, self.checking_saving_display, self.transfer_display, self.checking_saving_event, self.transaction_event = False, False, False, False, False  
+                        self.welcome_message = self.welcome_message_list[1]                      
 
                     elif self.checking_rect.collidepoint(event.pos):
                         self.welcome_message = self.catch_phrase(1)
+                        self.account_type = 1
                         self.profile_display, self.checking_saving_display, self.transfer_display = False, True, False
+                        self.welcome_message = self.welcome_message_list[2] 
 
                     elif self.saving_rect.collidepoint(event.pos):
-                        self.welcome_message = self.catch_phrase(2)
+                        
+                        self.account_type = 2
                         self.profile_display, self.checking_saving_display, self.transfer_display, self.transaction_event = False, True, False, False
                     
                     elif self.profile_rect.collidepoint(event.pos):
                         self.profile_display, self.checking_saving_display, self.transfer_display, self.checking_saving_event, self.transaction_event = True, False, False, False, False
+                        self.welcome_message = self.welcome_message_list[0] 
 
                     elif self.log_out_rect.collidepoint(event.pos):
                         self.disconnected = True
@@ -414,6 +443,7 @@ class HomePage(Element, Controller):
                         else:
                             if self.date_rect.collidepoint(event.pos):
                                 self.display_category_description = False
+                                self.scroll = 0
                                 if self.date_sort:
                                     self.transactions = self.display_transaction(self.user_id,1, None, None, None)
                                     self.date_sort = False
@@ -421,22 +451,27 @@ class HomePage(Element, Controller):
                                     self.transactions = self.display_transaction(self.user_id,2, None, None, None)
                                     self.date_sort = True
                             elif self.income_rect.collidepoint(event.pos):
+                                self.scroll = 0
                                 self.display_category_description = False
                                 self.transactions = self.display_transaction(self.user_id,3, None, None, None)
 
                             elif self.expense_rect.collidepoint(event.pos):
+                                self.scroll = 0
                                 self.display_category_description = False
                                 self.transactions = self.display_transaction(self.user_id,4, None, None, None)
 
                             elif self.ascending_rect.collidepoint(event.pos):
+                                self.scroll = 0
                                 self.display_category_description = False
                                 self.transactions = self.display_transaction(self.user_id,5, None, None, None)
 
                             elif self.descending_rect.collidepoint(event.pos):
+                                self.scroll = 0
                                 self.display_category_description = False
                                 self.transactions = self.display_transaction(self.user_id, 6, None, None, None)
 
                             elif self.calendar_rect.collidepoint(event.pos):
+                                self.scroll = 0
                                 self.ddisplay_start_end_date = False
                                 if self.display_start_end_date:
                                     self.display_start_end_date = False
@@ -452,6 +487,7 @@ class HomePage(Element, Controller):
 
 
                             elif self.type_rect.collidepoint(event.pos):
+                                self.scroll = 0
                                 self.display_category_description = True
                                 self.transactions = self.display_transaction(self.user_id,8, self.sort_category, None, None)
                                 if self.sort_category < 5:

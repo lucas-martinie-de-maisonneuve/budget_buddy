@@ -29,6 +29,10 @@ class LogIn(Element, Animation, Controller):
         self.current_account = False
         self.savings_account = False
 
+        # Password
+        self.show_pass = False
+        self.password_display = " *" * len(self.input_password)
+
         self.image_paths = {
             "twitter": "assets/image/LogIn/login_twitter.png",
             "instagram": "assets/image/LogIn/login_instagram.png",
@@ -84,15 +88,22 @@ class LogIn(Element, Animation, Controller):
         self.text_input(self.input_email_rect, self.input_email, "Email address", 720, 250, 350, 50, id="email_login")
 
         # Password
-        self.input_password_rect = self.button_hover("Password", self.W//2+220, 320, 350, 50, self.green2, self.green2, self.green2, self.green2, self.input_password, self.font4, self.white, 18, 1, 5)
-        self.text_input(self.input_password_rect, self.input_password, "Password", 720, 320, 350, 50, id="email_login")
+        self.input_password_rect = self.button_hover("Password", self.W//2+220, 320, 350, 50, self.green2, self.green2, self.green2, self.green2, self.password_display, self.font4, self.white, 18, 1, 5)
+        self.text_input(self.input_password_rect, self.password_display, "Password", 720, 320, 350, 50, id="email_login")
 
         # Eye
         self.img_background(870, 320, 25, 25, self.images["eye"])
+        self.show_pass_rect = pygame.Rect(858, 310, 25, 25)
+        
+        if self.show_pass:
+           self.password_display = self.input_password
+        else:
+            self.password_display = " *" * len(self.input_password)
+
 
         # Login
         self.login_rect = self.button_hover("Login", self.W//2+220, 390, 350, 50, self.green, self.green, self.green, self.green,"Log In", self.font1, self.white, 18, 1, 5) 
-
+     
         # Error message
         if self.error_login:
             self.text_center(self.font1, 16, "Wrong Email or Password", self.red2, 720, 430)
@@ -247,7 +258,6 @@ class LogIn(Element, Animation, Controller):
             self.text_not_center(self.font4, 14, "typically offering interest on deposited funds", self.white, self.W//2+150, self.H//2-105)
             self.text_not_center(self.font4, 14, "and restricting the number of withdrawals.", self.white, self.W//2+150, self.H//2-90)
 
-
     def account_details(self):
         self.check_digits  = self.random_sort_code()
         self.sort_code_1 = self.random_sort_code()
@@ -268,6 +278,9 @@ class LogIn(Element, Animation, Controller):
                     if self.input_email_rect.collidepoint(event.pos):
                         self.entry = 1
 
+                    elif self.show_pass_rect.collidepoint(event.pos):
+                        self.show_pass = True                  
+
                     elif self.input_password_rect.collidepoint(event.pos):
                         self.entry = 2
 
@@ -280,7 +293,14 @@ class LogIn(Element, Animation, Controller):
 
                     elif self.signup_rect.collidepoint(event.pos):
                         self.register_running = True
-                        self.login_running = False
+                        self.login_running = False                
+                   
+
+                elif event.type == pygame.MOUSEBUTTONUP:
+                    if self.show_pass_rect.collidepoint(event.pos):
+                        self.show_pass = False
+
+
 
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_BACKSPACE:
@@ -296,6 +316,8 @@ class LogIn(Element, Animation, Controller):
                         elif self.entry == 2:
                             self.input_password += event.unicode
                             self.error_login = False
+
+           
 
     def register_run(self):
         if self.register_running:
@@ -336,7 +358,7 @@ class LogIn(Element, Animation, Controller):
                             not self.input_email_register or
                             not self.input_password_register or
                             not self.current_account and
-                            not self.savings_account or
+                            not self.savings_account or 
                             not self.checkbox):
                             if self.input_first_name_register == "":
                                 self.error_fn = True

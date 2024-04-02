@@ -106,14 +106,3 @@ class Controller(UserRepository,TransactionRepository):
 
         total = total_amount_r -  total_amount_s
         return total
-    
- 
-
-
-
-
-
-
-
-    
-
