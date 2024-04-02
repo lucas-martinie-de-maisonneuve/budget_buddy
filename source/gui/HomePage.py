@@ -44,6 +44,8 @@ class HomePage(Element, Controller):
         self.display_notif = self.notification()
 
         # Sort by
+        self.calendar_error = False
+        self.display_start_end_date = False
         self.input_start_date = "00/00/0000"
         self.input_end_date = "00/00/0000"
 
@@ -230,6 +232,9 @@ class HomePage(Element, Controller):
 
         self.text_not_center(self.font1, 14, str(self.welcome_message[0][0]), self.white, 295, 170)
 
+        if self.calendar_error: 
+            self.text_not_center(self.font4, 12, "Invalid", self.red, 345, 582)
+
     def profile_design(self):
 
         # Name
@@ -284,11 +289,11 @@ class HomePage(Element, Controller):
         # Filter by period
         self.calendar_rect = self.img_txt_hover("calendar", "Calendar", 320, 570, 35, 35, self.images["calendar"], self.images["calendar"], self.font3, 15, self.grey3, 345, 560)
 
-        self.input_start_date_rect = self.button_hover("start", 350, 605, 80, 25, self.grey, self.grey3, self.grey, self.grey3, self.input_start_date, self.font3, self.black, 10, 2, 5) 
+        if self.display_start_end_date: 
+            self.input_start_date_rect = self.button_hover("start", 350, 605, 80, 25, self.grey, self.grey3, self.grey, self.grey3, self.input_start_date, self.font3, self.black, 10, 2, 5) 
 
-        self.input_end_date_rect = self.button_hover("end", 350, 637, 80, 25, self.grey, self.grey3, self.grey, self.grey3, self.input_end_date, self.font3, self.black, 10, 2, 5)
-
-        self.validate_rect = self.button_hover("Validate", 350, 665, 80, 20, self.grey, self.grey3, self.green4, self.green4, "Validate", self.font3, self.black, 10, 2, 5)
+            self.input_end_date_rect = self.button_hover("end", 350, 637, 80, 25, self.grey, self.grey3, self.grey, self.grey3, self.input_end_date, self.font3, self.black, 10, 2, 5)
+            self.validate_rect = self.button_hover("Validate", 350, 665, 80, 20, self.grey, self.grey3, self.green4, self.green4, "Validate", self.font3, self.black, 10, 2, 5)
 
     def transaction_design(self):
 
@@ -431,15 +436,19 @@ class HomePage(Element, Controller):
                                 self.display_category_description = False
                                 self.transactions = self.display_transaction(self.user_id, 6, None, None, None)
 
-                            # elif self.calendar_rect.collidepoint(event.pos):
-                            #     self.display_category_description = False
-                            #     self.transactions = self.display_transaction(self.user_id, 7, None, self.input_start_date, self.input_end_date)
+                            elif self.calendar_rect.collidepoint(event.pos):
+                                self.ddisplay_start_end_date = False
+                                if self.display_start_end_date:
+                                    self.display_start_end_date = False
+                                else:
+                                    self.display_start_end_date= True                                                 
 
                             elif self.validate_rect.collidepoint(event.pos):
-                                self.display_category_description = False
-                                self.transactions = self.display_transaction(self.user_id, 7, None, self.input_start_date, self.input_end_date)
-
-
+                                try:
+                                    self.display_category_description = False
+                                    self.transactions = self.display_transaction(self.user_id, 7, None, self.input_start_date, self.input_end_date)
+                                except: 
+                                    self.calendar_error = True
 
 
                             elif self.type_rect.collidepoint(event.pos):
@@ -453,10 +462,12 @@ class HomePage(Element, Controller):
                             elif self.input_start_date_rect.collidepoint(event.pos):
                                 self.input_start_date = ""
                                 self.entry = 9
+                                self.calendar_error = False
 
                             elif self.input_end_date_rect.collidepoint(event.pos):
                                 self.input_end_date = ""
                                 self.entry = 10
+                                self.calendar_error = False
 
                 
 

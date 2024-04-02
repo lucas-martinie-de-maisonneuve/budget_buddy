@@ -53,7 +53,6 @@ class TransactionRepository(Database):
     def calendar_filter(self, start_date, end_date, user_id):
         start_date = datetime.strptime(start_date, '%d/%m/%Y').strftime('%Y-%m-%d')
         end_date = datetime.strptime(end_date, '%d/%m/%Y').strftime('%Y-%m-%d')
-
         sql = "SELECT * FROM transaction WHERE (id_receiver = %s OR id_sender = %s ) AND date BETWEEN %s AND %s ORDER BY date "
         values = (user_id, user_id, start_date, end_date, )
         return self.fetch(sql, values)
