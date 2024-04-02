@@ -38,5 +38,3 @@ class Database:
         result = self.cursor.fetchone()
         self.disconnect()
         return result
-    
-    

@@ -7,7 +7,7 @@ class HomePage(Element, Controller):
         Element.__init__(self)
         Controller.__init__(self)
         self.user = user_info
-        self.user_id, self.user_fisrt_name, self.user_last_name, self.user_email, self.user_iban, self.user_account_number, self.last_login_date = self.user[0], self.user[1], self.user[2], self.user[3], self.user[5], self.user[6], self.user[9]
+        self.user_id, self.user_fisrt_name, self.user_last_name, self.user_email, self.sort_code, self.user_iban, self.user_account_number, self.last_login_date = self.user[0], self.user[1], self.user[2], self.user[3], self.user[5], self.user[6], self.user[7], self.user[9]
 
         self.transactions = self.display_transaction(self.user_id, 1, None)
         self.date_sort = False
@@ -17,13 +17,18 @@ class HomePage(Element, Controller):
         self.checking_receiver = False
         self.saving_receiver = False
 
+        self.sort_code_1 = str(self.sort_code)[:2]
+        self.sort_code_2 = str(self.sort_code)[2:4]
+        self.sort_code_3 = str(self.sort_code)[4:]
+        self.sort_code_final = '-'.join([self.sort_code_1, self.sort_code_2, self.sort_code_3])
+
         self.not_conform = False
         self.transaction_event = False
-        
+
         self.sort_category = 0
         self.category_list = ["income", "Living Expenses", "Transportation Costs" ,"Food and Grocery Expenditures", "Personal Expenses", "Financial Obligations"]
         self.display_category_description = False
-        
+
         self.checking_saving_event = False
         self.scroll = 0
         self.accounts_running = True
@@ -35,9 +40,9 @@ class HomePage(Element, Controller):
         # Main Page
         self.welcome_message = ""
         self.coin_angle = 0
-        self.rotation_speed = 2    
+        self.rotation_speed = 2
         self.total_saving = str(self.display_total_amount(2, self.user_id))
-        self.total_checking = str(self.display_total_amount(1, self.user_id))  
+        self.total_checking = str(self.display_total_amount(1, self.user_id))
         self.total_account = str(int(self.total_saving) + int(self.total_checking))
 
         # Notification
@@ -97,7 +102,7 @@ class HomePage(Element, Controller):
         # Account ID Number
 
         self.text_not_center(self.font3, 13, " Account ID number | ", self.white, 600, 75)
-        self.text_not_center(self.font2, 13, self.user[7], self.white, 765, 75)
+        self.text_not_center(self.font2, 13, self.user_account_number, self.white, 770, 76)
 
         # Notification
         self.img_hover("bell", "bell", 890, 80, 40, 40,self.images["bell"],self.images["bell"])
@@ -115,7 +120,7 @@ class HomePage(Element, Controller):
 
         # User info
         self.img_not_center("Profil pic", 90, 160, 90, 90, self.images["profile"])
-        self.text_not_center(self.font1, 15, f"{self.user[1]} { self.user[2]}", self.grey3, 70, 270)
+        self.text_not_center(self.font1, 15, f"{self.user_fisrt_name} {self.user_last_name}", self.grey3, 70, 270)
         self.profile_rect = self.button_hover_small("My Profil", 140, 320, 190, 40, self.green2, self.green2, self.green2, self.green2, "My Profil", self.font1, self.white,15, 0, 3
         )
 
@@ -153,18 +158,18 @@ class HomePage(Element, Controller):
         self.img_hover("Circle", "Circle", 530, 410, 110, 110,self.images["circle"],self.images["circle"])
         self.text_not_center(self.font4, 15, self.total_checking, self.white, 500, 405)
         self.text_not_center(self.font1, 14, "CHECKING ACCOUNT", self.white, 330, 370)
-        self.text_not_center(self.font4, 12,f"Sort Code  — {self.user[5]}", self.white, 330, 400)
-        self.text_not_center(self.font4, 12, f"Account ID — { self.user[7]}", self.white, 330, 430)
-        self.text_not_center(self.font4, 12, f"{self.user[1]} { self.user[2]}", self.white, 330, 460)
+        self.text_not_center(self.font4, 12,f"Sort Code  — {self.sort_code_final}", self.white, 330, 400)
+        self.text_not_center(self.font4, 12, f"Account ID — {self.user_account_number}", self.white, 330, 430)
+        self.text_not_center(self.font4, 12, f"{self.user_fisrt_name} {self.user_last_name}", self.white, 330, 460)
 
         # Saving Account
         self.rect_full(self.green1, 460, 580, 300, 150, 5)
         self.img_hover("Circle", "Circle", 530, 580, 110, 110,self.images["circle"],self.images["circle"])
         self.text_not_center(self.font4, 15, self.total_saving, self.white, 500, 575)
         self.text_not_center(self.font1, 14, "SAVING ACCOUNT", self.white, 330, 540)
-        self.text_not_center(self.font4, 12, f"Sort Code — {self.user[5]}", self.white, 330, 570)
-        self.text_not_center(self.font4, 12,f"Account ID  — { self.user[7]}", self.white, 330, 600)
-        self.text_not_center(self.font4, 12,f"{self.user[1]} { self.user[2]}", self.white, 330, 630)
+        self.text_not_center(self.font4, 12, f"Sort Code — {self.sort_code_final}", self.white, 330, 570)
+        self.text_not_center(self.font4, 12,f"Account ID  — {self.user_account_number}", self.white, 330, 600)
+        self.text_not_center(self.font4, 12,f"{self.user_fisrt_name} {self.user_last_name}", self.white, 330, 630)
 
         # Animation
         rotated_coin = pygame.transform.rotate(self.images["coin"], self.coin_angle)
@@ -250,7 +255,7 @@ class HomePage(Element, Controller):
 
         # SORT CODE
         self.text_not_center(self.font1, 16, "Sort Code", self.grey1, 330, 500)
-        self.text_not_center(self.font2, 16, str(self.user[5]), self.grey1, 480, 500)
+        self.text_not_center(self.font2, 16, self.sort_code_final, self.grey1, 480, 500)
         pygame.draw.line(self.Window, self.green4, (330, 530), (750, 530), 1)
 
         # IBAN
