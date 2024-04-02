@@ -49,17 +49,17 @@ class HomePage(Element, Controller):
 
         self.images = {}
         for name, path in self.image_paths.items():
-            self.images[name] = pygame.image.load(path)    
-        
+            self.images[name] = pygame.image.load(path)
+
         self.profile_display, self.checking_saving_display, self.transfer_display = False, False, False
 
-    def background(self): 
+    def background(self):
         self.img_background(400, 300, 1244, 830, self.images["background"])
-     
+
     def top_bar(self):
         self.img_background(500, 76.5, 1000, 153, self.images["background_top"])
         # Rect
-        self.rect_full(self.green3, 500, 25, 1000, 30, 0) 
+        self.rect_full(self.green3, 500, 25, 1000, 30, 0)
         self.rect_full(self.green1, 500, 75, 1000, 70, 0)
         self.rect_full(self.green3, 500, 125, 1000, 30, 0)
 
@@ -74,12 +74,12 @@ class HomePage(Element, Controller):
 
         # Brand
         self.text_not_center(self.font1, 18, "Wildcat Wealth Bank", self.white, 10, 85)
-        
+
         # Account ID Number
-       
+
         self.text_not_center(self.font3, 13, " Account ID number | ", self.white, 585, 75)
-        self.text_not_center(self.font2, 13, self.user[6], self.white, 755, 75)
-        
+        self.text_not_center(self.font2, 13, self.user[7], self.white, 755, 75)
+
         # Notification
         self.img_hover("bell", "bell", 890, 80, 40, 40,self.images["bell"],self.images["bell"])
         self.text_not_center(self.font1, 15, "17", self.yellow, 900, 50)
@@ -120,7 +120,7 @@ class HomePage(Element, Controller):
 
     def main_section (self):
         self.rect_full(self.grey, 630, 420, 700, 530, 5)
-        self.rect_border(self.green2, 630, 420, 700, 530, 2, 5) 
+        self.rect_border(self.green2, 630, 420, 700, 530, 2, 5)
         self.rect_radius_top(self.green3, 630, 175, 700, 45, 5)
 
     def main_page_design(self):
@@ -157,7 +157,7 @@ class HomePage(Element, Controller):
         self.text_not_center(self.font2, 17,"To / From", self.black, 535, 210)
         self.text_not_center(self.font2, 17, "Description", self.black, 740, 210)
         self.text_not_center(self.font2, 17, "Amount", self.black, 910, 210)
-        
+
         if not self.checking_saving_event:
             self.checking_saving_event = True
 
@@ -165,12 +165,12 @@ class HomePage(Element, Controller):
 
         # Name
         self.text_not_center(self.font1, 16, "Name", self.grey1, 330, 300)
-        self.text_not_center(self.font2, 16, self.user[1], self.grey1, 390, 300)
+        self.text_not_center(self.font2, 16, self.user[2], self.grey1, 390, 300)
         pygame.draw.line(self.Window, self.green4, (330, 330), (750, 330), 1)
 
         # Surname
         self.text_not_center(self.font1, 16, "Surname", self.grey1, 330, 350)
-        self.text_not_center(self.font2, 16,self.user[2], self.grey1, 420, 350)
+        self.text_not_center(self.font2, 16,self.user[3], self.grey1, 420, 350)
         pygame.draw.line(self.Window, self.green4, (330, 380), (750, 380), 1)
 
         # Email
@@ -180,12 +180,12 @@ class HomePage(Element, Controller):
 
          # IBAN
         self.text_not_center(self.font1, 16, "IBAN", self.grey1, 330, 500)
-        self.text_not_center(self.font2, 16, self.user[5], self.grey1, 390, 500)
+        self.text_not_center(self.font2, 16, self.user[6], self.grey1, 390, 500)
         pygame.draw.line(self.Window, self.green4, (330, 530), (750, 530), 1)
 
         # Account ID
         self.text_not_center(self.font1, 16, "Account ID Number", self.grey1, 330, 450)
-        self.text_not_center(self.font2, 16, self.user[6], self.grey1,500, 450)
+        self.text_not_center(self.font2, 16, self.user[7], self.grey1,500, 450)
         pygame.draw.line(self.Window, self.green4, (330, 480), (750, 480), 1)
 
 

@@ -332,7 +332,7 @@ class LogIn(Element, Animation, Controller):
                             not self.input_email_register or
                             not self.input_password_register or
                             not self.current_account and
-                            not self.savings_account or 
+                            not self.savings_account or
                             not self.checkbox):
                             if self.input_first_name_register == "":
                                 self.error_fn = True

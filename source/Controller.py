@@ -52,7 +52,7 @@ class Controller(UserRepository,TransactionRepository):
 
     def register_user(self):
         hashed_password_register = sha256(self.input_password_register.encode()).hexdigest()
-        self.new_user = self.add_user(self.input_first_name_register,self.input_last_name_register, self.input_email_register, hashed_password_register, self.iban, self.account_number, self.account_type_number)
+        self.new_user = self.add_user(self.input_first_name_register, self.input_last_name_register, self.input_email_register, hashed_password_register, self.sort_code, self.iban, self.account_number, self.account_type_number)
         return self.new_user
 
     def display_transaction(self, user_id, filter):
