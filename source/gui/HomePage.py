@@ -7,9 +7,9 @@ class HomePage(Element, Controller):
         Element.__init__(self)
         Controller.__init__(self)
         self.user = user_info
-        self.user_id, self.user_fisrt_name, self.user_last_name, self.user_email, self.user_iban, self.user_account_number, self.last_login_date = self.user[0], self.user[1], self.user[2], self.user[3], self.user[5], self.user[6], self.user[7]
+        self.user_id, self.user_fisrt_name, self.user_last_name, self.user_email, self.sort_code, self.user_iban, self.user_account_number, self.last_login_date = self.user[0], self.user[1], self.user[2], self.user[3], self.user[5], self.user[6], self.user[7], self.user[9]
 
-        self.transactions = self.display_transaction(self.user_id, 1)
+        self.transactions = self.display_transaction(self.user_id, 1, None)
         self.date_sort = False
 
         self.checking_sender = False
@@ -17,9 +17,17 @@ class HomePage(Element, Controller):
         self.checking_receiver = False
         self.saving_receiver = False
 
+        self.sort_code_1 = str(self.sort_code)[:2]
+        self.sort_code_2 = str(self.sort_code)[2:4]
+        self.sort_code_3 = str(self.sort_code)[4:]
+        self.sort_code_final = '-'.join([self.sort_code_1, self.sort_code_2, self.sort_code_3])
+
         self.not_conform = False
         self.transaction_event = False
 
+        self.sort_category = 0
+        self.category_list = ["income", "Living Expenses", "Transportation Costs" ,"Food and Grocery Expenditures", "Personal Expenses", "Financial Obligations"]
+        self.display_category_description = False
 
         self.checking_saving_event = False
         self.scroll = 0
@@ -27,12 +35,14 @@ class HomePage(Element, Controller):
         self.transaction_running = True
         self.disconnected = True
 
+        self.entry = False
+
         # Main Page
         self.welcome_message = ""
         self.coin_angle = 0
-        self.rotation_speed = 2    
+        self.rotation_speed = 2
         self.total_saving = str(self.display_total_amount(2, self.user_id))
-        self.total_checking = str(self.display_total_amount(1, self.user_id))  
+        self.total_checking = str(self.display_total_amount(1, self.user_id))
         self.total_account = str(int(self.total_saving) + int(self.total_checking))
 
         # Notification
@@ -64,17 +74,17 @@ class HomePage(Element, Controller):
 
         self.images = {}
         for name, path in self.image_paths.items():
-            self.images[name] = pygame.image.load(path)    
-        
+            self.images[name] = pygame.image.load(path)
+
         self.profile_display, self.checking_saving_display, self.transfer_display = False, False, False
 
-    def background(self): 
+    def background(self):
         self.img_background(400, 300, 1244, 830, self.images["background"])
-     
+
     def top_bar(self):
         self.img_background(500, 76.5, 1000, 153, self.images["background_top"])
         # Rect
-        self.rect_full(self.green3, 500, 25, 1000, 30, 0) 
+        self.rect_full(self.green3, 500, 25, 1000, 30, 0)
         self.rect_full(self.green1, 500, 75, 1000, 70, 0)
         self.rect_full(self.green3, 500, 125, 1000, 30, 0)
 
@@ -88,14 +98,15 @@ class HomePage(Element, Controller):
 
         # Brand
         self.text_not_center(self.font1, 18, "Wildcat Wealth Bank", self.white, 10, 85)
-        
+
         # Account ID Number
-        self.text_not_center(self.font2, 13, "Account ID Number :", self.white, 600, 75)
-        self.text_not_center(self.font2, 13, self.user[6], self.white, 755, 75)
-        
-        # # Notification
+
+        self.text_not_center(self.font3, 13, " Account ID number | ", self.white, 600, 75)
+        self.text_not_center(self.font2, 13, self.user_account_number, self.white, 770, 76)
+
+        # Notification
         self.img_hover("bell", "bell", 890, 80, 40, 40,self.images["bell"],self.images["bell"])
-        self.text_not_center(self.font1, 15, str(self.display_notif), self.yellow, 900, 50) 
+        self.text_not_center(self.font1, 15, str(self.display_notif), self.yellow, 900, 50)
 
         # Log Out
         self.log_out_rect = self.img_hover("Log Out", "Log Out", 970, 80, 40, 40,self.images["logout"],self.images["logout"])
@@ -109,7 +120,7 @@ class HomePage(Element, Controller):
 
         # User info
         self.img_not_center("Profil pic", 90, 160, 90, 90, self.images["profile"])
-        self.text_not_center(self.font1, 15, f"{self.user[1]} { self.user[2]}", self.grey3, 70, 270)
+        self.text_not_center(self.font1, 15, f"{self.user_fisrt_name} {self.user_last_name}", self.grey3, 70, 270)
         self.profile_rect = self.button_hover_small("My Profil", 140, 320, 190, 40, self.green2, self.green2, self.green2, self.green2, "My Profil", self.font1, self.white,15, 0, 3
         )
 
@@ -133,7 +144,7 @@ class HomePage(Element, Controller):
 
     def main_section (self):
         self.rect_full(self.grey, 630, 420, 700, 530, 5)
-        self.rect_border(self.green2, 630, 420, 700, 530, 2, 5) 
+        self.rect_border(self.green2, 630, 420, 700, 530, 2, 5)
         self.rect_radius_top(self.green3, 630, 175, 700, 45, 5)
 
     def all_accounts(self):
@@ -147,18 +158,18 @@ class HomePage(Element, Controller):
         self.img_hover("Circle", "Circle", 530, 410, 110, 110,self.images["circle"],self.images["circle"])
         self.text_not_center(self.font4, 15, self.total_checking, self.white, 500, 405)
         self.text_not_center(self.font1, 14, "CHECKING ACCOUNT", self.white, 330, 370)
-        self.text_not_center(self.font4, 12,f"Sort Code  — 66-66-66", self.white, 330, 400)
-        self.text_not_center(self.font4, 12, f"Account ID — { self.user[6]}", self.white, 330, 430)
-        self.text_not_center(self.font4, 12, f"{self.user[1]} { self.user[2]}", self.white, 330, 460)
+        self.text_not_center(self.font4, 12,f"Sort Code  — {self.sort_code_final}", self.white, 330, 400)
+        self.text_not_center(self.font4, 12, f"Account ID — {self.user_account_number}", self.white, 330, 430)
+        self.text_not_center(self.font4, 12, f"{self.user_fisrt_name} {self.user_last_name}", self.white, 330, 460)
 
         # Saving Account
         self.rect_full(self.green1, 460, 580, 300, 150, 5)
         self.img_hover("Circle", "Circle", 530, 580, 110, 110,self.images["circle"],self.images["circle"])
         self.text_not_center(self.font4, 15, self.total_saving, self.white, 500, 575)
         self.text_not_center(self.font1, 14, "SAVING ACCOUNT", self.white, 330, 540)
-        self.text_not_center(self.font4, 12, f"Sort Code — 66-66-66", self.white, 330, 570)
-        self.text_not_center(self.font4, 12,f"Account ID  — { self.user[6]}", self.white, 330, 600)
-        self.text_not_center(self.font4, 12,f"{self.user[1]} { self.user[2]}", self.white, 330, 630)
+        self.text_not_center(self.font4, 12, f"Sort Code — {self.sort_code_final}", self.white, 330, 570)
+        self.text_not_center(self.font4, 12,f"Account ID  — {self.user_account_number}", self.white, 330, 600)
+        self.text_not_center(self.font4, 12,f"{self.user_fisrt_name} {self.user_last_name}", self.white, 330, 630)
 
         # Animation
         rotated_coin = pygame.transform.rotate(self.images["coin"], self.coin_angle)
@@ -184,7 +195,6 @@ class HomePage(Element, Controller):
         self.top_bar()
         self.side_bar()
         self.main_section()
-        self.all_accounts() # A MODIFIER
 
     def saving_checking_design(self):
         self.filter_options()
@@ -194,8 +204,8 @@ class HomePage(Element, Controller):
             self.pos_y = y + self.scroll
 
             if self.pos_y < 425:
-                self.text_not_center(self.font3, 10,str(transaction[6]), self.black, 450, self.pos_y + 252.5)
-                self.text_not_center(self.font3, 10,f"{str(transaction[5].day)}/{str(transaction[5].month)}/{str(transaction[5].year)}", self.black, 460, self.pos_y + 252.5)
+                self.text_not_center(self.font3, 10,('['+ str(transaction[6])+']'), self.black, 440, self.pos_y + 252.5)
+                self.text_not_center(self.font3, 10, f"{transaction[5].day:02d}/{transaction[5].month:02d}/{transaction[5].year}", self.black, 460, self.pos_y + 252.5)
                 self.text_not_center(self.font3, 15, str(transaction[2]), self.black, 530, self.pos_y + 250)
                 self.text_not_center(self.font3, 12, str(transaction[3]), self.black, 750, self.pos_y + 251.5)
                 self.text_not_center(self.font3, 12, str(transaction[4]), self.black, 938, self.pos_y + 250)
@@ -210,11 +220,12 @@ class HomePage(Element, Controller):
         self.rect_full(self.grey, 630, 220, 700, 50, 0)
         self.rect_border(self.green2, 630, 420, 700, 530, 2, 5)
         self.rect_radius_top(self.green3, 630, 175, 700, 45, 5)
+        self.text_not_center(self.font2, 17, "Sort by", self.black, 305, 210)
         self.text_not_center(self.font2, 17,"Date", self.black, 464, 210)
         self.text_not_center(self.font2, 17,"To / From", self.black, 535, 210)
         self.text_not_center(self.font2, 17, "Description", self.black, 740, 210)
         self.text_not_center(self.font2, 17, "Amount", self.black, 910, 210)
-        
+
         if not self.checking_saving_event:
             self.checking_saving_event = True
 
@@ -237,38 +248,40 @@ class HomePage(Element, Controller):
         self.text_not_center(self.font2, 16, self.user[3], self.grey1, 400, 400)
         pygame.draw.line(self.Window, self.green4, (330, 430), (750, 430), 1)
 
-        # Sort Code
-        self.text_not_center(self.font1, 16, "Sort Code", self.grey1, 330, 450)
-        self.text_not_center(self.font2, 16, "77-77-77 ", self.grey1, 410, 450)
-        pygame.draw.line(self.Window, self.green4, (330, 480), (750, 480), 1)
-        
         # Account ID
-        self.text_not_center(self.font1, 16, "Account ID Number", self.grey1, 330, 500)
-        self.text_not_center(self.font2, 16, self.user[6], self.grey1, 480, 500)
+        self.text_not_center(self.font1, 16, "Account ID Number", self.grey1, 330, 450)
+        self.text_not_center(self.font2, 16, self.user[7], self.grey1,500, 450)
+        pygame.draw.line(self.Window, self.green4, (330, 480), (750, 480), 1)
+
+        # SORT CODE
+        self.text_not_center(self.font1, 16, "Sort Code", self.grey1, 330, 500)
+        self.text_not_center(self.font2, 16, self.sort_code_final, self.grey1, 480, 500)
         pygame.draw.line(self.Window, self.green4, (330, 530), (750, 530), 1)
 
         # IBAN
         self.text_not_center(self.font1, 16, "IBAN", self.grey1, 330, 550)
-        self.text_not_center(self.font2, 16, self.user[5], self.grey1, 380, 550)
+        self.text_not_center(self.font2, 16, self.user[6], self.grey1, 380, 550)
         pygame.draw.line(self.Window, self.green4, (330, 580), (750, 580), 1)
 
-    def filter_options(self): 
+    def filter_options(self):
 
         # Filter by date
-        self.text_not_center(self.font3, 18, "Sort by", self.grey2, 305, 290)
-        self.date_rect = self.img_txt_hover("date", "Date", 320, 350, 35, 35, self.images["date"], self.images["date"], self.font3, 15, self.grey3,345, 340)
+        self.date_rect = self.img_txt_hover("date", "Date", 320, 270, 35, 35, self.images["date"], self.images["date"], self.font3, 15, self.grey3,345, 260)
         # Filter by income
-        self.income_rect = self.img_txt_hover("income", "Income", 320, 400, 35, 35, self.images["income"], self.images["income"], self.font3, 15, self.grey3,345, 390)
+        self.income_rect = self.img_txt_hover("income", "Income", 320, 320, 35, 35, self.images["income"], self.images["income"], self.font3, 15, self.grey3,345, 310)
         # Filter by expense
-        self.expense_rect = self.img_txt_hover("expense", "Expense", 320, 450, 35, 35, self.images["expense"], self.images["expense"], self.font3, 15, self.grey3,345, 440)
+        self.expense_rect = self.img_txt_hover("expense", "Expense", 320, 370, 35, 35, self.images["expense"], self.images["expense"], self.font3, 15, self.grey3,345, 360)
         # Filter by amount descending
-        self.descending_rect = self.img_txt_hover("descending", "Descending", 320, 500, 35, 35, self.images["descending"], self.images["descending"], self.font3, 15, self.grey3,345, 490)
+        self.descending_rect = self.img_txt_hover("descending", "Descending", 320, 420, 35, 35, self.images["descending"], self.images["descending"], self.font3, 15, self.grey3,345, 410)
         # Filter by amount ascending
-        self.ascending_rect = self.img_txt_hover("ascending", "Ascending", 320, 550, 35, 35, self.images["ascending"], self.images["ascending"], self.font3, 15, self.grey3,345, 540)
+        self.ascending_rect = self.img_txt_hover("ascending", "Ascending", 320, 470, 35, 35, self.images["ascending"], self.images["ascending"], self.font3, 15, self.grey3,345, 460)
         # Filter by period
-        self.calendar_rect = self.img_txt_hover("calendar", "Calendar", 320, 600, 35, 35, self.images["calendar"], self.images["calendar"], self.font3, 15, self.grey3,345, 590)
+        self.calendar_rect = self.img_txt_hover("calendar", "Calendar", 320, 520, 35, 35, self.images["calendar"], self.images["calendar"], self.font3, 15, self.grey3,345, 510)
         # Filter by type
-        self.category_rect = self.img_txt_hover("type", "Type", 320, 650, 35, 35, self.images["type"], self.images["type"], self.font3, 15, self.grey3,345, 640)
+        if self.display_category_description:
+            type_text = self.category_list[self.sort_category - 1] 
+        else: type_text = "Type"
+        self.type_rect = self.img_txt_hover("type", type_text, 320, 570, 35, 35, self.images["type"], self.images["type"], self.font3, 15, self.grey3,345, 560)
 
     def transaction_design(self):
 
@@ -346,10 +359,10 @@ class HomePage(Element, Controller):
 
     def notification(self):
         new_notif = 0
-        for transaction in self.transactions: 
-            if transaction[5] > self.last_login_date: 
+        for transaction in self.transactions:
+            if transaction[5] > self.last_login_date:
                 new_notif = new_notif + 1
-        return new_notif  
+        return new_notif
 
     def homepage_run(self):
         if self.accounts_running:
@@ -371,8 +384,6 @@ class HomePage(Element, Controller):
                     elif self.saving_rect.collidepoint(event.pos):
                         self.welcome_message = self.catch_phrase(2)
                         self.profile_display, self.checking_saving_display, self.transfer_display, self.transaction_event = False, True, False, False
-
-
                     
                     elif self.profile_rect.collidepoint(event.pos):
                         self.profile_display, self.checking_saving_display, self.transfer_display, self.checking_saving_event, self.transaction_event = True, False, False, False, False
@@ -388,29 +399,40 @@ class HomePage(Element, Controller):
                             self.scroll -= 15
                         else:
                             if self.date_rect.collidepoint(event.pos):
+                                self.display_category_description = False
                                 if self.date_sort:
-                                    self.transactions = self.display_transaction(self.user_id,1)
+                                    self.transactions = self.display_transaction(self.user_id,1, None)
                                     self.date_sort = False
                                 else:
-                                    self.transactions = self.display_transaction(self.user_id,2)
+                                    self.transactions = self.display_transaction(self.user_id,2, None)
                                     self.date_sort = True
                             elif self.income_rect.collidepoint(event.pos):
-                                self.transactions = self.display_transaction(self.user_id,3)
+                                self.display_category_description = False
+                                self.transactions = self.display_transaction(self.user_id,3, None)
 
                             elif self.expense_rect.collidepoint(event.pos):
-                                self.transactions = self.display_transaction(self.user_id,4)
+                                self.display_category_description = False
+                                self.transactions = self.display_transaction(self.user_id,4, None)
 
                             elif self.ascending_rect.collidepoint(event.pos):
-                                self.transactions = self.display_transaction(self.user_id,5)
+                                self.display_category_description = False
+                                self.transactions = self.display_transaction(self.user_id,5, None)
 
                             elif self.descending_rect.collidepoint(event.pos):
-                                self.transactions = self.display_transaction(self.user_id,6)
+                                self.display_category_description = False
+                                self.transactions = self.display_transaction(self.user_id,6, None)
 
                             # elif self.calendar_rect.collidepoint(event.pos):
-                            #     self.transactions = self.display_transaction(self.user_id,7)
+                                self.display_category_description = False
+                            #     self.transactions = self.display_transaction(self.user_id,7, None)
 
-                            elif self.calendar_rect.collidepoint(event.pos):
-                                self.transactions = self.display_transaction(self.user_id,8)
+                            elif self.type_rect.collidepoint(event.pos):
+                                self.display_category_description = True
+                                self.transactions = self.display_transaction(self.user_id,8, self.sort_category)
+                                if self.sort_category < 5:
+                                    self.sort_category += 1
+                                else:
+                                    self.sort_category = 0
 
                     if self.transaction_event:
                         if self.checking_sender_rect.collidepoint(event.pos):

@@ -25,9 +25,9 @@ class UserRepository(Database):
         return user
 
     # TABLE USER
-    def add_user(self, first_name, last_name, email, password, iban, account_number, account_type):
-        sql = "INSERT INTO user (first_name, last_name, email, password, iban, account_number, account_type) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-        values = ( first_name, last_name, email, password, iban, account_number, account_type)
+    def add_user(self, first_name, last_name, email, password, sort_code, iban, account_number, account_type):
+        sql = "INSERT INTO user (first_name, last_name, email, password, sort_code, iban, account_number, account_type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        values = ( first_name, last_name, email, password, sort_code, iban, account_number, account_type)
         self.execute_query(sql, values)
 
     def user_info(self):
@@ -56,7 +56,6 @@ class UserRepository(Database):
         self.execute_query(sql, params)
 
     # A revoir
-
     def get_last_message_time(self, id_user):
         sql = "SELECT date_last_message FROM user WHERE id = %s"
         values = (id_user,)

@@ -52,7 +52,7 @@ class Controller(UserRepository,TransactionRepository):
         
     def register_user(self):
         hashed_password_register = sha256(self.input_password_register.encode()).hexdigest()
-        self.new_user = self.add_user(self.input_first_name_register,self.input_last_name_register, self.input_email_register, hashed_password_register, self.iban, self.account_number, self.account_type_number)
+        self.new_user = self.add_user(self.input_first_name_register, self.input_last_name_register, self.input_email_register, hashed_password_register, self.sort_code, self.iban, self.account_number, self.account_type_number)
         return self.new_user
         
     # Notification
@@ -69,7 +69,7 @@ class Controller(UserRepository,TransactionRepository):
     def catch_phrase(self, account_nb):
         return self.description_account([account_nb])  
     
-    def display_transaction(self, user_id, filter):
+    def display_transaction(self, user_id, filter, id_categ):
         if filter == 1:
             transactions = self.descending_date_filter(user_id)
 
@@ -92,7 +92,7 @@ class Controller(UserRepository,TransactionRepository):
         #     transactions = self.amount_desc_filter(user_id)
 
         elif filter == 8:
-            transactions = self.category_filter(user_id)
+            transactions = self.category_filter(user_id, id_categ)
 
         return transactions
     
@@ -108,14 +108,3 @@ class Controller(UserRepository,TransactionRepository):
 
         total = total_amount_r -  total_amount_s
         return total
-    
- 
-
-
-
-
-
-
-
-    
-

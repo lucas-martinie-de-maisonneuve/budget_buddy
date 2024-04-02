@@ -7,24 +7,25 @@ CREATE TABLE user (
     last_name VARCHAR(255),
     email VARCHAR(255),
     password VARCHAR(255),
+    sort_code INT,
     iban VARCHAR(255),
     account_number VARCHAR(255),
     account_type INT,
     date_last_co DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO user (first_name, last_name, email, password, iban, account_number, account_type) VALUES
-('Hamza','Naya', 'a', "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb", "GB10WWBP10203012345698", 28092002, 3),
-('Lucas','Martinie','lucas.m@laplateforme.io', '43e405862bdfbdef17f2f13bf6e8a3efe088de01ad8eb4a9f47ff3fa21f20aae', "GB10WWBP10203012345678", 24121995, 3),
-('Vanny','Lamorte','hamza.n@laplateforme.io', 'c9d0532835cc70cbc44011958faed891b3f254627dd0e7b8d3d99c995b2600e4', "GB11WWBP11223387654321", 13052001, 3),
-('Lucy','Madec','vanny.l@laplateforme.io', '4f15f99279d26f053ddbe27b8e5d9d3203926820c25ebeade0bd082653ab696b', "GB12WWBP30201054321678", 25121993, 3);
+INSERT INTO user (first_name, last_name, email, password, sort_code, iban, account_number, account_type) VALUES
+('Hamza','Naya', 'a', "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb", 456879,"GB10WWBP10203012345698", 28092002, 3),
+('Lucas','Martinie','lucas.m@laplateforme.io', '43e405862bdfbdef17f2f13bf6e8a3efe088de01ad8eb4a9f47ff3fa21f20aae', 789128, "GB10WWBP10203012345678", 24121995, 3),
+('Vanny','Lamorte','hamza.n@laplateforme.io', 'c9d0532835cc70cbc44011958faed891b3f254627dd0e7b8d3d99c995b2600e4', 126879, "GB11WWBP11223387654321", 13052001, 3),
+('Lucy','Madec','vanny.l@laplateforme.io', '4f15f99279d26f053ddbe27b8e5d9d3203926820c25ebeade0bd082653ab696b', 635278, "GB12WWBP30201054321678", 25121993, 3);
 
 -- 1. Super User a
 -- 2. LucasMartinie1!
 -- 3. HamzaNaya1!
 -- 4. LucyMadec1!
 
-CREATE TABLE decription (
+CREATE TABLE description (
     id INT PRIMARY KEY AUTO_INCREMENT,
     tagline TEXT
 );
@@ -34,9 +35,9 @@ CREATE TABLE decription (
 -- Both = 3
 
 
-INSERT INTO account(account_type, description) VALUES
-('1',"Welcome to your checking account! Let's manage your finances together"),
-('2', "Welcome back to your savings account! Let's continue growing your financial goals together");
+INSERT INTO description (tagline) VALUES
+("Welcome to your checking account! Let's manage your finances together"),
+("Welcome back to your savings account! Let's continue growing your financial goals together");
 
 -- "Unlock the perks of a checking account today! Enjoy easy access to your funds, seamless online transactions, and peace of mind with built-in security features."
 -- "Unlock financial freedom with our Saving Account! Enjoy peace of mind knowing your money is safe and growing. With a minimum deposit of 100 pounds per month and a maximum daily withdrawal limit of 300 pounds, it's the perfect way to secure your future while maintaining access to your funds."
@@ -72,7 +73,6 @@ INSERT INTO transaction (transaction_re, transaction_name, description, amount, 
 ('2', 'Tesco', 'grocery shopping', 30,'2024-01-10', 3, 1, 1, 65),
 ('2', 'Blacks', 'hoodie', 50,'2024-01-09', 4, 1, 1, 15),
 ('2', 'Cooper Green', 'rent', 950,'2024-01-08', 1, 1, 1, 49),
-
 ('2', 'Cooper Green', 'water bill', 46,'2023-06-25', 1, 1, 2, 38), 
 ('2', 'Total', 'fuel car', 60,'2023-06-24', 2, 1, 2, 5),
 ('2', 'Mark Spencer', 'grocery shopping', 82,'2023-06-23', 3, 1, 2, 15),
@@ -85,7 +85,6 @@ INSERT INTO transaction (transaction_re, transaction_name, description, amount, 
 ('2', 'Tesco', 'grocery shopping', 120,'2023-04-10', 3, 1, 2, 19),
 ('2', 'JDSport', 'trouser', 50,'2023-04-09', 4, 1, 2, 22),
 ('2', 'Cooper Green', 'rent', 800,'2023-04-08', 1, 1, 2, 31),
-
 ('2', 'Cooper Green', 'water bill', 55,'2022-03-25', 1, 1, 3, 9),
 ('2', 'Total', 'fuel car', 30,'2022-03-24', 2, 1, 3, 8),
 ('2', 'Mark Spencer', 'grocery shopping', 50,'2022-03-23', 3, 1, 3, 9),
@@ -98,7 +97,6 @@ INSERT INTO transaction (transaction_re, transaction_name, description, amount, 
 ('2', 'Tesco', 'grocery shopping', 28,'2022-01-10', 3, 1, 3, 10),
 ('2', 'H&M', 'skirt', 35,'2022-01-09', 4, 1, 3, 32),
 ('2', 'Cooper Green', 'rent', 650,'2022-01-08', 1, 1, 3, 48),
-
 ('1', 'La Plateforme', 'salary', 3000, '2024-03-01', 0, 1, 6, 1),
 ('1', 'La Plateforme', 'salary', 3000, '2023-12-01', 0, 1, 6, 1),
 ('1', 'La Plateforme', 'salary', 3000, '2024-01-01', 0, 1, 6, 1),
