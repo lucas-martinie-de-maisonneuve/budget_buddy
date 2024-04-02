@@ -10,6 +10,7 @@ class HomePage(Element, Controller):
         self.user_id, self.user_fisrt_name, self.user_last_name, self.user_email, self.sort_code, self.user_iban, self.user_account_number, self.last_login_date = self.user[0], self.user[1], self.user[2], self.user[3], self.user[5], self.user[6], self.user[7], self.user[9]
 
         self.transactions = self.display_transaction(self.user_id, 1, None)
+        self.account_type = None
         self.date_sort = False
 
         self.checking_sender = False
@@ -202,20 +203,20 @@ class HomePage(Element, Controller):
 
         for transaction in self.transactions:
             self.pos_y = y + self.scroll
+            if transaction[7] == self.account_type:
+                if self.pos_y < 425:
+                    self.text_not_center(self.font3, 10,('['+ str(transaction[6])+']'), self.black, 440, self.pos_y + 252.5)
+                    self.text_not_center(self.font3, 10, f"{transaction[5].day:02d}/{transaction[5].month:02d}/{transaction[5].year}", self.black, 460, self.pos_y + 252.5)
+                    self.text_not_center(self.font3, 15, str(transaction[2]), self.black, 530, self.pos_y + 250)
+                    self.text_not_center(self.font3, 12, str(transaction[3]), self.black, 750, self.pos_y + 251.5)
+                    self.text_not_center(self.font3, 12, str(transaction[4]), self.black, 938, self.pos_y + 250)
+                    self.text_not_center(self.font3, 12, "£", self.black, 930, self.pos_y + 250)
+                    if transaction[8] == self.user_id:
+                        self.text_not_center(self.font1, 18, "-", self.red, 920, self.pos_y + 250)
+                    elif transaction[9] == self.user_id:
+                        self.text_not_center(self.font1, 18, "+", self.green, 920, self.pos_y + 250)
 
-            if self.pos_y < 425:
-                self.text_not_center(self.font3, 10,('['+ str(transaction[6])+']'), self.black, 440, self.pos_y + 252.5)
-                self.text_not_center(self.font3, 10, f"{transaction[5].day:02d}/{transaction[5].month:02d}/{transaction[5].year}", self.black, 460, self.pos_y + 252.5)
-                self.text_not_center(self.font3, 15, str(transaction[2]), self.black, 530, self.pos_y + 250)
-                self.text_not_center(self.font3, 12, str(transaction[3]), self.black, 750, self.pos_y + 251.5)
-                self.text_not_center(self.font3, 12, str(transaction[4]), self.black, 938, self.pos_y + 250)
-                self.text_not_center(self.font3, 12, "£", self.black, 930, self.pos_y + 250)
-                if transaction[8] == self.user_id:
-                    self.text_not_center(self.font1, 18, "-", self.red, 920, self.pos_y + 250)
-                elif transaction[9] == self.user_id:
-                    self.text_not_center(self.font1, 18, "+", self.green, 920, self.pos_y + 250)
-
-                y += 25
+                    y += 25
 
         self.rect_full(self.grey, 630, 220, 700, 50, 0)
         self.rect_border(self.green2, 630, 420, 700, 530, 2, 5)
@@ -379,10 +380,12 @@ class HomePage(Element, Controller):
 
                     elif self.checking_rect.collidepoint(event.pos):
                         self.welcome_message = self.catch_phrase(1)
+                        self.account_type = 1
                         self.profile_display, self.checking_saving_display, self.transfer_display = False, True, False
 
                     elif self.saving_rect.collidepoint(event.pos):
                         self.welcome_message = self.catch_phrase(2)
+                        self.account_type = 2
                         self.profile_display, self.checking_saving_display, self.transfer_display, self.transaction_event = False, True, False, False
                     
                     elif self.profile_rect.collidepoint(event.pos):
