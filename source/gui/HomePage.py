@@ -7,8 +7,7 @@ class HomePage(Element, Controller):
         Element.__init__(self)
         Controller.__init__(self)
         self.user = user_info
-        self.user_id = self.user[0]
-        self.user_fisrt_name, self.user_last_name, self.user_email, self.user_iban, self.user_account_number = self.user[1], self.user[2], self.user[3], self.user[5], self.user[6]
+        self.user_id, self.user_fisrt_name, self.user_last_name, self.user_email, self.user_iban, self.user_account_number, self.last_login_date = self.user[0], self.user[1], self.user[2], self.user[3], self.user[5], self.user[6], self.user[8]
 
         self.transactions = self.display_transaction(self.user_id, 1, None)
         self.date_sort = False
@@ -31,14 +30,30 @@ class HomePage(Element, Controller):
         self.transaction_running = True
         self.disconnected = True
 
+        self.entry = False
+
+        # Main Page
+        self.welcome_message = ""
+        self.coin_angle = 0
+        self.rotation_speed = 2    
+        self.total_saving = str(self.display_total_amount(2, self.user_id))
+        self.total_checking = str(self.display_total_amount(1, self.user_id))  
+        self.total_account = str(int(self.total_saving) + int(self.total_checking))
+
+        # Notification
+        self.display_notif = self.notification()
+
         self.image_paths = {
-            "logout": "assets/image/Accounts/accounts_off1.png",
-            "bell":"assets/image/Accounts/accounts_bell.png",
-            "logo":"assets/image/Accounts/accounts_logo.png",
-            "background":"assets/image/Accounts/accounts_background1.jpg",
-            "background_top":"assets/image/Accounts/accounts_background_top.jpg",
-            "help":"assets/image/Accounts/accounts_help.png",
-            "pic":"assets/image/Accounts/accounts_pic.png", 
+            # Main page
+            "logout": "assets/image/MainPage/mainpage_off.png",
+            "bell":"assets/image/MainPage/mainpage_bell.png",
+            "background":"assets/image/MainPage/mainpage_background1.jpg",
+            "background_top":"assets/image/MainPage/mainpage_background_top.jpg",
+            "help":"assets/image/MainPage/mainpage_help.png",
+            "profile":"assets/image/MainPage/mainpage_profile.png",
+            "coin":"assets/image/MainPage/mainpage_coin.png",
+            "circle":"assets/image/MainPage/mainpage_circle.png",
+            # Checking & Saving
             "date":"assets/image/Account/account_1.png",
             "income":"assets/image/Account/account_2.png",
             "expense":"assets/image/Account/account_3.png",
@@ -46,8 +61,10 @@ class HomePage(Element, Controller):
             "ascending":"assets/image/Account/account_7.png",
             "calendar":"assets/image/Account/account_6.png",
             "type":"assets/image/Account/account_4.png",
-            "modify":"assets/image/Profile/profile1.png",
-            "question":"assets/image/Transaction/transaction1.png",
+            # Profile
+            "pen":"assets/image/Profile/profile_pen.png",
+            # Transaction
+            "question":"assets/image/Transaction/transaction_question.png",
         }
 
         self.images = {}
@@ -66,7 +83,6 @@ class HomePage(Element, Controller):
         self.rect_full(self.green1, 500, 75, 1000, 70, 0)
         self.rect_full(self.green3, 500, 125, 1000, 30, 0)
 
-
         # Lines v top bar
         pygame.draw.line(self.Window, self.green4, (850, 53), (850, 100), 1)
         pygame.draw.line(self.Window, self.green4, (930, 53), (930, 100), 1)
@@ -79,13 +95,12 @@ class HomePage(Element, Controller):
         self.text_not_center(self.font1, 18, "Wildcat Wealth Bank", self.white, 10, 85)
         
         # Account ID Number
-       
-        self.text_not_center(self.font3, 13, " Account ID number | ", self.white, 585, 75)
+        self.text_not_center(self.font2, 13, "Account ID Number :", self.white, 600, 75)
         self.text_not_center(self.font2, 13, self.user[6], self.white, 755, 75)
         
-        # Notification
+        # # Notification
         self.img_hover("bell", "bell", 890, 80, 40, 40,self.images["bell"],self.images["bell"])
-        self.text_not_center(self.font1, 15, "17", self.yellow, 900, 50)
+        self.text_not_center(self.font1, 15, str(self.display_notif), self.yellow, 900, 50) 
 
         # Log Out
         self.log_out_rect = self.img_hover("Log Out", "Log Out", 970, 80, 40, 40,self.images["logout"],self.images["logout"])
@@ -98,7 +113,7 @@ class HomePage(Element, Controller):
         self.rect_radius_top(self.green3, 140, 175, 250, 45, 5)
 
         # User info
-        self.img_not_center("Profil pic", 90, 160, 90, 90, self.images["pic"])
+        self.img_not_center("Profil pic", 90, 160, 90, 90, self.images["profile"])
         self.text_not_center(self.font1, 15, f"{self.user[1]} { self.user[2]}", self.grey3, 70, 270)
         self.profile_rect = self.button_hover_small("My Profil", 140, 320, 190, 40, self.green2, self.green2, self.green2, self.green2, "My Profil", self.font1, self.white,15, 0, 3
         )
@@ -126,7 +141,50 @@ class HomePage(Element, Controller):
         self.rect_border(self.green2, 630, 420, 700, 530, 2, 5) 
         self.rect_radius_top(self.green3, 630, 175, 700, 45, 5)
 
+    def all_accounts(self):
+
+        pygame.draw.line(self.Window, self.grey3, (315, 280), (605, 280), 1)
+        self.text_not_center(self.font1, 35, self.total_account, self.green1, 405, 230)
+        self.text_not_center(self.font1, 18, "Total Balance", self.grey2, 405, 290)
+
+        # Checking Account
+        self.rect_full(self.green1, 460, 410, 300, 150, 5)
+        self.img_hover("Circle", "Circle", 530, 410, 110, 110,self.images["circle"],self.images["circle"])
+        self.text_not_center(self.font4, 15, self.total_checking, self.white, 500, 405)
+        self.text_not_center(self.font1, 14, "CHECKING ACCOUNT", self.white, 330, 370)
+        self.text_not_center(self.font4, 12,f"Sort Code  — 66-66-66", self.white, 330, 400)
+        self.text_not_center(self.font4, 12, f"Account ID — { self.user[6]}", self.white, 330, 430)
+        self.text_not_center(self.font4, 12, f"{self.user[1]} { self.user[2]}", self.white, 330, 460)
+
+        # Saving Account
+        self.rect_full(self.green1, 460, 580, 300, 150, 5)
+        self.img_hover("Circle", "Circle", 530, 580, 110, 110,self.images["circle"],self.images["circle"])
+        self.text_not_center(self.font4, 15, self.total_saving, self.white, 500, 575)
+        self.text_not_center(self.font1, 14, "SAVING ACCOUNT", self.white, 330, 540)
+        self.text_not_center(self.font4, 12, f"Sort Code — 66-66-66", self.white, 330, 570)
+        self.text_not_center(self.font4, 12,f"Account ID  — { self.user[6]}", self.white, 330, 600)
+        self.text_not_center(self.font4, 12,f"{self.user[1]} { self.user[2]}", self.white, 330, 630)
+
+        # Animation
+        rotated_coin = pygame.transform.rotate(self.images["coin"], self.coin_angle)
+        resized_rotated_coin = pygame.transform.scale(rotated_coin, (90, 90))
+        resized_rotated_coin_rect = resized_rotated_coin.get_rect(center=(350, 240))
+
+        self.Window.blit(resized_rotated_coin, resized_rotated_coin_rect)
+     
+        self.coin_angle += self.rotation_speed
+        if self.coin_angle >= 360:
+            self.coin_angle -= 360
+        elif self.coin_angle < 0:
+            self.coin_angle += 360
+
+    # Diagramme
+    def diagram(self):
+        pass     
+      
+    
     def main_page_design(self):
+
         self.background()
         self.top_bar()
         self.side_bar()
@@ -165,6 +223,8 @@ class HomePage(Element, Controller):
         if not self.checking_saving_event:
             self.checking_saving_event = True
 
+        self.text_not_center(self.font1, 14, str(self.welcome_message[0][0]), self.white, 295, 170)
+
     def profile_design(self):
 
         # Name
@@ -182,16 +242,20 @@ class HomePage(Element, Controller):
         self.text_not_center(self.font2, 16, self.user[3], self.grey1, 400, 400)
         pygame.draw.line(self.Window, self.green4, (330, 430), (750, 430), 1)
 
-         # IBAN
-        self.text_not_center(self.font1, 16, "IBAN", self.grey1, 330, 500)
-        self.text_not_center(self.font2, 16, self.user[5], self.grey1, 390, 500)
+        # Sort Code
+        self.text_not_center(self.font1, 16, "Sort Code", self.grey1, 330, 450)
+        self.text_not_center(self.font2, 16, "77-77-77 ", self.grey1, 410, 450)
+        pygame.draw.line(self.Window, self.green4, (330, 480), (750, 480), 1)
+        
+        # Account ID
+        self.text_not_center(self.font1, 16, "Account ID Number", self.grey1, 330, 500)
+        self.text_not_center(self.font2, 16, self.user[6], self.grey1, 480, 500)
         pygame.draw.line(self.Window, self.green4, (330, 530), (750, 530), 1)
 
-        # Account ID
-        self.text_not_center(self.font1, 16, "Account ID Number", self.grey1, 330, 450)
-        self.text_not_center(self.font2, 16, self.user[6], self.grey1,500, 450)
-        pygame.draw.line(self.Window, self.green4, (330, 480), (750, 480), 1)
-
+        # IBAN
+        self.text_not_center(self.font1, 16, "IBAN", self.grey1, 330, 550)
+        self.text_not_center(self.font2, 16, self.user[5], self.grey1, 380, 550)
+        pygame.draw.line(self.Window, self.green4, (330, 580), (750, 580), 1)
 
     def filter_options(self): 
 
@@ -287,6 +351,13 @@ class HomePage(Element, Controller):
 
         self.transaction_event = True
 
+    def notification(self):
+        new_notif = 0
+        for transaction in self.transactions: 
+            if transaction[5] > self.last_login_date: 
+                new_notif = new_notif + 1
+        return new_notif  
+
     def homepage_run(self):
         if self.accounts_running:
             self.background()
@@ -300,9 +371,14 @@ class HomePage(Element, Controller):
                     if self.transfer_rect.collidepoint(event.pos):
                         self.profile_display, self.checking_saving_display, self.checking_saving_event, self.transfer_display, self.transaction_event = False, False, False, True, False
 
-                    elif self.checking_rect.collidepoint(event.pos) or self.saving_rect.collidepoint(event.pos):
-                        self.profile_display, self.checking_saving_display, self.transfer_display, self.transaction_event = False, True, False, False
+                    elif self.checking_rect.collidepoint(event.pos):
+                        self.welcome_message = self.catch_phrase(1)
+                        self.profile_display, self.checking_saving_display, self.transfer_display = False, True, False
 
+                    elif self.saving_rect.collidepoint(event.pos):
+                        self.welcome_message = self.catch_phrase(2)
+                        self.profile_display, self.checking_saving_display, self.transfer_display, self.transaction_event = False, True, False, False
+                    
                     elif self.profile_rect.collidepoint(event.pos):
                         self.profile_display, self.checking_saving_display, self.transfer_display, self.checking_saving_event, self.transaction_event = True, False, False, False, False
 

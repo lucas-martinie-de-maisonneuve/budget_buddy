@@ -38,5 +38,5 @@ class Database:
         result = self.cursor.fetchone()
         self.disconnect()
         return result
-
-    # def close_connection(self):
+    
+    

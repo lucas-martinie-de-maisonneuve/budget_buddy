@@ -24,18 +24,12 @@ class TransactionRepository(Database):
         return self.fetch(sql, values)
 
     # ACCOUNTS
-    def account_type(self):
-        sql = "SELECT ad_description FROM account"
-        return self.fetch(sql)
-
-    def ad_description_account(self):
-        sql = "SELECT ad_description FROM account"
-        return self.fetch(sql)
-
-    def general_description_account(self):
-        sql = "SELECT _description FROM account"
-        return self.fetch(sql)
-
+    
+    def description_account(self, account_nb):
+        sql = "SELECT tagline FROM description WHERE id = %s"
+        values = (account_nb)
+        return self.fetch(sql, values)    
+    
     def income_filter(self, user_id):
         sql = "SELECT * FROM transaction WHERE transaction_re = 1  AND (id_receiver = %s OR id_sender = %s)"
         values = (user_id, user_id)
@@ -75,8 +69,24 @@ class TransactionRepository(Database):
     def category_filter (self, user_id, id_categ):
         sql = "SELECT * FROM transaction WHERE (id_sender = %s OR id_receiver = %s) AND id_category  = %s"
         values = (user_id, user_id, id_categ)
+        return self.fetch(sql, values)    
+    
+    def sum_account_r(self, account_id, user_id  ):
+        sql = "SELECT SUM(amount) AS total_amount FROM transaction WHERE account_id = %s AND id_receiver = %s"
+        values = (account_id, user_id)
         return self.fetch(sql, values)
+    
+    def sum_account_s(self, account_id, user_id  ):
+        sql = "SELECT SUM(amount) AS total_amount FROM transaction WHERE account_id = %s AND id_sender = %s"
+        values = (account_id, user_id)
+        return self.fetch(sql, values)
+      
 
+
+    # def diagram_category (self, user_id, account_id): 
+    #     sql = "SELECT id_category FROM transaction WHERE id_sender = %s OR id_receiver = %s AND account_id = %s "
+    #     values = (user_id, user_id, account_id)
+    #     return self.fetch(sql, values)
 
     # Notification
     def last_notif (self, id_user):
@@ -87,9 +97,18 @@ class TransactionRepository(Database):
 
     def save_last_transaction (self, id_user):
         current_time = datetime.now()
-        sql = "UPDATE user SET date_last_transaction = %s WHERE id = %s"
+        sql = "UPDATE user SET date_last_co = %s WHERE id = %s"
         values = (current_time, id_user,)
         self.execute_query(sql, values)
+
+    def get_last_co_time(self, id_user):
+        sql = "SELECT date_last_co FROM user WHERE id = %s"
+        values = (id_user)
+        result = self.fetch(sql, values)
+        if result: 
+                return result[0][0]
+        else: 
+            return None       
 
     def add_notification(self):
         user = "fist_name_user"

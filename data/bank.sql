@@ -19,26 +19,24 @@ INSERT INTO user (first_name, last_name, email, password, iban, account_number, 
 ('Vanny','Lamorte','hamza.n@laplateforme.io', 'c9d0532835cc70cbc44011958faed891b3f254627dd0e7b8d3d99c995b2600e4', "GB11WWBP11223387654321", 13052001, 3),
 ('Lucy','Madec','vanny.l@laplateforme.io', '4f15f99279d26f053ddbe27b8e5d9d3203926820c25ebeade0bd082653ab696b', "GB12WWBP30201054321678", 25121993, 3);
 
--- 0. Super User a
--- 1. LucasMartinie1!
--- 2. HamzaNaya1!
--- 3. VannyLamorte1!
+-- 1. Super User a
+-- 2. LucasMartinie1!
+-- 3. HamzaNaya1!
+-- 4. LucyMadec1!
 
-CREATE TABLE account (
+CREATE TABLE description (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    consumer_id INT,
-    account_type INT,
-    general_description TEXT,
-    FOREIGN KEY (consumer_id) REFERENCES user(id)
+    tagline TEXT
 );
 
 -- Checking Accounts = 1
 -- Savings Accounts = 2
 -- Both = 3
 
-INSERT INTO account(account_type, description) VALUES
-('1',"Welcome to your checking account! Let's manage your finances together"),
-('2', "Welcome back to your savings account! Let's continue growing your financial goals together");
+
+INSERT INTO description (tagline) VALUES
+("Welcome to your checking account! Let's manage your finances together"),
+("Welcome back to your savings account! Let's continue growing your financial goals together");
 
 -- "Unlock the perks of a checking account today! Enjoy easy access to your funds, seamless online transactions, and peace of mind with built-in security features."
 -- "Unlock financial freedom with our Saving Account! Enjoy peace of mind knowing your money is safe and growing. With a minimum deposit of 100 pounds per month and a maximum daily withdrawal limit of 300 pounds, it's the perfect way to secure your future while maintaining access to your funds."
