@@ -403,6 +403,7 @@ class HomePage(Element, Controller):
                         else:
                             if self.date_rect.collidepoint(event.pos):
                                 self.display_category_description = False
+                                self.scroll = 0
                                 if self.date_sort:
                                     self.transactions = self.display_transaction(self.user_id,1, None)
                                     self.date_sort = False
@@ -410,26 +411,32 @@ class HomePage(Element, Controller):
                                     self.transactions = self.display_transaction(self.user_id,2, None)
                                     self.date_sort = True
                             elif self.income_rect.collidepoint(event.pos):
+                                self.scroll = 0
                                 self.display_category_description = False
                                 self.transactions = self.display_transaction(self.user_id,3, None)
 
                             elif self.expense_rect.collidepoint(event.pos):
+                                self.scroll = 0
                                 self.display_category_description = False
                                 self.transactions = self.display_transaction(self.user_id,4, None)
 
                             elif self.ascending_rect.collidepoint(event.pos):
+                                self.scroll = 0
                                 self.display_category_description = False
                                 self.transactions = self.display_transaction(self.user_id,5, None)
 
                             elif self.descending_rect.collidepoint(event.pos):
+                                self.scroll = 0
                                 self.display_category_description = False
                                 self.transactions = self.display_transaction(self.user_id,6, None)
 
                             # elif self.calendar_rect.collidepoint(event.pos):
+                                self.scroll = 0
                                 self.display_category_description = False
                             #     self.transactions = self.display_transaction(self.user_id,7, None)
 
                             elif self.type_rect.collidepoint(event.pos):
+                                self.scroll = 0
                                 self.display_category_description = True
                                 self.transactions = self.display_transaction(self.user_id,8, self.sort_category)
                                 if self.sort_category < 5:
