@@ -235,22 +235,22 @@ class HomePage(Element, Controller):
 
         # Name
         self.text_not_center(self.font1, 16, "Name", self.grey1, 330, 300)
-        self.text_not_center(self.font2, 16, self.user[1], self.grey1, 390, 300)
+        self.text_not_center(self.font2, 16, self.user_fisrt_name, self.grey1, 390, 300)
         pygame.draw.line(self.Window, self.green4, (330, 330), (750, 330), 1)
 
         # Surname
         self.text_not_center(self.font1, 16, "Surname", self.grey1, 330, 350)
-        self.text_not_center(self.font2, 16,self.user[2], self.grey1, 420, 350)
+        self.text_not_center(self.font2, 16, self.user_last_name, self.grey1, 420, 350)
         pygame.draw.line(self.Window, self.green4, (330, 380), (750, 380), 1)
 
         # Email
         self.text_not_center(self.font1, 16, "Email", self.grey1, 330, 400)
-        self.text_not_center(self.font2, 16, self.user[3], self.grey1, 400, 400)
+        self.text_not_center(self.font2, 16, self.user_email, self.grey1, 400, 400)
         pygame.draw.line(self.Window, self.green4, (330, 430), (750, 430), 1)
 
         # Account ID
         self.text_not_center(self.font1, 16, "Account ID Number", self.grey1, 330, 450)
-        self.text_not_center(self.font2, 16, self.user[7], self.grey1,500, 450)
+        self.text_not_center(self.font2, 16, self.user_account_number, self.grey1,500, 450)
         pygame.draw.line(self.Window, self.green4, (330, 480), (750, 480), 1)
 
         # SORT CODE
@@ -260,7 +260,7 @@ class HomePage(Element, Controller):
 
         # IBAN
         self.text_not_center(self.font1, 16, "IBAN", self.grey1, 330, 550)
-        self.text_not_center(self.font2, 16, self.user[6], self.grey1, 380, 550)
+        self.text_not_center(self.font2, 16, self.user_iban, self.grey1, 380, 550)
         pygame.draw.line(self.Window, self.green4, (330, 580), (750, 580), 1)
 
     def filter_options(self):
@@ -279,7 +279,7 @@ class HomePage(Element, Controller):
         self.calendar_rect = self.img_txt_hover("calendar", "Calendar", 320, 520, 35, 35, self.images["calendar"], self.images["calendar"], self.font3, 15, self.grey3,345, 510)
         # Filter by type
         if self.display_category_description:
-            type_text = self.category_list[self.sort_category - 1] 
+            type_text = self.category_list[self.sort_category - 1]
         else: type_text = "Type"
         self.type_rect = self.img_txt_hover("type", type_text, 320, 570, 35, 35, self.images["type"], self.images["type"], self.font3, 15, self.grey3,345, 560)
 
