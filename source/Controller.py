@@ -69,7 +69,7 @@ class Controller(UserRepository,TransactionRepository):
     def catch_phrase(self, account_nb):
         return self.description_account([account_nb])  
     
-    def display_transaction(self, user_id, filter, id_categ):
+    def display_transaction(self, user_id, filter, id_categ, start_date, end_date):
         if filter == 1:
             transactions = self.descending_date_filter(user_id)
 
@@ -88,16 +88,14 @@ class Controller(UserRepository,TransactionRepository):
         elif filter == 6:
             transactions = self.amount_asc_filter(user_id)
 
-        # elif filter == 7:
-        #     transactions = self.amount_desc_filter(user_id)
+        elif filter == 7:
+            transactions = self.calendar_filter(start_date, end_date, user_id)
 
         elif filter == 8:
             transactions = self.category_filter(user_id, id_categ)
-
         return transactions
     
     # Main Page
-
     def display_total_amount(self, account_id, user_id):
         total_amount_r =  self.sum_account_r(account_id, user_id)[0][0]  
         total_amount_s =  self.sum_account_s(account_id, user_id)[0][0]   

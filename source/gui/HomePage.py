@@ -9,7 +9,7 @@ class HomePage(Element, Controller):
         self.user = user_info
         self.user_id, self.user_fisrt_name, self.user_last_name, self.user_email, self.user_iban, self.user_account_number, self.last_login_date = self.user[0], self.user[1], self.user[2], self.user[3], self.user[5], self.user[6], self.user[9]
 
-        self.transactions = self.display_transaction(self.user_id, 1, None)
+        self.transactions = self.display_transaction(self.user_id, 1, None, None, None)
         self.date_sort = False
 
         self.checking_sender = False
@@ -42,6 +42,10 @@ class HomePage(Element, Controller):
 
         # Notification
         self.display_notif = self.notification()
+
+        # Sort by
+        self.input_start_date = "00/00/0000"
+        self.input_end_date = "00/00/0000"
 
         self.image_paths = {
             # Main page
@@ -78,6 +82,7 @@ class HomePage(Element, Controller):
 
     def top_bar(self):
         self.img_background(500, 76.5, 1000, 153, self.images["background_top"])
+
         # Rect
         self.rect_full(self.green3, 500, 25, 1000, 30, 0)
         self.rect_full(self.green1, 500, 75, 1000, 70, 0)
@@ -95,7 +100,6 @@ class HomePage(Element, Controller):
         self.text_not_center(self.font1, 18, "Wildcat Wealth Bank", self.white, 10, 85)
 
         # Account ID Number
-
         self.text_not_center(self.font3, 13, " Account ID number | ", self.white, 600, 75)
         self.text_not_center(self.font2, 13, self.user[7], self.white, 765, 75)
 
@@ -248,7 +252,7 @@ class HomePage(Element, Controller):
         self.text_not_center(self.font2, 16, self.user[7], self.grey1,500, 450)
         pygame.draw.line(self.Window, self.green4, (330, 480), (750, 480), 1)
 
-        # SORT CODE
+        # Sort Code
         self.text_not_center(self.font1, 16, "Sort Code", self.grey1, 330, 500)
         self.text_not_center(self.font2, 16, str(self.user[5]), self.grey1, 480, 500)
         pygame.draw.line(self.Window, self.green4, (330, 530), (750, 530), 1)
@@ -270,13 +274,21 @@ class HomePage(Element, Controller):
         self.descending_rect = self.img_txt_hover("descending", "Descending", 320, 420, 35, 35, self.images["descending"], self.images["descending"], self.font3, 15, self.grey3,345, 410)
         # Filter by amount ascending
         self.ascending_rect = self.img_txt_hover("ascending", "Ascending", 320, 470, 35, 35, self.images["ascending"], self.images["ascending"], self.font3, 15, self.grey3,345, 460)
-        # Filter by period
-        self.calendar_rect = self.img_txt_hover("calendar", "Calendar", 320, 520, 35, 35, self.images["calendar"], self.images["calendar"], self.font3, 15, self.grey3,345, 510)
+
         # Filter by type
         if self.display_category_description:
             type_text = self.category_list[self.sort_category - 1] 
         else: type_text = "Type"
-        self.type_rect = self.img_txt_hover("type", type_text, 320, 570, 35, 35, self.images["type"], self.images["type"], self.font3, 15, self.grey3,345, 560)
+        self.type_rect = self.img_txt_hover("type", type_text, 320, 520, 35, 35, self.images["type"], self.images["type"], self.font3, 15, self.grey3,345, 510)
+
+        # Filter by period
+        self.calendar_rect = self.img_txt_hover("calendar", "Calendar", 320, 570, 35, 35, self.images["calendar"], self.images["calendar"], self.font3, 15, self.grey3, 345, 560)
+
+        self.input_start_date_rect = self.button_hover("start", 350, 605, 80, 25, self.grey, self.grey3, self.grey, self.grey3, self.input_start_date, self.font3, self.black, 10, 2, 5) 
+
+        self.input_end_date_rect = self.button_hover("end", 350, 637, 80, 25, self.grey, self.grey3, self.grey, self.grey3, self.input_end_date, self.font3, self.black, 10, 2, 5)
+
+        self.validate_rect = self.button_hover("Validate", 350, 665, 80, 20, self.grey, self.grey3, self.green4, self.green4, "Validate", self.font3, self.black, 10, 2, 5)
 
     def transaction_design(self):
 
@@ -387,6 +399,8 @@ class HomePage(Element, Controller):
                         self.disconnected = True
                         self.accounts_running = False
 
+                    # Event Saving & Checking
+
                     if self.checking_saving_event:
                         if event.button == 4 and self.scroll < 0 :
                             self.scroll += 15
@@ -396,39 +410,57 @@ class HomePage(Element, Controller):
                             if self.date_rect.collidepoint(event.pos):
                                 self.display_category_description = False
                                 if self.date_sort:
-                                    self.transactions = self.display_transaction(self.user_id,1, None)
+                                    self.transactions = self.display_transaction(self.user_id,1, None, None, None)
                                     self.date_sort = False
                                 else:
-                                    self.transactions = self.display_transaction(self.user_id,2, None)
+                                    self.transactions = self.display_transaction(self.user_id,2, None, None, None)
                                     self.date_sort = True
                             elif self.income_rect.collidepoint(event.pos):
                                 self.display_category_description = False
-                                self.transactions = self.display_transaction(self.user_id,3, None)
+                                self.transactions = self.display_transaction(self.user_id,3, None, None, None)
 
                             elif self.expense_rect.collidepoint(event.pos):
                                 self.display_category_description = False
-                                self.transactions = self.display_transaction(self.user_id,4, None)
+                                self.transactions = self.display_transaction(self.user_id,4, None, None, None)
 
                             elif self.ascending_rect.collidepoint(event.pos):
                                 self.display_category_description = False
-                                self.transactions = self.display_transaction(self.user_id,5, None)
+                                self.transactions = self.display_transaction(self.user_id,5, None, None, None)
 
                             elif self.descending_rect.collidepoint(event.pos):
                                 self.display_category_description = False
-                                self.transactions = self.display_transaction(self.user_id,6, None)
+                                self.transactions = self.display_transaction(self.user_id, 6, None, None, None)
 
                             # elif self.calendar_rect.collidepoint(event.pos):
+                            #     self.display_category_description = False
+                            #     self.transactions = self.display_transaction(self.user_id, 7, None, self.input_start_date, self.input_end_date)
+
+                            elif self.validate_rect.collidepoint(event.pos):
                                 self.display_category_description = False
-                            #     self.transactions = self.display_transaction(self.user_id,7, None)
+                                self.transactions = self.display_transaction(self.user_id, 7, None, self.input_start_date, self.input_end_date)
+
+
+
 
                             elif self.type_rect.collidepoint(event.pos):
                                 self.display_category_description = True
-                                self.transactions = self.display_transaction(self.user_id,8, self.sort_category)
+                                self.transactions = self.display_transaction(self.user_id,8, self.sort_category, None, None)
                                 if self.sort_category < 5:
                                     self.sort_category += 1
                                 else:
                                     self.sort_category = 0
 
+                            elif self.input_start_date_rect.collidepoint(event.pos):
+                                self.input_start_date = ""
+                                self.entry = 9
+
+                            elif self.input_end_date_rect.collidepoint(event.pos):
+                                self.input_end_date = ""
+                                self.entry = 10
+
+                
+
+                    # Event Transaction
                     if self.transaction_event:
                         if self.checking_sender_rect.collidepoint(event.pos):
                             self.checking_sender = not self.checking_sender
@@ -465,7 +497,7 @@ class HomePage(Element, Controller):
                             if self.input_iban_receiver  == "IBAN":
                                 self.input_iban_receiver = ""
                             self.entry = 8
-
+          
                         elif self.checking_receiver_rect.collidepoint(event.pos):
                             self.checking_receiver = not self.checking_receiver
 
@@ -474,8 +506,9 @@ class HomePage(Element, Controller):
 
                         elif self.confirm_button_rect.collidepoint(event.pos):
                             pass
-                if self.transaction_event:
-                    if event.type == pygame.KEYDOWN:
+                        
+                if event.type == pygame.KEYDOWN:
+                    if self.transaction_event:
                             if event.key == pygame.K_BACKSPACE:
                                 if self.entry == 3:
                                     self.input_description = self.input_description[:-1]
@@ -489,6 +522,7 @@ class HomePage(Element, Controller):
                                     self.input_surname_receiver = self.input_surname_receiver[:-1]
                                 elif self.entry == 8:
                                     self.input_iban_receiver = self.input_iban_receiver[:-1]
+                              
                             else:
                                 if self.entry == 3 and len(self.input_description) < 32:
                                     self.input_description += event.unicode
@@ -510,3 +544,18 @@ class HomePage(Element, Controller):
                                 elif self.entry == 8 and len(self.input_iban_receiver) < 22:
                                     if event.unicode.isupper():
                                         self.input_iban_receiver += event.unicode
+                         
+                    # Saving & Checking
+                    elif self.checking_saving_event:
+                        if event.key == pygame.K_BACKSPACE:
+                            if self.entry == 9:
+                                self.input_start_date = self.input_start_date[:-1]
+                            elif self.entry == 10:
+                                self.input_end_date = self.input_end_date[:-1]
+                        else: 
+
+                            if self.entry == 9 and len(self.input_start_date) < 10:
+                                self.input_start_date += event.unicode
+
+                            elif self.entry == 10 and len(self.input_end_date) < 10:
+                                self.input_end_date += event.unicode
