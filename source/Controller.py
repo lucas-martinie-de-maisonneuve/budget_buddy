@@ -49,12 +49,26 @@ class Controller(UserRepository,TransactionRepository):
             self.user = self.get_user(self.input_email, hashed_password)
             self.connected = True
             return self.user
-
+        
     def register_user(self):
         hashed_password_register = sha256(self.input_password_register.encode()).hexdigest()
         self.new_user = self.add_user(self.input_first_name_register, self.input_last_name_register, self.input_email_register, hashed_password_register, self.sort_code, self.iban, self.account_number, self.account_type_number)
         return self.new_user
+        
+    # Notification
+        
+    def save_last_co(self,user_id):
+        self.save_last_transaction (user_id)
 
+    def load_info_last_co(self, user): 
+        self.last_login_date = self.get_last_co_time(user)
+        return self.last_login_date 
+
+    # Saving & Checking 
+
+    def catch_phrase(self, account_nb):
+        return self.description_account([account_nb])  
+    
     def display_transaction(self, user_id, filter):
         if filter == 1:
             transactions = self.descending_date_filter(user_id)
@@ -81,3 +95,27 @@ class Controller(UserRepository,TransactionRepository):
             transactions = self.category_filter(user_id)
 
         return transactions
+    
+    # Main Page
+
+    def display_total_amount(self, account_id, user_id):
+        total_amount_r =  self.sum_account_r(account_id, user_id)[0][0]  
+        total_amount_s =  self.sum_account_s(account_id, user_id)[0][0]   
+        if total_amount_r == None:
+            total_amount_r = 0
+        if total_amount_s ==  None:
+            total_amount_s = 0
+
+        total = total_amount_r -  total_amount_s
+        return total
+    
+ 
+
+
+
+
+
+
+
+    
+
