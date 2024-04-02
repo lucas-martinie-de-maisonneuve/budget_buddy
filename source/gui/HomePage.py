@@ -279,7 +279,7 @@ class HomePage(Element, Controller):
 
         # Sort Code
         self.text_not_center(self.font1, 16, "Sort Code", self.grey1, 330, 500)
-        self.text_not_center(self.font2, 16, self.sort_code_final, self.grey1, 410, 490)
+        self.text_not_center(self.font2, 16, self.sort_code_final, self.grey1, 420, 500)
         pygame.draw.line(self.Window, self.green4, (330, 530), (750, 530), 1)
 
         # IBAN
