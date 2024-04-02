@@ -66,9 +66,9 @@ class TransactionRepository(Database):
         values = (user_id, user_id)
         return self.fetch(sql, values)
 
-    def category_filter (self, user_id):
-        sql = "SELECT * FROM transaction WHERE id_sender = %s OR id_receiver = %s ORDER BY id_category ASC"
-        values = (user_id, user_id)
+    def category_filter (self, user_id, id_categ):
+        sql = "SELECT * FROM transaction WHERE (id_sender = %s OR id_receiver = %s) AND id_category  = %s"
+        values = (user_id, user_id, id_categ)
         return self.fetch(sql, values)    
     
     def sum_account_r(self, account_id, user_id  ):

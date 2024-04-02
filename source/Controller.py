@@ -69,7 +69,7 @@ class Controller(UserRepository,TransactionRepository):
     def catch_phrase(self, account_nb):
         return self.description_account([account_nb])  
     
-    def display_transaction(self, user_id, filter):
+    def display_transaction(self, user_id, filter, id_categ):
         if filter == 1:
             transactions = self.descending_date_filter(user_id)
 
@@ -92,7 +92,7 @@ class Controller(UserRepository,TransactionRepository):
         #     transactions = self.amount_desc_filter(user_id)
 
         elif filter == 8:
-            transactions = self.category_filter(user_id)
+            transactions = self.category_filter(user_id, id_categ)
 
         return transactions
     
