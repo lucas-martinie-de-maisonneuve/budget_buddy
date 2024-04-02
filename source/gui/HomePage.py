@@ -7,7 +7,7 @@ class HomePage(Element, Controller):
         Element.__init__(self)
         Controller.__init__(self)
         self.user = user_info
-        self.user_id, self.user_fisrt_name, self.user_last_name, self.user_email, self.user_iban, self.user_account_number, self.last_login_date = self.user[0], self.user[1], self.user[2], self.user[3], self.user[5], self.user[6], self.user[8]
+        self.user_id, self.user_fisrt_name, self.user_last_name, self.user_email, self.user_iban, self.user_account_number, self.last_login_date = self.user[0], self.user[1], self.user[2], self.user[3], self.user[5], self.user[6], self.user[9]
 
         self.transactions = self.display_transaction(self.user_id, 1)
         self.date_sort = False
@@ -94,11 +94,11 @@ class HomePage(Element, Controller):
         # Account ID Number
 
         self.text_not_center(self.font3, 13, " Account ID number | ", self.white, 600, 75)
-        self.text_not_center(self.font2, 13, self.user[7], self.white, 755, 75)
+        self.text_not_center(self.font2, 13, self.user[7], self.white, 765, 75)
 
         # Notification
         self.img_hover("bell", "bell", 890, 80, 40, 40,self.images["bell"],self.images["bell"])
-        self.text_not_center(self.font1, 15, str(self.display_notif), self.yellow, 900, 50) 
+        self.text_not_center(self.font1, 15, str(self.display_notif), self.yellow, 900, 50)
 
         # Log Out
         self.log_out_rect = self.img_hover("Log Out", "Log Out", 970, 80, 40, 40,self.images["logout"],self.images["logout"])
@@ -150,8 +150,8 @@ class HomePage(Element, Controller):
         self.img_hover("Circle", "Circle", 530, 410, 110, 110,self.images["circle"],self.images["circle"])
         self.text_not_center(self.font4, 15, self.total_checking, self.white, 500, 405)
         self.text_not_center(self.font1, 14, "CHECKING ACCOUNT", self.white, 330, 370)
-        self.text_not_center(self.font4, 12,f"Sort Code  — 66-66-66", self.white, 330, 400)
-        self.text_not_center(self.font4, 12, f"Account ID — { self.user[6]}", self.white, 330, 430)
+        self.text_not_center(self.font4, 12,f"Sort Code  — {self.user[5]}", self.white, 330, 400)
+        self.text_not_center(self.font4, 12, f"Account ID — { self.user[7]}", self.white, 330, 430)
         self.text_not_center(self.font4, 12, f"{self.user[1]} { self.user[2]}", self.white, 330, 460)
 
         # Saving Account
@@ -159,8 +159,8 @@ class HomePage(Element, Controller):
         self.img_hover("Circle", "Circle", 530, 580, 110, 110,self.images["circle"],self.images["circle"])
         self.text_not_center(self.font4, 15, self.total_saving, self.white, 500, 575)
         self.text_not_center(self.font1, 14, "SAVING ACCOUNT", self.white, 330, 540)
-        self.text_not_center(self.font4, 12, f"Sort Code — 66-66-66", self.white, 330, 570)
-        self.text_not_center(self.font4, 12,f"Account ID  — { self.user[6]}", self.white, 330, 600)
+        self.text_not_center(self.font4, 12, f"Sort Code — {self.user[5]}", self.white, 330, 570)
+        self.text_not_center(self.font4, 12,f"Account ID  — { self.user[7]}", self.white, 330, 600)
         self.text_not_center(self.font4, 12,f"{self.user[1]} { self.user[2]}", self.white, 330, 630)
 
         # Animation
@@ -226,12 +226,12 @@ class HomePage(Element, Controller):
 
         # Name
         self.text_not_center(self.font1, 16, "Name", self.grey1, 330, 300)
-        self.text_not_center(self.font2, 16, self.user[2], self.grey1, 390, 300)
+        self.text_not_center(self.font2, 16, self.user[1], self.grey1, 390, 300)
         pygame.draw.line(self.Window, self.green4, (330, 330), (750, 330), 1)
 
         # Surname
         self.text_not_center(self.font1, 16, "Surname", self.grey1, 330, 350)
-        self.text_not_center(self.font2, 16,self.user[3], self.grey1, 420, 350)
+        self.text_not_center(self.font2, 16,self.user[2], self.grey1, 420, 350)
         pygame.draw.line(self.Window, self.green4, (330, 380), (750, 380), 1)
 
         # Email
@@ -239,27 +239,22 @@ class HomePage(Element, Controller):
         self.text_not_center(self.font2, 16, self.user[3], self.grey1, 400, 400)
         pygame.draw.line(self.Window, self.green4, (330, 430), (750, 430), 1)
 
-        # IBAN
-        self.text_not_center(self.font1, 16, "IBAN", self.grey1, 330, 500)
-        self.text_not_center(self.font2, 16, self.user[5], self.grey1, 390, 500)
-        pygame.draw.line(self.Window, self.green4, (330, 530), (750, 530), 1)
-
         # Account ID
         self.text_not_center(self.font1, 16, "Account ID Number", self.grey1, 330, 450)
-        self.text_not_center(self.font2, 16, self.user[6], self.grey1,500, 450)
+        self.text_not_center(self.font2, 16, self.user[7], self.grey1,500, 450)
         pygame.draw.line(self.Window, self.green4, (330, 480), (750, 480), 1)
-        
-        # Account ID
-        self.text_not_center(self.font1, 16, "Account ID Number", self.grey1, 330, 500)
-        self.text_not_center(self.font2, 16, self.user[6], self.grey1, 480, 500)
+
+        # SORT CODE
+        self.text_not_center(self.font1, 16, "Sort Code", self.grey1, 330, 500)
+        self.text_not_center(self.font2, 16, str(self.user[5]), self.grey1, 480, 500)
         pygame.draw.line(self.Window, self.green4, (330, 530), (750, 530), 1)
 
         # IBAN
         self.text_not_center(self.font1, 16, "IBAN", self.grey1, 330, 550)
-        self.text_not_center(self.font2, 16, self.user[5], self.grey1, 380, 550)
+        self.text_not_center(self.font2, 16, self.user[6], self.grey1, 380, 550)
         pygame.draw.line(self.Window, self.green4, (330, 580), (750, 580), 1)
 
-    def filter_options(self): 
+    def filter_options(self):
 
         # Filter by date
         self.text_not_center(self.font3, 18, "Sort by", self.grey2, 305, 290)
@@ -353,10 +348,10 @@ class HomePage(Element, Controller):
 
     def notification(self):
         new_notif = 0
-        for transaction in self.transactions: 
-            if transaction[5] > self.last_login_date: 
+        for transaction in self.transactions:
+            if transaction[5] > self.last_login_date:
                 new_notif = new_notif + 1
-        return new_notif  
+        return new_notif
 
     def homepage_run(self):
         if self.accounts_running:
