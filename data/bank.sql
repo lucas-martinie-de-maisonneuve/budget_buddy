@@ -24,7 +24,7 @@ INSERT INTO user (first_name, last_name, email, password, iban, account_number, 
 -- 3. HamzaNaya1!
 -- 4. LucyMadec1!
 
-CREATE TABLE decription (
+CREATE TABLE description (
     id INT PRIMARY KEY AUTO_INCREMENT,
     tagline TEXT
 );
@@ -34,9 +34,9 @@ CREATE TABLE decription (
 -- Both = 3
 
 
-INSERT INTO account(account_type, description) VALUES
-('1',"Welcome to your checking account! Let's manage your finances together"),
-('2', "Welcome back to your savings account! Let's continue growing your financial goals together");
+INSERT INTO description (tagline) VALUES
+("Welcome to your checking account! Let's manage your finances together"),
+("Welcome back to your savings account! Let's continue growing your financial goals together");
 
 -- "Unlock the perks of a checking account today! Enjoy easy access to your funds, seamless online transactions, and peace of mind with built-in security features."
 -- "Unlock financial freedom with our Saving Account! Enjoy peace of mind knowing your money is safe and growing. With a minimum deposit of 100 pounds per month and a maximum daily withdrawal limit of 300 pounds, it's the perfect way to secure your future while maintaining access to your funds."

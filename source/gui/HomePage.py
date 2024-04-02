@@ -7,7 +7,7 @@ class HomePage(Element, Controller):
         Element.__init__(self)
         Controller.__init__(self)
         self.user = user_info
-        self.user_id, self.user_fisrt_name, self.user_last_name, self.user_email, self.user_iban, self.user_account_number, self.last_login_date = self.user[0], self.user[1], self.user[2], self.user[3], self.user[5], self.user[6], self.user[7]
+        self.user_id, self.user_fisrt_name, self.user_last_name, self.user_email, self.user_iban, self.user_account_number, self.last_login_date = self.user[0], self.user[1], self.user[2], self.user[3], self.user[5], self.user[6], self.user[8]
 
         self.transactions = self.display_transaction(self.user_id, 1)
         self.date_sort = False
@@ -26,6 +26,8 @@ class HomePage(Element, Controller):
         self.accounts_running = True
         self.transaction_running = True
         self.disconnected = True
+
+        self.entry = False
 
         # Main Page
         self.welcome_message = ""

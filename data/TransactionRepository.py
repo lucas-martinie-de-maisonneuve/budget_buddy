@@ -26,7 +26,7 @@ class TransactionRepository(Database):
     # ACCOUNTS
     
     def description_account(self, account_nb):
-        sql = "SELECT description FROM account WHERE id = %s"
+        sql = "SELECT tagline FROM description WHERE id = %s"
         values = (account_nb)
         return self.fetch(sql, values)    
     
