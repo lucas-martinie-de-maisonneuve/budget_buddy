@@ -22,6 +22,8 @@ def display():
                 h.saving_checking_design()
             elif h.transfer_display:
                 h.transaction_design()
+            else :
+                h.all_accounts()
             h.top_bar()
 
         elif h.disconnected:

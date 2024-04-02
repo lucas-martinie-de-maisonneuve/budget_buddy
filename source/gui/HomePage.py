@@ -184,7 +184,6 @@ class HomePage(Element, Controller):
         self.top_bar()
         self.side_bar()
         self.main_section()
-        self.all_accounts() # A MODIFIER
 
     def saving_checking_design(self):
         self.filter_options()
@@ -371,8 +370,6 @@ class HomePage(Element, Controller):
                     elif self.saving_rect.collidepoint(event.pos):
                         self.welcome_message = self.catch_phrase(2)
                         self.profile_display, self.checking_saving_display, self.transfer_display, self.transaction_event = False, True, False, False
-
-
                     
                     elif self.profile_rect.collidepoint(event.pos):
                         self.profile_display, self.checking_saving_display, self.transfer_display, self.checking_saving_event, self.transaction_event = True, False, False, False, False
