@@ -136,17 +136,18 @@ class HomePage(Element, Controller):
         self.img_hover("Circle", "Circle", 530, 410, 110, 110,self.images["circle"],self.images["circle"])
         self.text_not_center(self.font4, 15, self.total_checking, self.white, 500, 405)
         self.text_not_center(self.font1, 14, "CHECKING ACCOUNT", self.white, 330, 370)
-        self.text_not_center(self.font4, 12, "N° 1234566", self.white, 330, 400)
-        self.text_not_center(self.font4, 12, "Vanny Lamorte", self.white, 330, 430)
+        self.text_not_center(self.font4, 12,f"Sort Code  — 66-66-66", self.white, 330, 400)
+        self.text_not_center(self.font4, 12, f"Account ID — { self.user[6]}", self.white, 330, 430)
+        self.text_not_center(self.font4, 12, f"{self.user[1]} { self.user[2]}", self.white, 330, 460)
 
         # Saving Account
         self.rect_full(self.green1, 460, 580, 300, 150, 5)
         self.img_hover("Circle", "Circle", 530, 580, 110, 110,self.images["circle"],self.images["circle"])
         self.text_not_center(self.font4, 15, self.total_saving, self.white, 500, 575)
         self.text_not_center(self.font1, 14, "SAVING ACCOUNT", self.white, 330, 540)
-        self.text_not_center(self.font4, 12, "N° 1234566", self.white, 330, 570)
-        self.text_not_center(self.font4, 12, "Vanny Lamorte", self.white, 330, 600)
-
+        self.text_not_center(self.font4, 12, f"Sort Code — 66-66-66", self.white, 330, 570)
+        self.text_not_center(self.font4, 12,f"Account ID  — { self.user[6]}", self.white, 330, 600)
+        self.text_not_center(self.font4, 12,f"{self.user[1]} { self.user[2]}", self.white, 330, 630)
 
         # Animation
         rotated_coin = pygame.transform.rotate(self.images["coin"], self.coin_angle)
@@ -216,16 +217,21 @@ class HomePage(Element, Controller):
         self.text_not_center(self.font1, 16, "Email", self.grey1, 330, 400)
         self.text_not_center(self.font2, 16, self.user[3], self.grey1, 400, 400)
         pygame.draw.line(self.Window, self.green4, (330, 430), (750, 430), 1)
+
+        # Sort Code
+        self.text_not_center(self.font1, 16, "Sort Code", self.grey1, 330, 450)
+        self.text_not_center(self.font2, 16, "77-77-77 ", self.grey1, 410, 450)
+        pygame.draw.line(self.Window, self.green4, (330, 480), (750, 480), 1)
         
         # Account ID
-        self.text_not_center(self.font1, 16, "Account ID Number", self.grey1, 330, 450)
-        self.text_not_center(self.font2, 16, self.user[5], self.grey1,500, 450)
-        pygame.draw.line(self.Window, self.green4, (330, 480), (750, 480), 1)
+        self.text_not_center(self.font1, 16, "Account ID Number", self.grey1, 330, 500)
+        self.text_not_center(self.font2, 16, self.user[6], self.grey1, 480, 500)
+        pygame.draw.line(self.Window, self.green4, (330, 530), (750, 530), 1)
 
         # IBAN
-        self.text_not_center(self.font1, 16, "IBAN", self.grey1, 330, 500)
-        self.text_not_center(self.font2, 16, self.user[6], self.grey1, 390, 500)
-        pygame.draw.line(self.Window, self.green4, (330, 530), (750, 530), 1)
+        self.text_not_center(self.font1, 16, "IBAN", self.grey1, 330, 550)
+        self.text_not_center(self.font2, 16, self.user[5], self.grey1, 380, 550)
+        pygame.draw.line(self.Window, self.green4, (330, 580), (750, 580), 1)
 
     def filter_options(self): 
 
