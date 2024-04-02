@@ -12,11 +12,6 @@ class HomePage(Element, Controller):
         self.transactions = self.display_transaction(self.user_id, 1, None)
         self.date_sort = False
 
-        self.checking_sender = False
-        self.saving_sender = False
-        self.checking_receiver = False
-        self.saving_receiver = False
-
         self.sort_code_1 = str(self.sort_code)[:2]
         self.sort_code_2 = str(self.sort_code)[2:4]
         self.sort_code_3 = str(self.sort_code)[4:]
@@ -36,6 +31,22 @@ class HomePage(Element, Controller):
         self.disconnected = True
 
         self.entry = False
+
+        self.error_de = False
+        self.error_nc = False
+        self.error_at = False
+        self.error_ne = False
+        self.error_se = False
+        self.error_ib = False
+
+        self.checking_sender = False
+        self.saving_sender = False
+        self.checking_receiver = False
+        self.saving_receiver = False
+
+
+        self.error_ops = False
+        self.error_opr = False
 
         # Main Page
         self.welcome_message = ""
@@ -186,9 +197,8 @@ class HomePage(Element, Controller):
 
     # Diagramme
     def diagram(self):
-        pass     
-      
-    
+        pass
+
     def main_page_design(self):
 
         self.background()
@@ -286,7 +296,7 @@ class HomePage(Element, Controller):
     def transaction_design(self):
 
         # Sender
-        self.text_not_center(self.font1, 18, "Sender", self.grey2, 450, 225)
+        self.text_not_center(self.font1, 18, "Sender", self.grey2, 435, 225)
         self.input_name_sender_rect = self.button_hover("Name", 380, 290, 150, 40, self.grey, self.green1, self.grey, self.green1, self.user_fisrt_name, self.font3, self.grey2, 14, 2, 5)
         self.input_surname_sender_rect = self.button_hover("Surname", 540, 290, 150, 40, self.grey, self.green1, self.grey, self.green1, self.user_last_name, self.font3, self.grey2, 14, 2, 5)
 
@@ -301,6 +311,7 @@ class HomePage(Element, Controller):
             self.saving_sender_rect = self.button_hover("Saving Account", 540, 360, 150, 40, self.grey, self.green1, self.grey, self.green1, "Saving Account", self.font3, self.grey2, 14, 2, 5)
 
         self.input_description_rect = self.button_hover("Description", 460, 430, 310, 40, self.grey, self.green1, self.grey, self.green1, self.input_description, self.font3, self.grey2, 14, 2, 5)
+
         self.input_amont_rect = self.button_hover("Amount", 460, 570, 310, 40, self.grey, self.green1, self.grey, self.green1, self.input_amount, self.font3, self.grey2, 14, 2, 5)
 
         # Category
@@ -317,7 +328,6 @@ class HomePage(Element, Controller):
         else:
             self.category = "Category"
 
-
         self.button_hover("Category", 420, 500, 220, 40, self.grey, self.green1, self.grey, self.green1, self.category, self.font3, self.grey2, 14, 2, 5)
         self.input_number_category_rect = self.button_hover("number", 560, 500, 40, 40, self.grey, self.green1, self.grey, self.green1, self.input_number_category, self.font3, self.grey2, 14, 2, 5)
         self.question_rect = self.img_not_center("question", 585, 490, 25, 25, self.images["question"])
@@ -330,13 +340,16 @@ class HomePage(Element, Controller):
             self.text_not_center(self.font4, 12, "5 = Financial Obligations", self.grey2, 520, 625)
 
         # Receiver
-        self.text_not_center(self.font1, 18, "Receiver", self.grey2, 780, 225)
+        self.text_not_center(self.font1, 18, "Receiver", self.grey2, 765, 225)
+
         self.input_name_receiver_rect = self.button_hover("Name",720, 290, 150, 40, self.grey, self.green1, self.grey, self.green1, self.input_name_receiver, self.font3, self.grey2, 14, 2, 5)
+
         self.input_surname_receiver_rect = self.button_hover("Surname", 880, 290, 150, 40, self.grey, self.green1, self.grey, self.green1, self.input_surname_receiver, self.font3, self.grey2, 14, 2, 5) 
+
         self.input_iban_receiver_rect = self.button_hover("IBAN", 800, 360, 310, 40, self.grey, self.green1, self.grey, self.green1, self.input_iban_receiver, self.font3, self.grey2, 14, 2, 5)
 
         # Send money to yourself
-        self.text_not_center(self.font1, 18, "Transfer to yourself", self.grey2, 700, 430)
+        self.text_not_center(self.font1, 18, "Transfer to yourself", self.grey2, 720, 430)
 
         if self.checking_receiver:
             self.checking_receiver_rect = self.button_hover("Checking Account", 720, 500, 150, 40, self.green1, self.green1, self.green1, self.green1, "Checking Account", self.font3, self.white, 14, 2, 5)
@@ -347,13 +360,25 @@ class HomePage(Element, Controller):
             self.saving_receiver_rect = self.button_hover("Saving Account", 880, 500, 150, 40, self.green1, self.green1, self.green1, self.green1, "Saving Account", self.font3, self.white, 14, 2, 5)
         else:
             self.saving_receiver_rect = self.button_hover("Saving Account", 880, 500, 150, 40, self.grey, self.green1, self.grey, self.green1, "Saving Account", self.font3, self.grey2, 14, 2, 5)
+        if self.error_ops:
+            self.text_center(self.font4, 15, "Choose an option", self.red2, 455, 326)
+        if self.error_de:
+            self.text_center(self.font4, 15, "Invalid Input", self.red2, 575, 400)
+        if self.error_nc:
+            self.text_center(self.font4, 15, "Invalid Input", self.red2, 575, 470)
+        if self.error_at:
+            self.text_center(self.font4, 15, "Invalid Input", self.red2, 575, 540)
+        if self.error_ne:
+            self.text_center(self.font4, 15, "Invalid Input", self.red2, 755, 260)
+        if self.error_se:
+            self.text_center(self.font4, 15, "Invalid Input", self.red2,  915, 260)
+        if self.error_ib:
+            self.text_center(self.font4, 15, "Invalid Input", self.red2,  915, 330)
+        if self.error_opr:
+            self.text_center(self.font4, 15, "Choose an option", self.red2,  795, 466)
 
         # Validation button
         self.confirm_button_rect = self.button_hover("validation", 855, 600, 200, 40, self.green2, self.green2, self.green1, self.green1, "CONFIRM BANK TRANSFER", self.font3, self.white, 14, 2, 5)
-
-        # Error Message
-        if self.not_conform:
-            self.text_not_center(self.font1, 12, "Oops, something has gone wrong ", self.red, 770, 630)
 
         self.transaction_event = True
 
@@ -384,7 +409,7 @@ class HomePage(Element, Controller):
                     elif self.saving_rect.collidepoint(event.pos):
                         self.welcome_message = self.catch_phrase(2)
                         self.profile_display, self.checking_saving_display, self.transfer_display, self.transaction_event = False, True, False, False
-                    
+
                     elif self.profile_rect.collidepoint(event.pos):
                         self.profile_display, self.checking_saving_display, self.transfer_display, self.checking_saving_event, self.transaction_event = True, False, False, False, False
 
@@ -437,48 +462,98 @@ class HomePage(Element, Controller):
                     if self.transaction_event:
                         if self.checking_sender_rect.collidepoint(event.pos):
                             self.checking_sender = not self.checking_sender
+                            self.error_ops = False
 
                         elif self.saving_sender_rect.collidepoint(event.pos):
                             self.saving_sender = not self.saving_sender
+                            self.error_ops = False
 
                         elif self.input_description_rect.collidepoint(event.pos):
                             if self.input_description == "Description":
                                 self.input_description = ""
+                            self.error_de = False
                             self.entry = 3
 
                         elif self.input_number_category_rect.collidepoint(event.pos):
                             if self.input_number_category == "1-7":
                                 self.input_number_category = ""
+                            self.error_nc = False
                             self.entry = 4
 
                         elif self.input_amont_rect.collidepoint(event.pos):
                             if self.input_amount == "Amount":
                                 self.input_amount = ""
+                            self.error_at = False
                             self.entry = 5
 
                         elif self.input_name_receiver_rect.collidepoint(event.pos):
                             if self.input_name_receiver == "Name":
                                 self.input_name_receiver = ""
+                            self.error_ne = False
                             self.entry = 6
 
                         elif self.input_surname_receiver_rect.collidepoint(event.pos):
                             if self.input_surname_receiver == "Surname":
                                 self.input_surname_receiver = ""
+                            self.error_se = False
                             self.entry = 7
 
                         elif self.input_iban_receiver_rect.collidepoint(event.pos):
                             if self.input_iban_receiver  == "IBAN":
                                 self.input_iban_receiver = ""
+                            self.error_ib = False
                             self.entry = 8
 
                         elif self.checking_receiver_rect.collidepoint(event.pos):
                             self.checking_receiver = not self.checking_receiver
+                            self.error_opr = False
 
                         elif self.saving_receiver_rect.collidepoint(event.pos):
                             self.saving_receiver = not self.saving_receiver
+                            self.error_opr = False
 
                         elif self.confirm_button_rect.collidepoint(event.pos):
-                            pass
+                            if (not self.input_description or
+                                not self.input_number_category or
+                                not self.input_amount or
+                                not self.input_name_receiver or
+                                not self.input_surname_receiver or
+                                not self.input_iban_receiver or
+                                not self.checking_sender and
+                                not self.saving_sender or
+                                not self.checking_receiver and
+                                not self.saving_receiver):
+                                if self.input_description == "Description" or self.input_description == "":
+                                    self.error_de = True
+                                if self.input_number_category == "1-7" or self.input_number_category == "":
+                                    self.error_nc = True
+                                if self.input_amount == "Amount" or self.input_amount == "":
+                                    self.error_at = True
+                                if self.input_name_receiver == "Name" or self.input_name_receiver == "":
+                                    self.error_ne = True
+                                if self.input_surname_receiver == "Surname" or self.input_surname_receiver == "":
+                                    self.error_se = True
+                                if self.input_iban_receiver == "IBAN" or self.input_iban_receiver == "":
+                                    self.error_ib = True
+                                if not self.checking_sender and not self.saving_sender:
+                                    self.error_ops = True
+                                if not self.checking_receiver and not self.saving_receiver:
+                                    self.error_opr = True
+                            else:
+                                pass
+                                # if self.input_iban_receiver:
+                                #     self.transfer_money()
+                                #     self.checking_sender = False
+                                #     self.saving_sender = False
+                                #     self.checking_receiver = False
+                                #     self.saving_sender = False
+                                #     self.input_description = "Description"
+                                #     self.input_number_category = "1-7"
+                                #     self.input_amount = "Amount"
+                                #     self.input_name_receiver = "Name"
+                                #     self.input_surname_receiver  = "Surname"
+                                #     self.self.input_iban_receiver = "IBAN"
+
                 if self.transaction_event:
                     if event.type == pygame.KEYDOWN:
                             if event.key == pygame.K_BACKSPACE:

@@ -24,12 +24,11 @@ class TransactionRepository(Database):
         return self.fetch(sql, values)
 
     # ACCOUNTS
-    
     def description_account(self, account_nb):
         sql = "SELECT tagline FROM description WHERE id = %s"
         values = (account_nb)
-        return self.fetch(sql, values)    
-    
+        return self.fetch(sql, values)
+
     def income_filter(self, user_id):
         sql = "SELECT * FROM transaction WHERE transaction_re = 1  AND (id_receiver = %s OR id_sender = %s)"
         values = (user_id, user_id)
@@ -69,18 +68,18 @@ class TransactionRepository(Database):
     def category_filter (self, user_id, id_categ):
         sql = "SELECT * FROM transaction WHERE (id_sender = %s OR id_receiver = %s) AND id_category  = %s"
         values = (user_id, user_id, id_categ)
-        return self.fetch(sql, values)    
-    
+        return self.fetch(sql, values)
+
     def sum_account_r(self, account_id, user_id  ):
         sql = "SELECT SUM(amount) AS total_amount FROM transaction WHERE account_id = %s AND id_receiver = %s"
         values = (account_id, user_id)
         return self.fetch(sql, values)
-    
+
     def sum_account_s(self, account_id, user_id  ):
         sql = "SELECT SUM(amount) AS total_amount FROM transaction WHERE account_id = %s AND id_sender = %s"
         values = (account_id, user_id)
         return self.fetch(sql, values)
-      
+
 
 
     # def diagram_category (self, user_id, account_id): 
