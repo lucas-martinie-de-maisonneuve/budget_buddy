@@ -542,6 +542,7 @@ class HomePage(Element, Controller):
                     elif self.log_out_rect.collidepoint(event.pos):
                         self.disconnected = True
                         self.accounts_running = False
+                        self.save_last_co(self.user_id)
 
                     # Event Saving & Checking
                     if self.checking_saving_event:
@@ -643,7 +644,7 @@ class HomePage(Element, Controller):
                             self.transfer_money_message = False
 
                         elif self.input_number_category_rect.collidepoint(event.pos):
-                            if self.input_number_category == "1-7":
+                            if self.input_number_category == "1-5":
                                 self.input_number_category = ""
                             self.error_nc = False
                             self.entry = 4
@@ -702,7 +703,7 @@ class HomePage(Element, Controller):
                                 not self.saving_receiver):
                                 if self.input_description == "Description" or self.input_description == "":
                                     self.error_de = True
-                                if self.input_number_category == "1-7" or self.input_number_category == "":
+                                if self.input_number_category == "1-5" or self.input_number_category == "":
                                     self.error_nc = True
                                 if self.input_amount == "Amount" or self.input_amount == "":
                                     self.error_at = True
@@ -717,7 +718,7 @@ class HomePage(Element, Controller):
                                 if not self.checking_receiver and not self.saving_receiver:
                                     self.error_opr = True
                             else:
-                                self.current_date = datetime.now().strftime('%Y-%m-%d')
+                                self.current_date = datetime.now()
                                 if not self.checking_receiver and not self.saving_receiver:
                                     self.id_receiver  = self.get_id_receiver()
                                     self.new_transaction_account_id = 1
@@ -729,7 +730,10 @@ class HomePage(Element, Controller):
                                         self.new_transaction_account_id = 1
                                     if self.saving_receiver and not self.checking_receiver:
                                         self.new_transaction_account_id = 2
-                                        self.transfer_money()
+                                    self.transfer_money()
+                                    self.transactions = self.display_transaction(self.user_id, 1, None, None, None)
+                                    self.display_notif = self.notification()
+
                                 self.error_de = False
                                 self.error_nc = False
                                 self.error_at = False
@@ -744,7 +748,7 @@ class HomePage(Element, Controller):
                                 self.checking_receiver = False
                                 self.saving_sender = False
                                 self.input_description = "Description"
-                                self.input_number_category = "1-7"
+                                self.input_number_category = "1-5"
                                 self.input_amount = "Amount"
                                 self.input_name_receiver = "Name"
                                 self.input_surname_receiver  = "Surname"
@@ -793,7 +797,7 @@ class HomePage(Element, Controller):
                                     self.input_surname_receiver += event.unicode
 
                                 elif self.entry == 8 and len(self.input_iban_receiver) < 22:
-                                    if event.unicode.isupper():
+                                    if event.unicode.isupper() or event.unicode.isdigit():
                                         self.input_iban_receiver += event.unicode
 
                     # Saving & Checking
