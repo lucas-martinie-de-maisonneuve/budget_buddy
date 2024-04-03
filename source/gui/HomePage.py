@@ -233,45 +233,46 @@ class HomePage(Element, Controller):
             elif transaction[6] == 2:
                 transport_total += transaction[4]
 
-        pygame.draw.line(self.Window, self.grey3, (625, 500), (970, 500), 2)
+        pygame.draw.line(self.Window, self.grey3, (625, 450), (970, 450), 2)
 
         total = obligation_total + grocery_total + living_total + personal_total + transport_total + income_total
         if total == 0:
             total = 1
-        obligation_size = 350 * obligation_total / total
-        grocery_size = 350 * grocery_total / total
-        living_size = 350 * living_total / total
-        personal_size = 350 * personal_total / total
-        transport_size = 350 * transport_total / total
-        income_size = 350 * income_total / total
+        obligation_size = 215 * obligation_total / total
+        grocery_size = 215 * grocery_total / total
+        living_size = 215 * living_total / total
+        personal_size = 215 * personal_total / total
+        transport_size = 215 * transport_total / total
+        income_size = 215 * income_total / total
 
         self.img_center("Income", 650, 650, 40, 40, self.images["income_logo"])
-        self.rect_full_not_centered(self.black, 670, 502, 40, income_size, 0)
-        self.text_center(self.font2, 12, f"+{income_total}€",self.green2, 650, 492 - (income_size))
+        self.rect_full_not_centered(self.black, 670, 452, 40, income_size, 0)
+        self.text_center(self.font2, 12, f"+{income_total}€",self.green2, 650, 442 - (income_size))
 
         self.img_center("obligation", 710, 650, 40, 40, self.images["obligation"])
-        self.rect_full_not_centered(self.black, 730, 500 + obligation_size, 40, obligation_size, 0)
-        self.text_center(self.font2, 12, f"-{obligation_total}€",self.red2, 710, 510 + obligation_size)
+        self.rect_full_not_centered(self.black, 730, 450 + obligation_size, 40, obligation_size, 0)
+        self.text_center(self.font2, 12, f"-{obligation_total}€",self.red2, 710, 460 + obligation_size)
 
         self.img_center("grocery", 770, 650, 40, 40, self.images["grocery"])
-        self.rect_full_not_centered(self.black, 790, 500 + grocery_size, 40, grocery_size, 0)
-        self.text_center(self.font2, 12, f"-{grocery_total}€",self.red2, 770, 510 + grocery_size)
+        self.rect_full_not_centered(self.black, 790, 450 + grocery_size, 40, grocery_size, 0)
+        self.text_center(self.font2, 12, f"-{grocery_total}€",self.red2, 770, 460 + grocery_size)
 
         self.img_center("living", 830, 650, 40, 40, self.images["living"])
-        self.rect_full_not_centered(self.black, 850, 500 + living_size, 40, living_size, 0)
-        self.text_center(self.font2, 12, f"-{living_total}€",self.red2, 830, 510 + living_size)
+        self.rect_full_not_centered(self.black, 850, 450 + living_size, 40, living_size, 0)
+        self.text_center(self.font2, 12, f"-{living_total}€",self.red2, 830, 460 + living_size)
 
         self.img_center("personal", 890, 650, 40, 40, self.images["personal"])
-        self.rect_full_not_centered(self.black, 910, 500 + personal_size, 40, personal_size, 0)
-        self.text_center(self.font2, 12, f"-{personal_total}€",self.red2, 890, 510 + personal_size)
+        self.rect_full_not_centered(self.black, 910, 450 + personal_size, 40, personal_size, 0)
+        self.text_center(self.font2, 12, f"-{personal_total}€",self.red2, 890, 460 + personal_size)
 
         self.img_center("transportation", 950, 650, 40, 40, self.images["transportation"])
-        self.rect_full_not_centered(self.black, 970, 500 + transport_size, 40, transport_size, 0)
-        self.text_center(self.font2, 12, f"-{transport_total}€",self.red2, 950, 510 + transport_size)
+        self.rect_full_not_centered(self.black, 970, 450 + transport_size, 40, transport_size, 0)
+        self.text_center(self.font2, 12, f"-{transport_total}€",self.red2, 950, 460 + transport_size)
 
-        self.last_month = self.button_hover_small("1month ", 650, 205, 100, 20, self.grey2, self.grey3, self.grey1, self.grey3, "Last month", self.font3, self.white, 12, 2, 5)
-        self.three_last_month = self.button_hover_small("3month ", 775, 205, 100, 20, self.grey2, self.grey3, self.grey1, self.grey3, "Three month", self.font3, self.white, 12, 2, 5)
-        self.last_year = self.button_hover_small("lastyear ", 900, 205, 100, 20, self.grey2, self.grey3, self.grey1, self.grey3, "Last year", self.font3, self.white, 12, 2, 5)
+        self.last_month = self.button_hover_small("1month ", 650, 210, 85, 20, self.grey2, self.grey3, self.grey1, self.grey3, "Last month", self.font3, self.white, 12, 2, 5)
+        self.three_last_month = self.button_hover_small("3month ", 740, 210, 85, 20, self.grey2, self.grey3, self.grey1, self.grey3, "Three month", self.font3, self.white, 12, 2, 5)
+        self.last_year = self.button_hover_small("lastyear ", 830, 210, 85, 20, self.grey2, self.grey3, self.grey1, self.grey3, "Last year", self.font3, self.white, 12, 2, 5)
+        self.all_time = self.button_hover_small("alltime ", 920, 210, 85, 20, self.grey2, self.grey3, self.grey1, self.grey3, "All Time", self.font3, self.white, 12, 2, 5)
 
     def main_page_design(self):
 
@@ -632,6 +633,8 @@ class HomePage(Element, Controller):
                             self.transactions = self.display_transaction(self.user_id, 9, 90, None, None)
                         elif self.last_year.collidepoint(event.pos):
                             self.transactions = self.display_transaction(self.user_id, 9, 365, None, None)
+                        elif self.all_time.collidepoint(event.pos):
+                            self.transactions = self.display_transaction(self.user_id, 1, None, None, None)
 
                 if self.transaction_event:
                     if event.type == pygame.KEYDOWN:
