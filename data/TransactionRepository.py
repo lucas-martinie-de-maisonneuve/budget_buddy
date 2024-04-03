@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from data.Database import Database
 
 class TransactionRepository(Database):
@@ -110,6 +110,13 @@ class TransactionRepository(Database):
         sql = "INSERT INTO notification(notif_message) VALUES (%s)"
         values = (value,)
         self.execute_query(sql, values)
+
+    def date_sorting(self, user_id, time):
+        actual_time = datetime.now()
+        start_time = actual_time - timedelta(days=time)
+        sql = "SELECT * FROM transaction WHERE (id_sender = %s OR id_receiver = %s) AND date between %s AND %s"
+        values = (user_id, user_id,start_time, actual_time)
+        return self.fetch(sql, values)
 
     def display_notification(self, id_user):
         sql = "SELECT notif_message FROM notification WHERE id = %s"

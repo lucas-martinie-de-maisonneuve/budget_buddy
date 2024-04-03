@@ -15,6 +15,12 @@ class HomePage(Element, Controller):
         self.account_type = None
         self.date_sort = False
 
+        self.checking_sender = False
+        self.saving_sender = False
+        self.checking_receiver = False
+        self.saving_receiver = False
+        self.home_event = True
+
         self.sort_code_1 = str(self.sort_code)[:2]
         self.sort_code_2 = str(self.sort_code)[2:4]
         self.sort_code_3 = str(self.sort_code)[4:]
@@ -53,7 +59,6 @@ class HomePage(Element, Controller):
         self.error_opr = False
 
         # Main Page
-        self.welcome_message = ""
         self.coin_angle = 0
         self.rotation_speed = 2
         self.total_saving = str(self.display_total_amount(2, self.user_id))
@@ -91,7 +96,15 @@ class HomePage(Element, Controller):
             "pen":"assets/image/Profile/profile_pen.png",
             # Transaction
             "question":"assets/image/Transaction/transaction_question.png",
+            # Logo diagram
+            "income_logo":"assets/image/MainPage/income_logo.png",
+            "living":"assets/image/MainPage/house_logo.png",
+            "personal":"assets/image/MainPage/clothing_logo.png",
+            "obligation":"assets/image/MainPage/document_logo.png",
+            "grocery":"assets/image/MainPage/grocery_logo.png",
+            "transportation":"assets/image/MainPage/transport_logo.png",
         }
+
 
         self.images = {}
         for name, path in self.image_paths.items():
@@ -105,6 +118,7 @@ class HomePage(Element, Controller):
         "Welcome back to your savings account! Let's continue growing your financial goals together",
         "Transfer Money Now with Ease!"
         ]
+        self.welcome_message = self.welcome_message_list[1]                      
 
     def background(self):
         self.img_background(400, 300, 1244, 830, self.images["background"])
@@ -226,10 +240,66 @@ class HomePage(Element, Controller):
             self.coin_angle -= 360
         elif self.coin_angle < 0:
             self.coin_angle += 360
+        self.diagram()
 
     # Diagramme
     def diagram(self):
-        pass
+        income_size, obligation_size, grocery_size, living_size, personal_size, transport_size = 0, 0, 0, 0, 0, 0 
+        income_total, obligation_total, grocery_total, living_total, personal_total, transport_total = 0, 0, 0, 0, 0, 0 
+        for transaction in self.transactions:
+            if transaction[6] == 0:
+                income_total += transaction[4]
+            elif transaction[6] == 5:
+                obligation_total += transaction[4]
+            elif transaction[6] == 3:
+                grocery_total += transaction[4]
+            elif transaction[6] == 1:
+                living_total += transaction[4]
+            elif transaction[6] == 4:
+                personal_total += transaction[4]
+            elif transaction[6] == 2:
+                transport_total += transaction[4]
+
+        pygame.draw.line(self.Window, self.grey3, (625, 450), (970, 450), 2)
+
+        total = obligation_total + grocery_total + living_total + personal_total + transport_total + income_total
+        if total == 0:
+            total = 1
+        obligation_size = 215 * obligation_total / total
+        grocery_size = 215 * grocery_total / total
+        living_size = 215 * living_total / total
+        personal_size = 215 * personal_total / total
+        transport_size = 215 * transport_total / total
+        income_size = 215 * income_total / total
+
+        self.img_center("Income", 650, 650, 40, 40, self.images["income_logo"])
+        self.rect_full_not_centered(self.black, 670, 452, 40, income_size, 0)
+        self.text_center(self.font2, 12, f"+{income_total}€",self.green2, 650, 442 - (income_size))
+
+        self.img_center("obligation", 710, 650, 40, 40, self.images["obligation"])
+        self.rect_full_not_centered(self.black, 730, 450 + obligation_size, 40, obligation_size, 0)
+        self.text_center(self.font2, 12, f"-{obligation_total}€",self.red2, 710, 460 + obligation_size)
+
+        self.img_center("grocery", 770, 650, 40, 40, self.images["grocery"])
+        self.rect_full_not_centered(self.black, 790, 450 + grocery_size, 40, grocery_size, 0)
+        self.text_center(self.font2, 12, f"-{grocery_total}€",self.red2, 770, 460 + grocery_size)
+
+        self.img_center("living", 830, 650, 40, 40, self.images["living"])
+        self.rect_full_not_centered(self.black, 850, 450 + living_size, 40, living_size, 0)
+        self.text_center(self.font2, 12, f"-{living_total}€",self.red2, 830, 460 + living_size)
+
+        self.img_center("personal", 890, 650, 40, 40, self.images["personal"])
+        self.rect_full_not_centered(self.black, 910, 450 + personal_size, 40, personal_size, 0)
+        self.text_center(self.font2, 12, f"-{personal_total}€",self.red2, 890, 460 + personal_size)
+
+        self.img_center("transportation", 950, 650, 40, 40, self.images["transportation"])
+        self.rect_full_not_centered(self.black, 970, 450 + transport_size, 40, transport_size, 0)
+        self.text_center(self.font2, 12, f"-{transport_total}€",self.red2, 950, 460 + transport_size)
+
+        self.last_month = self.button_hover_small("1month ", 650, 210, 85, 20, self.grey2, self.grey3, self.grey1, self.grey3, "Last month", self.font3, self.white, 12, 2, 5)
+        self.three_last_month = self.button_hover_small("3month ", 740, 210, 85, 20, self.grey2, self.grey3, self.grey1, self.grey3, "Three month", self.font3, self.white, 12, 2, 5)
+        self.last_year = self.button_hover_small("lastyear ", 830, 210, 85, 20, self.grey2, self.grey3, self.grey1, self.grey3, "Last year", self.font3, self.white, 12, 2, 5)
+        self.all_time = self.button_hover_small("alltime ", 920, 210, 85, 20, self.grey2, self.grey3, self.grey1, self.grey3, "All Time", self.font3, self.white, 12, 2, 5)
 
     def main_page_design(self):
 
@@ -446,26 +516,28 @@ class HomePage(Element, Controller):
                     pass
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.transfer_rect.collidepoint(event.pos):
-                        self.profile_display, self.checking_saving_display, self.checking_saving_event, self.transfer_display, self.transaction_event = False, False, False, True, False
-                        self.welcome_message = self.welcome_message_list[4]
+                        self.profile_display, self.checking_saving_display, self.checking_saving_event, self.transfer_display, self.transaction_event, self.home_event = False, False, False, True, False, False
+                        self.welcome_message = self.welcome_message_list[4] 
 
                     elif self.home_rect.collidepoint(event.pos):
-                        self.profile_display, self.checking_saving_display, self.transfer_display, self.checking_saving_event, self.transaction_event = False, False, False, False, False  
-                        self.welcome_message = self.welcome_message_list[1]
+                        self.profile_display, self.checking_saving_display, self.transfer_display, self.checking_saving_event, self.transaction_event, self.home_event = False, False, False, False, False, True 
+                        self.welcome_message = self.welcome_message_list[1]                      
+                        self.transactions = self.display_transaction(self.user_id,1, None, None, None)
 
                     elif self.checking_rect.collidepoint(event.pos):
                         self.welcome_message = self.catch_phrase(1)
                         self.account_type = 1
-                        self.profile_display, self.checking_saving_display, self.transfer_display = False, True, False
-                        self.welcome_message = self.welcome_message_list[2]
+                        self.profile_display, self.checking_saving_display, self.home_event, self.transaction_event = False, True, False, False
+                        self.welcome_message = self.welcome_message_list[2] 
 
                     elif self.saving_rect.collidepoint(event.pos):
                         self.account_type = 2
-                        self.profile_display, self.checking_saving_display, self.transfer_display, self.transaction_event = False, True, False, False
+                        self.profile_display, self.checking_saving_display, self.transfer_display, self.transaction_event, self.home_event = False, True, False, False, False
+                        self.welcome_message = self.welcome_message_list[3] 
 
                     elif self.profile_rect.collidepoint(event.pos):
-                        self.profile_display, self.checking_saving_display, self.transfer_display, self.checking_saving_event, self.transaction_event = True, False, False, False, False
-                        self.welcome_message = self.welcome_message_list[0]
+                        self.profile_display, self.checking_saving_display, self.transfer_display, self.checking_saving_event, self.transaction_event, self.home_event = True, False, False, False, False, False
+                        self.welcome_message = self.welcome_message_list[0] 
 
                     elif self.log_out_rect.collidepoint(event.pos):
                         self.disconnected = True
@@ -677,6 +749,15 @@ class HomePage(Element, Controller):
                                 self.input_name_receiver = "Name"
                                 self.input_surname_receiver  = "Surname"
                                 self.input_iban_receiver = "IBAN"
+                    if self.home_event:
+                        if self.last_month.collidepoint(event.pos):
+                            self.transactions = self.display_transaction(self.user_id, 9, 30, None, None)
+                        elif self.three_last_month.collidepoint(event.pos):
+                            self.transactions = self.display_transaction(self.user_id, 9, 90, None, None)
+                        elif self.last_year.collidepoint(event.pos):
+                            self.transactions = self.display_transaction(self.user_id, 9, 365, None, None)
+                        elif self.all_time.collidepoint(event.pos):
+                            self.transactions = self.display_transaction(self.user_id, 1, None, None, None)
 
                 if self.transaction_event:
                     if event.type == pygame.KEYDOWN:
