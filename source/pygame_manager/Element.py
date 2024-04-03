@@ -105,27 +105,23 @@ class Element(Screen):
         button = pygame.draw.rect(self.Window, color, pygame.Rect(x - width //2, y - height //2, width, height),False,0, radius, radius)
         return button
 
-    # Rect border only on bottom
-    def rect_radius_bot(self, color, x, y, width, height, radius):
-        button = pygame.draw.rect(self.Window, color, pygame.Rect(x - width //2, y - height //2, width, height),False ,0,0,0, radius, radius)
-        return button
 
-# Def Circle
-    def circle(self, color, x, y, radius):
-        pygame.draw.circle(self.Window, color, (x,y), radius)
+# # Def Circle
+#     def circle(self, color, x, y, radius):
+#         pygame.draw.circle(self.Window, color, (x,y), radius)
 
-    def circle_alpha(self, alpha_color, x, y, radius):
-        circle_surface = pygame.Surface((self.W,self.H), pygame.SRCALPHA)
-        pygame.draw.circle(circle_surface,alpha_color,(x,y),radius)
-        self.Window.blit(circle_surface, (0,0))
+#     def circle_alpha(self, alpha_color, x, y, radius):
+#         circle_surface = pygame.Surface((self.W,self.H), pygame.SRCALPHA)
+#         pygame.draw.circle(circle_surface,alpha_color,(x,y),radius)
+#         self.Window.blit(circle_surface, (0,0))
 
-    def circle_hover(self, name, color,alpha_color, x, y, radius): 
-        name = pygame.draw.circle(self.Window, color, (x,y), radius)
+#     def circle_hover(self, name, color,alpha_color, x, y, radius): 
+#         name = pygame.draw.circle(self.Window, color, (x,y), radius)
 
-        if self.is_mouse_over_button(name):
-            self.circle_alpha(alpha_color, x, y, radius)
-        else:
-            self.circle(color, x, y, radius)
+#         if self.is_mouse_over_button(name):
+#             self.circle_alpha(alpha_color, x, y, radius)
+#         else:
+#             self.circle(color, x, y, radius)
 
 # Def Hover
     def is_mouse_over_button(self, button_rect):
@@ -159,16 +155,4 @@ class Element(Screen):
         self.text_center(font, text_size, text, text_color,  x, y)
 
         return name     
-        
-# Def Cursor 
-    def normal_cursor(self):
-        pygame.mouse.set_cursor(pygame.cursors.arrow)
-
-    def hand_cursor(self):
-        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
-
-# Def BackgroundAlpha
-    def screen_alpha(self, color):
-        self.alpha_window = pygame.Surface((self.W, self.H), pygame.SRCALPHA)
-        pygame.draw.rect(self.alpha_window, color, pygame.Rect(0,0, self.W, self.H))
-        self.Window.blit(self.alpha_window, (0,0))
+ 

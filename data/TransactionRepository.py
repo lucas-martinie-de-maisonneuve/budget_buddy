@@ -50,10 +50,11 @@ class TransactionRepository(Database):
         return self.fetch(sql, values)
 
     def calendar_filter(self, start_date, end_date, user_id):
-        sql = "SELECT * FROM transaction WHERE date BETWEEN %s AND %s ORDER BY date WHERE id_receiver = %s OR id_sender = %s"
-        params = (start_date, end_date)
-        values = (user_id, user_id)
-        return self.fetch(sql, params, values)
+        start_date = datetime.strptime(start_date, '%d/%m/%Y').strftime('%Y-%m-%d')
+        end_date = datetime.strptime(end_date, '%d/%m/%Y').strftime('%Y-%m-%d')
+        sql = "SELECT * FROM transaction WHERE (id_receiver = %s OR id_sender = %s ) AND date BETWEEN %s AND %s ORDER BY date "
+        values = (user_id, user_id, start_date, end_date, )
+        return self.fetch(sql, values)
 
     def amount_asc_filter (self, user_id):
         sql = "SELECT * FROM transaction WHERE id_receiver = %s OR id_sender = %s ORDER BY amount ASC "
@@ -80,12 +81,6 @@ class TransactionRepository(Database):
         values = (account_id, user_id)
         return self.fetch(sql, values)
 
-
-
-    # def diagram_category (self, user_id, account_id): 
-    #     sql = "SELECT id_category FROM transaction WHERE id_sender = %s OR id_receiver = %s AND account_id = %s "
-    #     values = (user_id, user_id, account_id)
-    #     return self.fetch(sql, values)
 
     # Notification
     def last_notif (self, id_user):
