@@ -34,19 +34,6 @@ CREATE TABLE description (
 -- Savings Accounts = 2
 -- Both = 3
 
-
-INSERT INTO description (tagline) VALUES
-("Welcome to your profile! Here, you can view all the details and information pertinent to you"),
-("Welcome! You are currently on the homepage where you can view the total details of all accounts"),
-("Welcome to your checking account! Let's manage your finances together"),
-("Welcome back to your savings account! Let's continue growing your financial goals together"),
-("Transfer Money Now with Ease!")
-;
-
-
--- "Unlock the perks of a checking account today! Enjoy easy access to your funds, seamless online transactions, and peace of mind with built-in security features."
--- "Unlock financial freedom with our Saving Account! Enjoy peace of mind knowing your money is safe and growing. With a minimum deposit of 100 pounds per month and a maximum daily withdrawal limit of 300 pounds, it's the perfect way to secure your future while maintaining access to your funds."
-
 CREATE TABLE transaction (
     id INT PRIMARY KEY AUTO_INCREMENT,
     transaction_re INT,
@@ -156,9 +143,3 @@ INSERT INTO transaction (transaction_re, transaction_name, description, amount, 
 -- Personal Expenses = 4
 -- Financial Obligations = 5
 
-
-CREATE TABLE notification (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    notif_message TEXT,
-    id_user INT
-);
