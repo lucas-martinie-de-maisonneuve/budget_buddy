@@ -12,11 +12,10 @@ class TransactionRepository(Database):
             except:
                 pass
 
-    def add_transaction(self, transaction_re, transaction_name, description, amount, date, id_category, id_user,  account_id ):
-        sql = "INSERT INTO transaction (transaction_re, transaction_name, description, amount, date, id_category, id_user,  account_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-        values = (transaction_re, transaction_name, description, amount, date, id_category, id_user,  account_id )
-        self.cursor.execute(sql, values)
-        self.connection.commit()
+    def add_transaction(self, transaction_re, transaction_name, description, amount, date, id_category, account_id, id_sender, id_receiver):
+        sql = "INSERT INTO transaction (transaction_re, transaction_name, description, amount, date, id_category, account_id, id_sender, id_receiver) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        values = (transaction_re, transaction_name, description, amount, date, id_category, account_id, id_sender, id_receiver)
+        self.execute_query(sql, values)
 
     def transaction_info(self, user_id):
         sql = "SELECT * FROM transaction WHERE id_receiver = %s OR id_sender = %s"

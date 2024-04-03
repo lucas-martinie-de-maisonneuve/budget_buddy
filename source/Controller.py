@@ -59,15 +59,15 @@ class Controller(UserRepository,TransactionRepository):
     def save_last_co(self,user_id):
         self.save_last_transaction (user_id)
 
-    def load_info_last_co(self, user): 
+    def load_info_last_co(self, user):
         self.last_login_date = self.get_last_co_time(user)
-        return self.last_login_date 
+        return self.last_login_date
 
-    # Saving & Checking 
+    # Saving & Checking
 
     def catch_phrase(self, account_nb):
-        return self.description_account([account_nb])  
-    
+        return self.description_account([account_nb])
+
     def display_transaction(self, user_id, filter, id_categ, start_date, end_date):
         if filter == 1:
             transactions = self.descending_date_filter(user_id)
@@ -95,7 +95,14 @@ class Controller(UserRepository,TransactionRepository):
         return transactions
     # Transfer money
     def transfer_money(self):
-        self.new_transaction = self.add_transaction(1, "Money Transfer", )
+        self.transaction_name = "Money Transfer"
+        self.new_transaction = self.add_transaction('1', self.transaction_name, self.input_description, self.input_amount, self.current_date, self.input_number_category, self.new_transaction_account_id, self.user_id, self.id_receiver)
+
+    def get_id_receiver(self):
+        self.id_receiver_transaction = self.get_user_transaction(self.input_iban_receiver)
+        return self.id_receiver_transaction
+
+
     # Main Page
     def display_total_amount(self, account_id, user_id):
         total_amount_r =  self.sum_account_r(account_id, user_id)[0][0]

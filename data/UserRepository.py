@@ -68,3 +68,9 @@ class UserRepository(Database):
     def first_name_user(self):
         sql = "SELECT first_name FROM user"
         return self.fetch(sql)
+
+    def get_user_transaction(self, iban):
+        sql = "SELECT id FROM user WHERE iban = %s"
+        value = (iban)
+        result = self.execute_query(sql, value)
+        return result
