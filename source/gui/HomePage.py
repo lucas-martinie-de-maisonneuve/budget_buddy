@@ -9,7 +9,7 @@ class HomePage(Element, Controller):
         self.user = user_info
         self.user_id, self.user_fisrt_name, self.user_last_name, self.user_email, self.sort_code, self.user_iban, self.user_account_number, self.last_login_date = self.user[0], self.user[1], self.user[2], self.user[3], self.user[5], self.user[6], self.user[7], self.user[9]
 
-        self.transactions = self.display_transaction(self.user_id, 1, None)
+        self.transactions = self.display_transaction(self.user_id, 1, None, None, None)
         self.account_type = None
         self.date_sort = False
 
@@ -17,6 +17,7 @@ class HomePage(Element, Controller):
         self.saving_sender = False
         self.checking_receiver = False
         self.saving_receiver = False
+        self.home_event = True
 
         self.sort_code_1 = str(self.sort_code)[:2]
         self.sort_code_2 = str(self.sort_code)[2:4]
@@ -39,7 +40,6 @@ class HomePage(Element, Controller):
         self.entry = False
 
         # Main Page
-        self.welcome_message = ""                   
         self.coin_angle = 0
         self.rotation_speed = 2
         self.total_saving = str(self.display_total_amount(2, self.user_id))
@@ -71,7 +71,15 @@ class HomePage(Element, Controller):
             "pen":"assets/image/Profile/profile_pen.png",
             # Transaction
             "question":"assets/image/Transaction/transaction_question.png",
+            # Logo diagram
+            "income_logo":"assets/image/MainPage/income_logo.png",
+            "living":"assets/image/MainPage/house_logo.png",
+            "personal":"assets/image/MainPage/clothing_logo.png",
+            "obligation":"assets/image/MainPage/document_logo.png",
+            "grocery":"assets/image/MainPage/grocery_logo.png",
+            "transportation":"assets/image/MainPage/transport_logo.png",
         }
+
 
         self.images = {}
         for name, path in self.image_paths.items():
@@ -85,6 +93,7 @@ class HomePage(Element, Controller):
         "Welcome back to your savings account! Let's continue growing your financial goals together",
         "Transfer Money Now with Ease!"
         ]
+        self.welcome_message = self.welcome_message_list[1]                      
 
     def background(self):
         self.img_background(400, 300, 1244, 830, self.images["background"])
@@ -198,11 +207,66 @@ class HomePage(Element, Controller):
             self.coin_angle -= 360
         elif self.coin_angle < 0:
             self.coin_angle += 360
+        self.diagram()
 
     # Diagramme
     def diagram(self):
-        pass          
-    
+        income_size, obligation_size, grocery_size, living_size, personal_size, transport_size = 0, 0, 0, 0, 0, 0 
+        income_total, obligation_total, grocery_total, living_total, personal_total, transport_total = 0, 0, 0, 0, 0, 0 
+        for transaction in self.transactions:
+            if transaction[6] == 0:
+                income_total += transaction[4]
+            elif transaction[6] == 5:
+                obligation_total += transaction[4]
+            elif transaction[6] == 3:
+                grocery_total += transaction[4]
+            elif transaction[6] == 1:
+                living_total += transaction[4]
+            elif transaction[6] == 4:
+                personal_total += transaction[4]
+            elif transaction[6] == 2:
+                transport_total += transaction[4]
+
+        pygame.draw.line(self.Window, self.grey3, (625, 500), (970, 500), 2)
+
+        total = obligation_total + grocery_total + living_total + personal_total + transport_total + income_total
+        if total == 0:
+            total = 1
+        obligation_size = 350 * obligation_total / total
+        grocery_size = 350 * grocery_total / total
+        living_size = 350 * living_total / total
+        personal_size = 350 * personal_total / total
+        transport_size = 350 * transport_total / total
+        income_size = 350 * income_total / total
+
+        self.img_center("Income", 650, 650, 40, 40, self.images["income_logo"])
+        self.rect_full_not_centered(self.black, 670, 502, 40, income_size, 0)
+        self.text_center(self.font2, 12, f"+{income_total}€",self.green2, 650, 492 - (income_size))
+
+        self.img_center("obligation", 710, 650, 40, 40, self.images["obligation"])
+        self.rect_full_not_centered(self.black, 730, 500 + obligation_size, 40, obligation_size, 0)
+        self.text_center(self.font2, 12, f"-{obligation_total}€",self.red2, 710, 510 + obligation_size)
+
+        self.img_center("grocery", 770, 650, 40, 40, self.images["grocery"])
+        self.rect_full_not_centered(self.black, 790, 500 + grocery_size, 40, grocery_size, 0)
+        self.text_center(self.font2, 12, f"-{grocery_total}€",self.red2, 770, 510 + grocery_size)
+
+        self.img_center("living", 830, 650, 40, 40, self.images["living"])
+        self.rect_full_not_centered(self.black, 850, 500 + living_size, 40, living_size, 0)
+        self.text_center(self.font2, 12, f"-{living_total}€",self.red2, 830, 510 + living_size)
+
+        self.img_center("personal", 890, 650, 40, 40, self.images["personal"])
+        self.rect_full_not_centered(self.black, 910, 500 + personal_size, 40, personal_size, 0)
+        self.text_center(self.font2, 12, f"-{personal_total}€",self.red2, 890, 510 + personal_size)
+
+        self.img_center("transportation", 950, 650, 40, 40, self.images["transportation"])
+        self.rect_full_not_centered(self.black, 970, 500 + transport_size, 40, transport_size, 0)
+        self.text_center(self.font2, 12, f"-{transport_total}€",self.red2, 950, 510 + transport_size)
+
+        self.last_month = self.button_hover_small("1month ", 650, 205, 100, 20, self.grey2, self.grey3, self.grey1, self.grey3, "Last month", self.font3, self.white, 12, 2, 5)
+        self.three_last_month = self.button_hover_small("3month ", 775, 205, 100, 20, self.grey2, self.grey3, self.grey1, self.grey3, "Three month", self.font3, self.white, 12, 2, 5)
+        self.last_year = self.button_hover_small("lastyear ", 900, 205, 100, 20, self.grey2, self.grey3, self.grey1, self.grey3, "Last year", self.font3, self.white, 12, 2, 5)
+
     def main_page_design(self):
 
         self.background()
@@ -390,26 +454,28 @@ class HomePage(Element, Controller):
                     pass
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.transfer_rect.collidepoint(event.pos):
-                        self.profile_display, self.checking_saving_display, self.checking_saving_event, self.transfer_display, self.transaction_event = False, False, False, True, False
+                        self.profile_display, self.checking_saving_display, self.checking_saving_event, self.transfer_display, self.transaction_event, self.home_event = False, False, False, True, False, False
                         self.welcome_message = self.welcome_message_list[4] 
 
                     elif self.home_rect.collidepoint(event.pos):
-                        self.profile_display, self.checking_saving_display, self.transfer_display, self.checking_saving_event, self.transaction_event = False, False, False, False, False  
+                        self.profile_display, self.checking_saving_display, self.transfer_display, self.checking_saving_event, self.transaction_event, self.home_event = False, False, False, False, False, True 
                         self.welcome_message = self.welcome_message_list[1]                      
+                        self.transactions = self.display_transaction(self.user_id,1, None, None, None)
 
                     elif self.checking_rect.collidepoint(event.pos):
                         self.welcome_message = self.catch_phrase(1)
                         self.account_type = 1
-                        self.profile_display, self.checking_saving_display, self.transfer_display = False, True, False
+                        self.profile_display, self.checking_saving_display, self.home_event, self.transaction_event = False, True, False, False
                         self.welcome_message = self.welcome_message_list[2] 
 
                     elif self.saving_rect.collidepoint(event.pos):
                         
                         self.account_type = 2
-                        self.profile_display, self.checking_saving_display, self.transfer_display, self.transaction_event = False, True, False, False
-                    
+                        self.profile_display, self.checking_saving_display, self.transfer_display, self.transaction_event, self.home_event = False, True, False, False, False
+                        self.welcome_message = self.welcome_message_list[3] 
+
                     elif self.profile_rect.collidepoint(event.pos):
-                        self.profile_display, self.checking_saving_display, self.transfer_display, self.checking_saving_event, self.transaction_event = True, False, False, False, False
+                        self.profile_display, self.checking_saving_display, self.transfer_display, self.checking_saving_event, self.transaction_event, self.home_event = True, False, False, False, False, False
                         self.welcome_message = self.welcome_message_list[0] 
 
                     elif self.log_out_rect.collidepoint(event.pos):
@@ -426,30 +492,30 @@ class HomePage(Element, Controller):
                                 self.display_category_description = False
                                 self.scroll = 0
                                 if self.date_sort:
-                                    self.transactions = self.display_transaction(self.user_id,1, None)
+                                    self.transactions = self.display_transaction(self.user_id,1, None, None, None)
                                     self.date_sort = False
                                 else:
-                                    self.transactions = self.display_transaction(self.user_id,2, None)
+                                    self.transactions = self.display_transaction(self.user_id,2, None, None, None)
                                     self.date_sort = True
                             elif self.income_rect.collidepoint(event.pos):
                                 self.scroll = 0
                                 self.display_category_description = False
-                                self.transactions = self.display_transaction(self.user_id,3, None)
+                                self.transactions = self.display_transaction(self.user_id,3, None, None, None)
 
                             elif self.expense_rect.collidepoint(event.pos):
                                 self.scroll = 0
                                 self.display_category_description = False
-                                self.transactions = self.display_transaction(self.user_id,4, None)
+                                self.transactions = self.display_transaction(self.user_id,4, None, None, None)
 
                             elif self.ascending_rect.collidepoint(event.pos):
                                 self.scroll = 0
                                 self.display_category_description = False
-                                self.transactions = self.display_transaction(self.user_id,5, None)
+                                self.transactions = self.display_transaction(self.user_id,5, None, None, None)
 
                             elif self.descending_rect.collidepoint(event.pos):
                                 self.scroll = 0
                                 self.display_category_description = False
-                                self.transactions = self.display_transaction(self.user_id,6, None)
+                                self.transactions = self.display_transaction(self.user_id,6, None, None, None)
 
                             # elif self.calendar_rect.collidepoint(event.pos):
                                 self.scroll = 0
@@ -459,7 +525,7 @@ class HomePage(Element, Controller):
                             elif self.type_rect.collidepoint(event.pos):
                                 self.scroll = 0
                                 self.display_category_description = True
-                                self.transactions = self.display_transaction(self.user_id,8, self.sort_category)
+                                self.transactions = self.display_transaction(self.user_id,8, self.sort_category, None, None)
                                 if self.sort_category < 5:
                                     self.sort_category += 1
                                 else:
@@ -510,6 +576,15 @@ class HomePage(Element, Controller):
 
                         elif self.confirm_button_rect.collidepoint(event.pos):
                             pass
+
+                    if self.home_event:
+                        if self.last_month.collidepoint(event.pos):
+                            self.transactions = self.display_transaction(self.user_id, 9, 30, None, None)
+                        elif self.three_last_month.collidepoint(event.pos):
+                            self.transactions = self.display_transaction(self.user_id, 9, 90, None, None)
+                        elif self.last_year.collidepoint(event.pos):
+                            self.transactions = self.display_transaction(self.user_id, 9, 365, None, None)
+
                 if self.transaction_event:
                     if event.type == pygame.KEYDOWN:
                             if event.key == pygame.K_BACKSPACE:
