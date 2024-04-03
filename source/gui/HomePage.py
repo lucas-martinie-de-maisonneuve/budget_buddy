@@ -470,21 +470,22 @@ class HomePage(Element, Controller):
                                 self.display_category_description = False
                                 self.transactions = self.display_transaction(self.user_id, 6, None, None, None)
 
-                            elif self.calendar_rect.collidepoint(event.pos):
+                            elif self.calendar_rect.collidepoint(event.pos): 
                                 self.scroll = 0
                                 self.ddisplay_start_end_date = False
                                 if self.display_start_end_date:
                                     self.display_start_end_date = False
                                 else:
-                                    self.display_start_end_date= True                                                 
+                                    self.display_start_end_date= True  
 
-                            elif self.validate_rect.collidepoint(event.pos):
-                                try:
-                                    self.display_category_description = False
-                                    self.transactions = self.display_transaction(self.user_id, 7, None, self.input_start_date, self.input_end_date)
-                                except: 
-                                    self.calendar_error = True
+                            elif self.display_start_end_date:    
 
+                                if self.validate_rect.collidepoint(event.pos) :
+                                    try:
+                                        self.display_category_description = False
+                                        self.transactions = self.display_transaction(self.user_id, 7, None, self.input_start_date, self.input_end_date)
+                                    except: 
+                                        self.calendar_error = True
 
                             elif self.type_rect.collidepoint(event.pos):
                                 self.scroll = 0
@@ -495,16 +496,20 @@ class HomePage(Element, Controller):
                                 else:
                                     self.sort_category = 0
 
-                            elif self.input_start_date_rect.collidepoint(event.pos):
-                                self.input_start_date = ""
-                                self.entry = 9
-                                self.calendar_error = False
+                        if self.display_start_end_date: 
+                            try:
+                                if self.input_start_date_rect.collidepoint(event.pos):
+                                    self.input_start_date = ""
+                                    self.entry = 9
+                                    self.calendar_error = False
+                                
 
-                            elif self.input_end_date_rect.collidepoint(event.pos):
-                                self.input_end_date = ""
-                                self.entry = 10
-                                self.calendar_error = False
-
+                                elif self.input_end_date_rect.collidepoint(event.pos):
+                                    self.input_end_date = ""
+                                    self.entry = 10
+                                    self.calendar_error = False
+                            except:
+                                pass
                 
 
                     # Event Transaction
